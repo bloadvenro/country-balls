@@ -32,6 +32,17 @@
     <path d="m-49-14 93-3 15 48-18 2-6-14-63 2-5 12-18-1Z" fill="#e6b483" stroke="#ba957c" stroke-width="3"/>
     <rect x="-55" y="-23" width="105" height="16" rx="7" fill="#f8cfa0"/><path d="M-34-16H28" stroke="#d7ac87" stroke-width="3" stroke-dasharray="5 6"/>
   </g>
+  <!-- A child's floor potty next to the step stool. -->
+  <g transform="translate(615 650)" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="3" cy="48" rx="81" ry="12" fill="#79a5a1" opacity=".4"/>
+    <path d="M-68-6q-5-24-2-45 1-16 18-18 14-1 19 12l9 33 53 5q22-18 35-2 9 12 3 29l7 27q2 9-12 11-61 12-124-1-10-2-10-10Z" fill="#f4c182" stroke="#b68f72" stroke-width="4"/>
+    <path d="M-59-51q1-6 8-6 8 0 8 6 0 5-7 5-8 1-9-5Z" fill="#c7ded2" stroke="#ca9d72" stroke-width="3"/>
+    <path d="M-58-20q22-15 71-10l20 3q7-12 17-12 13 0 16 13 5 15-11 22-43 19-95 8-30-6-18-24Z" fill="#fff0c7" stroke="#bb9776" stroke-width="3.5"/>
+    <path d="M-46-15q17-10 48-10 15 0 29 4 6 2 1 8-17 13-51 13-26 0-32-6-4-5 5-9Z" fill="#ba9376"/>
+    <path d="M-45-7q28 7 59 0-17 8-36 8-18-1-23-8Z" fill="#dac09c"/>
+    <path d="M-65 35q60 14 130-1" fill="none" stroke="#d7a26e" stroke-width="5"/>
+    <path d="m25 7 2.5 5 5.5.8-4 4 .9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-4 5.5-.8Z" fill="#fff4c9"/>
+  </g>
   <g transform="translate(770 431) rotate(4)"><path d="m-31-4 64-2-13 16h-37Z" fill="#de917b" stroke="#ba806c" stroke-width="2.5"/>
     <path d="M1-6v-47" stroke="#b38e69" stroke-width="4"/><path d="m-3-48-23 35h23Z" fill="#ffdc91"/><path d="m5-46 19 28-19 2Z" fill="#89bbb6"/>
   </g>

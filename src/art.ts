@@ -70,6 +70,13 @@ export const accessoryArt: Record<Item, string> = {
     <path d="m-45-20 4-4m26 1 4 3" stroke-width="8"/>
     <circle cx="33" cy="29" r="9" fill="#a8c9d1"/><circle cx="33" cy="29" r="4.5" fill="#e7f6f5" stroke-width="1.8"/>
   </g>`,
+  diaper: `<g ${stroke}>
+    <path d="M-55-15Q-1-3 55-15q-2 12-9 21-15-1-21 12-9 8-25 8-17 0-25-8-6-13-21-12-7-9-9-21Z" fill="#fffaf0"/>
+    <path d="M-55-15Q-1-3 55-15l-3 9Q2 7-52-6Z" fill="#d6efeb" stroke-width="2.5"/>
+    <path d="M-46 1q15 1 21 14m71-14q-15 1-21 14" fill="none" stroke="#a6c9c6" stroke-width="2.6" stroke-dasharray="3 4"/>
+    <g fill="#91cecb" stroke="#618d96" stroke-width="2"><rect x="-45" y="-9" width="15" height="8" rx="3" transform="rotate(12 -38 -5)"/><rect x="30" y="-9" width="15" height="8" rx="3" transform="rotate(-12 37 -5)"/></g>
+    <path d="m0 3 2.4 4.8 5.3.8-3.9 3.8.9 5.3L0 15.2l-4.7 2.5.9-5.3-3.9-3.8 5.3-.8Z" fill="#ffd57d" stroke="#cd9f60" stroke-width="1.5"/>
+  </g>`,
 }
 
 const behindProps = new Set<Item>(['tail', 'backpack', 'wings'])
@@ -121,12 +128,20 @@ const mouths: Record<Mouth,string> = {
   breathing: '<ellipse cy="2" rx="5.4" ry="3.8" fill="#5d3e50"/><path d="M-2.5 3.5q2.5-1.2 5 .1" fill="none" stroke="#e9a1ab" stroke-width="1.5"/>',
   frown: '<path d="M-10 4Q1-7 12 3" fill="none"/>',
   zigzag: '<path d="m-12 3 5-6 5 6 5-6 6 4" fill="none"/>',
+  gritted: '<path d="M-12 0q1-7 8-6l11 1q6 1 5 8-1 5-6 4l-12-1q-6 0-6-6Z" fill="#fff9e7"/><path d="m-10 0 20 2m-13-6v4m7 2v4" stroke="#937b79" stroke-width="1.4" fill="none"/>',
 }
 export function mouthArt(style: Mouth) {
   return `<g ${line}>${mouths[style]}</g>`
 }
-export function faceArt(face: Face, blink = false, eyes = expressions[face].eyes, mouth = expressions[face].mouth) {
-  return `${eyeArt(eyes,blink)}<g transform="translate(0 18)">${mouthArt(mouth)}</g>`
+const fist = `<path d="M-9 5q-4-5-3-12 1-5 5-4 3-5 7-2 5-2 7 3 5 0 5 5v5q0 7-7 10-8 2-14-5Z" fill="#f7d09c"/>
+  <path d="m-7-9 1 5m5-8 1 6m5-4 1 5m5 1q-2-4-6-3l-6 3q-2 3 1 5 2 1 6-1" fill="none" stroke-width="1.7"/>`
+export const strainingHands = [-1, 1].map(side =>
+  `<g transform="translate(${side * 32} 19) scale(${-side} 1) rotate(-12)" ${line}>${fist}</g>`).join('')
+const flushedCheeks = '<g fill="#f58c8e" opacity=".86"><ellipse cx="-23" cy="8" rx="8" ry="4"/><ellipse cx="23" cy="8" rx="8" ry="4"/></g>'
+
+export function faceArt(face: Face, blink = false, eyes = expressions[face].eyes, mouth = expressions[face].mouth, drawHands = true) {
+  const strain = face === 'straining'
+  return `${strain ? flushedCheeks : ''}${eyeArt(eyes,blink && !strain)}<g transform="translate(0 18)">${mouthArt(mouth)}</g>${strain && drawHands ? strainingHands : ''}`
 }
 
 export const glaze = `<path d="M-49-37C-67-2-50 43-9 52 17 59 42 46 54 31A61 61 0 0 1-49-37Z" fill="#282035" opacity=".24"/>

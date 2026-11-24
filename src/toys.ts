@@ -9,6 +9,7 @@ export const faces = {
   teary: 'Лёгкие слёзки',
   sobbing: 'Слёзы ручьём',
   angry: 'Сердитая',
+  straining: 'Тужится',
   shy: 'Смущение',
   cheeky: 'Озорная',
   worried: 'Встревоженная',
@@ -46,6 +47,7 @@ export const items = {
   syringe: 'Шприц',
   scalpel: 'Скальпель',
   stethoscope: 'Стетоскоп',
+  diaper: 'Подгузник',
 } as const
 
 export type Face = keyof typeof faces
@@ -60,6 +62,7 @@ const anchors: Record<Item, [number, number]> = {
   bunny: [0, -47], beret: [-5, -48], moonPin: [31, -39], tiara: [0, -48], neckerchief: [0, 42], ribbon: [0, 44],
   doctorCap: [-3, -53], doctorMask: [10, 21], doctorHeadMirror: [0, -36],
   syringe: [55, 20], scalpel: [-53, 24], stethoscope: [0, 24],
+  diaper: [0, 39],
 }
 
 export function itemAnchor(kind: Item): [number, number] {
@@ -75,6 +78,7 @@ export const mouthStyles = {
   fang: 'Клычок', pout: 'Надутые губки', beam: 'До ушей', whistle: 'Свисток',
   none: 'Без рта', smile: 'Улыбка', laugh: 'Хохот', tongue: 'Язычок',
   cat: 'Кошачий', gasp: 'Удивление', breathing: 'Сопит', frown: 'Хмурый', zigzag: 'Зигзаг',
+  gritted: 'Стиснутые зубки',
 } as const
 export type Eyes = keyof typeof eyeStyles
 export type Mouth = keyof typeof mouthStyles
@@ -85,6 +89,7 @@ export const expressions: Record<Face, { eyes: Eyes; mouth: Mouth }> = {
   happy: { eyes: 'classic', mouth: 'cat' }, sad: { eyes: 'droop', mouth: 'frown' },
   teary: { eyes: 'tears', mouth: 'frown' }, sobbing: { eyes: 'streams', mouth: 'gasp' },
   angry: { eyes: 'stern', mouth: 'zigzag' }, shy: { eyes: 'dots', mouth: 'smile' },
+  straining: { eyes: 'squeeze', mouth: 'gritted' },
   cheeky: { eyes: 'wink', mouth: 'tongue' }, worried: { eyes: 'wide', mouth: 'zigzag' },
   adoring: { eyes: 'hearts', mouth: 'cat' }, dazzled: { eyes: 'shimmer', mouth: 'beam' },
   dizzy: { eyes: 'spiral', mouth: 'gasp' },

@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Konva from 'konva'
 import { Circle, Ellipse, Group, Image as KImage, Layer, Line, Rect, Stage } from 'react-konva'
 import { actions, type Action, type Performance } from './actions'
-import { accessoryArt, faceAccessoryShift, faceArt, faceX, glaze, isBehindProp, svgUri } from './art'
+import { accessoryArt, faceAccessoryShift, faceArt, faceX, glaze, isBehindProp, strainingHands, svgUri } from './art'
 import { useBallFlag } from './ballFlag'
 import { actorScaleLimits, clamp, type Accessory, type Actor, type Ball } from './model'
 import type { Face } from './toys'
@@ -108,8 +108,27 @@ function Prop({ a, editing }: { a: Accessory; editing?: Editing }) {
     <KImage image={bitmap} x={-box/2} y={-box/2} width={box} height={box} listening={false}/>
   </Group>
 }
+function StrainingHands({ x }: { x: number }) {
+  const ref = useRef<Konva.Group>(null)
+  const image = useBitmap(svgUri(strainingHands, 104))
+  const reduced = useReducedMotion()
+  useEffect(() => {
+    const node = ref.current!
+    if (reduced) return
+    const animation = new Konva.Animation(frame => {
+      if (!frame) return
+      const release = (1 - Math.cos(frame.time * 2 * Math.PI / 1350)) / 2
+      node.scaleX(1 + .09 * release)
+      node.y(4 * release)
+    }, node.getLayer())
+    animation.start()
+    return () => { animation.stop(); node.scaleX(1); node.y(0) }
+  }, [reduced])
+  return <Group ref={ref} x={x} listening={false}><KImage image={image} x={-52} y={-52} width={104} height={104}/></Group>
+}
 function Puppet({ ball, look = 0, editing, face, blink = false, facing = 1 }: { ball: Ball; look?: number; editing?: Editing; face?: Face; blink?: boolean; facing?: -1 | 1 }) {
-  const flag = useBallFlag(ball.code), expression = useBitmap(svgUri(faceArt(face ?? ball.face, blink, face ? undefined : ball.eyes, face ? undefined : ball.mouth), 104))
+  const mood = face ?? ball.face
+  const flag = useBallFlag(ball.code), expression = useBitmap(svgUri(faceArt(mood, blink, face ? undefined : ball.eyes, face ? undefined : ball.mouth, false), 104))
   const x = faceX(facing, look)
   const finish = useBitmap(svgUri(glaze, 130))
   return <>
@@ -125,6 +144,7 @@ function Puppet({ ball, look = 0, editing, face, blink = false, facing = 1 }: { 
     </Group>
     {ball.accessories.filter(a => !isBehindProp(a.kind)).map(a =>
       <Group key={a.id} x={faceAccessoryShift(a.kind, x)}><Prop a={a} editing={editing}/></Group>)}
+    {mood === 'straining' && <StrainingHands x={x}/>}
   </>
 }
 
