@@ -50,7 +50,7 @@ export function eyeArt(style: Eyes, blink = false) {
     spiral: '<ellipse cy="-6" rx="13" ry="14"/><path d="M9-3C13-18-9-22-9-8c-1 10 15 13 15 3 0-7-9-8-9-2q0 4 4 2" fill="none"/>',
     streams: '<path d="M-13-5q10-10 23 0l-1 4q-13-6-22 1Z" fill="#383443"/><path d="M-13-2q6-4 11-1 2 8-2 17-4 9-3 16-1 5-6 4-6-1-5-8 0-8 4-16 3-8 1-12Z" fill="#64c8fa" stroke="#396d94" stroke-width="1.7"/><path d="M-8 2q2 7-3 17" fill="none" stroke="#d9f7ff" stroke-width="2.6"/>',
     tears: '<path d="M-13 0q11-10 26-4" fill="none"/><path d="M-10 0q-12 13-4 14 8 0 4-14Z" fill="#97deff"/>',
-    classic: shellEye, wink: shellEye, galaxy: galaxyEye,
+    classic: shellEye, wink: shellEye, resting: closed, galaxy: galaxyEye,
     dots: '<circle cy="-3" r="4.7" fill="#242126" stroke="none"/>',
     wide: '<ellipse cy="-6" rx="12" ry="17"/>',
     squeeze: '<path d="m-12-17 20 12-20 9" fill="none"/>',
@@ -74,6 +74,7 @@ const mouths: Record<Mouth,string> = {
   tongue: '<path d="M-12-3Q1 5 13-4" fill="none"/><path d="M0 1 12-2Q14 12 7 13 0 14 0 1Z" fill="#ff90a8"/>',
   cat: '<path d="M-12-1Q-7 9 0 0Q8 8 13-2" fill="none"/>',
   gasp: '<ellipse rx="5" ry="8" fill="#3d303d"/>',
+  breathing: '<ellipse cy="2" rx="5.4" ry="3.8" fill="#5d3e50"/><path d="M-2.5 3.5q2.5-1.2 5 .1" fill="none" stroke="#e9a1ab" stroke-width="1.5"/>',
   frown: '<path d="M-10 4Q1-7 12 3" fill="none"/>',
   zigzag: '<path d="m-12 3 5-6 5 6 5-6 6 4" fill="none"/>',
 }

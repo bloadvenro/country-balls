@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+  <defs>
+    <linearGradient id="wall" x2=".85" y2="1"><stop stop-color="#f6ecd9"/><stop offset=".65" stop-color="#fff6e5"/><stop offset="1" stop-color="#e3eada"/></linearGradient>
+    <linearGradient id="floor" x2=".2" y2="1"><stop stop-color="#d9c2a5"/><stop offset="1" stop-color="#f1dcc4"/></linearGradient>
+    <linearGradient id="quilt" x2=".35" y2="1"><stop stop-color="#93d4c7"/><stop offset="1" stop-color="#5aa99e"/></linearGradient>
+    <linearGradient id="glass" x2=".3" y2="1"><stop stop-color="#eefcfa" stop-opacity=".36"/><stop offset="1" stop-color="#a4d3d0" stop-opacity=".86"/></linearGradient>
+    <pattern id="tiles" width="95" height="53" patternUnits="userSpaceOnUse"><rect width="95" height="53" fill="#c3ded3"/><path d="M0 53V0H95" fill="none" stroke="#daebe3" stroke-width="3"/></pattern>
+    <pattern id="stitch" width="42" height="32" patternUnits="userSpaceOnUse"><path d="m17 17 4 4 6-8" stroke="#d1efe2" opacity=".75" stroke-width="2.6" stroke-linecap="round" fill="none"/></pattern>
+    <clipPath id="window"><rect x="902" y="94" width="291" height="234" rx="48"/></clipPath>
+    <g id="wheel"><circle cy="2" r="16" fill="#526b70"/><circle cy="2" r="7.5" fill="#b9cfc6"/><path d="M0-18V1" stroke="#829b9a" stroke-width="7" stroke-linecap="round"/></g>
+    <g id="leaf"><path d="M0 1Q-11-19-24-19-24-4 0 1Z" fill="#79a492"/></g>
+  </defs>
+  <rect width="1440" height="900" fill="url(#wall)"/>
+  <rect y="326" width="1440" height="204" fill="url(#tiles)"/>
+  <path d="M0 325h1440" stroke="#97b8ab" stroke-width="6"/>
+  <path d="M0 509h1440v391H0Z" fill="url(#floor)"/>
+  <path d="M0 511h1440" stroke="#99aca0" stroke-width="13"/>
+  <g fill="none" stroke="#c9b399" stroke-width="2.5" opacity=".54">
+    <path d="M0 609h1440M0 753h1440M325 520l-47 89m521 0 16 144m378-144-51-89m-691 233-48 147"/>
+  </g>
+  <!-- Wash station and a glass door to the hospital corridor. -->
+  <g stroke-linejoin="round">
+    <rect x="45" y="154" width="198" height="359" rx="14" fill="#a2beb3"/>
+    <rect x="53" y="162" width="182" height="348" rx="10" fill="#ddc3a4"/>
+    <rect x="76" y="184" width="111" height="160" rx="40" fill="#8fbab8"/>
+    <rect x="82" y="190" width="99" height="146" rx="35" fill="#cbe8df"/>
+    <path d="m91 267 66-64m-57 84 63-62" stroke="#e6f2e8" stroke-width="8" stroke-linecap="round"/>
+    <rect x="184" y="374" width="29" height="8" rx="4" fill="#6b8b88"/>
+    <rect x="272" y="309" width="38" height="58" rx="9" fill="#f7f6e6" stroke="#93b4ac" stroke-width="3"/>
+    <rect x="280" y="323" width="22" height="14" rx="4" fill="#90c7bd"/>
+    <path d="M275 405v-20q0-13 12-13 12 0 12 12" fill="none" stroke="#7a9b98" stroke-linecap="round" stroke-width="7"/>
+    <path d="M217 408h117q-4 31-24 34h-69q-19-4-24-34Z" fill="#edf5e9" stroke="#9bb7b2" stroke-width="4"/>
+    <path d="M241 443h70v64h-70Z" fill="#b8cfc0"/>
+  </g>
+  <!-- A privacy curtain, gathered away from the bed. -->
+  <path d="M280 71h419" stroke="#9baea5" stroke-width="6" stroke-linecap="round"/>
+  <g fill="#dce9dd" stroke="#9cb9a7" stroke-width="2.5">
+    <circle cx="321" cy="78" r="7"/><circle cx="347" cy="78" r="7"/><circle cx="374" cy="78" r="7"/><circle cx="404" cy="78" r="7"/>
+  </g>
+  <path d="M308 84q18 9 34 1 14 10 30 0 14 8 34-1l11 14q-3 97-55 178l10 152q-18 12-34 1-19 9-34-1l17-151q-21-92-13-193Z" fill="#a8c9ba"/>
+  <path d="M331 93q-7 110 8 166m36-164q-1 83-25 165m-6 27-9 123" fill="none" stroke="#8fb5a4" stroke-width="4" stroke-linecap="round"/>
+  <path d="m319 270 44-8 3 11-45 11Z" fill="#d9af77"/>
+  <!-- Baby ward emblem and a bedside monitor. -->
+  <g transform="translate(713 155)" stroke-linejoin="round">
+    <rect x="-63" y="-63" width="126" height="138" rx="47" fill="#e4d6c0"/>
+    <rect x="-64" y="-69" width="126" height="138" rx="47" fill="#e7f1e5" stroke="#9eb8a7" stroke-width="4"/>
+    <g transform="rotate(-20)">
+      <rect x="-25" y="-38" width="50" height="81" rx="25" fill="#f7e0bc" stroke="#8da69a" stroke-width="3.5"/>
+      <circle cy="-16" r="16" fill="#f2bea1"/>
+      <path d="M-10-16q3 4 6 0m7 0q3 4 6 0" fill="none" stroke="#926e68" stroke-width="2.3" stroke-linecap="round"/>
+      <path d="M-23-2q24 7 45 28Q9 54-15 34-26 23-23-2Z" fill="#d89a93" stroke="#a67d78" stroke-width="2.5"/>
+      <path d="M23-3Q11 3 3 11l17 14q9-13 3-28Z" fill="#edb4a7"/>
+    </g>
+    <path d="M30-47h8v6h6v8h-6v6h-8v-6h-6v-8h6Z" fill="#608f89"/>
+  </g>
+  <g transform="translate(449 224)" stroke-linejoin="round">
+    <path d="M23 70v21h87" fill="none" stroke="#95aea4" stroke-width="9" stroke-linecap="round"/>
+    <rect width="133" height="86" rx="14" fill="#eef4e6" stroke="#8fa9a1" stroke-width="4"/>
+    <rect x="9" y="9" width="103" height="65" rx="8" fill="#486975"/>
+    <path d="M17 44h19l7-8 8 10 8-24 7 37 8-17h28" fill="none" stroke="#acf0ca" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="122" cy="20" r="4" fill="#90bfac"/><circle cx="122" cy="34" r="4" fill="#ebc58c"/>
+  </g>
+  <!-- Daylight, sill and a small vase for a visiting family. -->
+  <rect x="893" y="85" width="309" height="255" rx="54" fill="#c8baa3"/>
+  <g clip-path="url(#window)">
+    <rect x="900" y="90" width="300" height="245" fill="#b9deda"/>
+    <circle cx="1120" cy="153" r="40" fill="#fff0bc"/>
+    <path d="M885 280q81-80 150-41 71-80 177-47v151H885Z" fill="#a3cabb"/>
+    <path d="M892 297q96-58 177-11 75-41 145-28v81H892Z" fill="#87b5a7"/>
+    <path d="M1048 80v264m-165-140h335" stroke="#f7edda" stroke-width="9"/>
+  </g>
+  <rect x="880" y="330" width="337" height="13" rx="6" fill="#b79c80"/>
+  <g transform="translate(1158 320)"><path d="m0-20-11-35m10 34 17-45m-19 45 1-60" stroke="#7a9b80" stroke-width="3"/><use href="#leaf" x="3" y="-40"/><use href="#leaf" transform="translate(4 -37) scale(-.7 .7)"/><g fill="#e5a09a"><circle cx="-12" cy="-57" r="8"/><circle cx="0" cy="-81" r="8"/></g><circle cx="17" cy="-68" r="9" fill="#edbf84"/><path d="M-13-25h26q-3 9 2 18 4 13-15 13T-15-7q5-9 2-18Z" fill="#85aba6"/></g>
+  <!-- Adjustable hospital bed: open mattress, quilt, safety rail and castors. -->
+  <ellipse cx="538" cy="683" rx="283" ry="21" fill="#967e6e" opacity=".19"/>
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <g stroke="#799297" stroke-width="12" fill="none"><path d="m345 594-8 74m376-70 11 70m-379-22h372"/><path d="m435 633 151-57m-45 57 94-48" stroke="#a0b2ac" stroke-width="14"/></g>
+    <use href="#wheel" x="336" y="666"/><use href="#wheel" x="725" y="666"/>
+    <path d="M289 560v-98q0-18 17-18h22q12 0 17 17l9 98" fill="#c59f80" stroke="#9a816f" stroke-width="4"/>
+    <path d="m303 513 84-84q11-11 23-2l82 65 230 7q20 1 30 16l34 45-20 22-425-13Z" fill="#fff8e7" stroke="#a9bcb0" stroke-width="4"/>
+    <path d="m330 497 49-55q9-10 20-5l47 26q12 8 5 18l-24 25q-13 13-26 10Z" fill="#fffdf0" stroke="#cfcec0" stroke-width="3"/>
+    <path d="M456 500q33 4 56 1l201 4q23-1 36 16l25 36-7 37-297-8q11-33-14-86Z" fill="url(#quilt)"/>
+    <path d="m488 514 222 5q13 0 21 10l28 40-2 13-259-6Z" fill="url(#stitch)"/>
+    <path d="m460 501 13 1q21 46 13 82l-14 1q7-40-12-84Z" fill="#d7eee1"/>
+    <path d="M291 561q240 12 494 9l-5 26q-229 6-483-11Z" fill="#d4b498" stroke="#9f8b79" stroke-width="4"/>
+    <path d="M740 569v-38q0-13 12-13h17q13 0 13 14v39" fill="none" stroke="#94aba9" stroke-width="9"/>
+    <path d="M336 568v-22q0-12 12-12l93 4q12 0 12 12v21" fill="none" stroke="#809b9c" stroke-width="8"/>
+    <path d="m347 536 92 4" stroke="#e4e6d9" stroke-width="8"/>
+  </g>
+  <!-- A newborn bassinet with a pink mattress, clear sides and a footprint tag. -->
+  <ellipse cx="898" cy="707" rx="126" ry="16" fill="#987f71" opacity=".18"/>
+  <g stroke-linejoin="round" stroke-linecap="round">
+    <path d="m814 585 29 97h105l28-98m-36 98 21 10m-111-10-21 10" fill="none" stroke="#7f9d9e" stroke-width="9"/>
+    <path d="M836 662q56 7 121-1" fill="none" stroke="#b2c8c1" stroke-width="8"/>
+    <use href="#wheel" transform="translate(828 693) scale(.75)"/><use href="#wheel" transform="translate(961 693) scale(.75)"/>
+    <path d="M775 495q-3-13 10-15l207-8q13 0 15 14l-14 87q-2 15-23 18l-148 9q-18 1-24-15Z" fill="#d8e8df" stroke="#8dafac" stroke-width="4"/>
+    <path d="m791 502 14 36q5 12 22 14l140-6q19-1 22-15l9-38Z" fill="#f9e3d8"/>
+    <path d="M796 515q47-11 102-9l58 2 32 11-3 14-159 14-22-7Z" fill="#eab7af"/>
+    <path d="m792 498 23 53 160-7 24-55-12 78q-2 11-17 14l-145 9q-14 0-18-12Z" fill="url(#glass)" stroke="#9dbbb7" stroke-width="3"/>
+    <path d="m779 488 24 54q3 9 17 9l153-7q11-1 16-11l18-46" fill="none" stroke="#f4f7e8" stroke-width="8"/>
+    <path d="m809 595 169-9" stroke="#8aa7a4" stroke-width="10"/>
+    <g transform="translate(886 562) rotate(-3)">
+      <rect x="-27" y="-13" width="54" height="28" rx="7" fill="#fff0d9" stroke="#c4b197" stroke-width="2"/>
+      <g fill="#cb918d"><ellipse cx="-8" cy="3" rx="3.2" ry="5.8" transform="rotate(-18 -8 3)"/><circle cx="-11" cy="-5" r="2.3"/><ellipse cx="7" cy="1" rx="3.2" ry="5.8" transform="rotate(19 7 1)"/><circle cx="10" cy="-7" r="2.3"/></g>
+    </g>
+  </g>
+  <!-- Chair for visitors. -->
+  <g transform="translate(1140 499)" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="5" cy="99" rx="88" ry="12" fill="#ad9985" opacity=".23"/>
+    <path d="m-51 34-15 59m108-59 14 59" stroke="#a8876f" stroke-width="11"/>
+    <path d="M-52 12q-28-76 5-91 34-12 76-6 22 4 23 26l-2 64" fill="#d7a399" stroke="#ac837b" stroke-width="4"/>
+    <path d="M-58 10q41-13 105-10 16 2 19 15l4 16q-54 22-125 9-12-8-3-30Z" fill="#edc2ad" stroke="#b89180" stroke-width="4"/>
+    <path d="M-65-16q9 3 13 42m115-52q-14 2-15 42" fill="none" stroke="#b89379" stroke-width="9"/>
+  </g>
+</svg>

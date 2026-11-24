@@ -56,6 +56,7 @@
 .park-page[data-background=ocean] .park-canvas{background-image:url('/backgrounds/ocean.svg')}
 .park-page[data-background=kitchen] .park-canvas{background-image:url('/backgrounds/kitchen.svg')}
 .park-page[data-background=bathroom] .park-canvas{background-image:url('/backgrounds/bathroom.svg')}
+.park-page[data-background=maternity] .park-canvas{background-image:url('/backgrounds/maternity.svg')}
 .park-page[data-background=bedroom] .park-canvas{background-image:url('/backgrounds/bedroom.svg')}
 .park-page[data-background=apartment] .park-canvas{background-image:url('/backgrounds/apartment.svg')}
 .park-page[data-background=ice] .park-canvas{background-image:url('/backgrounds/ice.svg')}

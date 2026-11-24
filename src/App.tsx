@@ -19,7 +19,7 @@ type Page = 'park' | 'workshop'
 type Tab = 'flags' | 'faces' | 'items'
 const route = (): Page => location.hash.slice(1) === 'workshop' ? 'workshop' : 'park'
 const tabs = [['flags', 'Флаги', Flag], ['faces', 'Мордочки', Heart], ['items', 'Наряды', Sparkles]] as const
-const backgroundLabels: Record<BackgroundId, string> = { park: 'Парк', playground: 'Парк аттракционов', party: 'Праздник', space: 'Космос', ocean: 'Под водой', ice: 'Ледяная бухта', apartment: 'Гостиная', kitchen: 'Кухня', bathroom: 'Ванная', bedroom: 'Спальня' }
+const backgroundLabels: Record<BackgroundId, string> = { park: 'Парк', playground: 'Парк аттракционов', party: 'Праздник', space: 'Космос', ocean: 'Под водой', ice: 'Ледяная бухта', apartment: 'Гостиная', kitchen: 'Кухня', bathroom: 'Ванная', bedroom: 'Спальня', maternity: 'Родильное отделение' }
 const EditorCanvas = lazy(() => import('./Canvas').then(module => ({ default: module.EditorCanvas })))
 const ParkCanvas = lazy(() => import('./Canvas').then(module => ({ default: module.ParkCanvas })))
 

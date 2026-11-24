@@ -3,6 +3,7 @@ export const faces = {
   laugh: 'Смех',
   surprise: 'Удивление',
   sleepy: 'Сонная мордочка',
+  asleep: 'Спит',
   happy: 'Радость',
   sad: 'Грусть',
   teary: 'Лёгкие слёзки',
@@ -60,18 +61,19 @@ export function itemAnchor(kind: Item): [number, number] {
 export const eyeStyles = {
   hearts: 'Сердечки', shimmer: 'Сияние', spiral: 'Спиральки', tears: 'Слёзки', streams: 'Слёзы ручьём',
   classic: 'Белые', galaxy: 'Галактики', dots: 'Точки', squeeze: 'Зажмуренные',
-  droop: 'Сонные', wink: 'Подмигивание', stern: 'Сердитые', wide: 'Круглые',
+  droop: 'Сонные', resting: 'Закрытые во сне', wink: 'Подмигивание', stern: 'Сердитые', wide: 'Круглые',
 } as const
 export const mouthStyles = {
   fang: 'Клычок', pout: 'Надутые губки', beam: 'До ушей', whistle: 'Свисток',
   none: 'Без рта', smile: 'Улыбка', laugh: 'Хохот', tongue: 'Язычок',
-  cat: 'Кошачий', gasp: 'Удивление', frown: 'Хмурый', zigzag: 'Зигзаг',
+  cat: 'Кошачий', gasp: 'Удивление', breathing: 'Сопит', frown: 'Хмурый', zigzag: 'Зигзаг',
 } as const
 export type Eyes = keyof typeof eyeStyles
 export type Mouth = keyof typeof mouthStyles
 export const expressions: Record<Face, { eyes: Eyes; mouth: Mouth }> = {
   smile: { eyes: 'classic', mouth: 'smile' }, laugh: { eyes: 'squeeze', mouth: 'laugh' },
   surprise: { eyes: 'wide', mouth: 'gasp' }, sleepy: { eyes: 'droop', mouth: 'none' },
+  asleep: { eyes: 'resting', mouth: 'breathing' },
   happy: { eyes: 'classic', mouth: 'cat' }, sad: { eyes: 'droop', mouth: 'frown' },
   teary: { eyes: 'tears', mouth: 'frown' }, sobbing: { eyes: 'streams', mouth: 'gasp' },
   angry: { eyes: 'stern', mouth: 'zigzag' }, shy: { eyes: 'dots', mouth: 'smile' },

@@ -30,8 +30,8 @@ test('парк: независимые копии друзей, клавиату
   await actorButtons.first().focus()
   await page.keyboard.press('Enter')
   await expect(actorButtons.first()).toHaveAttribute('aria-pressed', 'true')
-  await page.getByRole('button', { name: 'Настроение: Грусть' }).click()
-  await expect(page.getByRole('button', { name: 'Настроение: Грусть' })).toHaveAttribute('aria-pressed', 'true')
+  await page.getByRole('button', { name: 'Настроение: Спит' }).click()
+  await expect(page.getByRole('button', { name: 'Настроение: Спит' })).toHaveAttribute('aria-pressed', 'true')
   await actorButtons.last().press('Enter')
   await expect(page.getByRole('button', { name: 'Настроение: Улыбка' })).toHaveAttribute('aria-pressed', 'true')
   await page.getByTestId('action-greet').click()
@@ -280,7 +280,7 @@ test('сцена сохраняет больше десяти героев, на
   expect(full.collection).toHaveLength(3)
 
   await page.getByRole('button', {name:'Лицо влево'}).click()
-  for (const place of ['space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom']) {
+  for (const place of ['space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom', 'maternity']) {
     await page.getByTestId('open-backgrounds').click()
     const card = page.getByTestId('background-' + place)
     await card.locator('img').evaluate((img: HTMLImageElement) => img.decode())
@@ -289,7 +289,7 @@ test('сцена сохраняет больше десяти героев, на
   }
   await page.reload()
   expect((await saved(page)).actors[10].facing).toBe(-1)
-  expect((await saved(page)).backgroundId).toBe('bedroom')
+  expect((await saved(page)).backgroundId).toBe('maternity')
   await page.getByTestId('open-workshop').click()
   await page.getByRole('button', { name: 'Казахстан Изменить' }).click()
   await page.getByRole('button', { name: 'Сохранить' }).click()
@@ -368,7 +368,7 @@ test('крыло можно выбрать за край, сдвинуть и у
   expect(wings.scale).toBeCloseTo(1.15)
 })
 
-test('музыка меняется на всех десяти сценах, играет офлайн и запоминает выключатель', async ({ page, context }) => {
+test('музыка меняется на всех сценах, играет офлайн и запоминает выключатель', async ({ page, context }) => {
   await page.addInitScript(() => {
     const tracks = new Set<HTMLMediaElement>()
     const play = HTMLMediaElement.prototype.play
@@ -385,7 +385,7 @@ test('музыка меняется на всех десяти сценах, и�
   await page.reload()
   await page.waitForFunction(() => !!navigator.serviceWorker.controller)
   await context.setOffline(true)
-  for (const scene of ['park', 'playground', 'party', 'space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom']) {
+  for (const scene of ['park', 'playground', 'party', 'space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom', 'maternity']) {
     await page.getByTestId('open-backgrounds').click()
     await page.getByTestId('background-' + scene).click()
     await expect.poll(playing).toEqual(['/music/' + scene + '.mp3'])
@@ -393,7 +393,7 @@ test('музыка меняется на всех десяти сценах, и�
   await page.getByTestId('open-workshop').click()
   await expect.poll(playing).toEqual([])
   await page.getByRole('button', { name: 'В парк' }).click()
-  await expect.poll(playing).toEqual(['/music/bedroom.mp3'])
+  await expect.poll(playing).toEqual(['/music/maternity.mp3'])
   await page.getByRole('button', { name: 'Настройки' }).click()
   await page.getByRole('switch', { name: 'Музыка сцены' }).click()
   await expect.poll(playing).toEqual([])
