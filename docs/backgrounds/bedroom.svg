@@ -4,10 +4,31 @@
     <linearGradient id="floor" x2=".2" y2="1"><stop stop-color="#c39e97"/><stop offset="1" stop-color="#e3c6ae"/></linearGradient>
     <pattern id="quilt" width="65" height="52" patternUnits="userSpaceOnUse"><path d="m32 4 22 22-22 22-22-22Z" fill="none" stroke="#ebc2ba" stroke-width="2"/></pattern>
     <g id="star"><path d="m0-8 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" fill="#ffeab1"/></g>
+    <linearGradient id="daylight" x2=".2" y2="1"><stop stop-color="#8ed5ed"/><stop offset="1" stop-color="#e2f4e4"/></linearGradient>
+    <g id="sun-sky">
+      <rect x="690" y="62" width="215" height="180" rx="73" fill="url(#daylight)"/>
+      <g transform="translate(763 123)" stroke="#f6c666" stroke-linecap="round">
+        <path d="M0-25v-5m0 55v5m25-30h5m-55 0h-5m48-18 4-4m-40 40-4 4m40-4 4 4m-40-40-4-4" stroke-width="3"/>
+        <circle r="19" fill="#ffda7d" stroke-width="2"/>
+      </g>
+      <path d="M813 129q3-7 11-6 5-13 16-10 7 1 10 9 10-1 13 7Z" fill="#fff8ea"/>
+    </g>
+    <linearGradient id="dusk" x2=".3" y2="1"><stop stop-color="#23284f" stop-opacity=".49"/><stop offset="1" stop-color="#1a234a" stop-opacity=".64"/></linearGradient>
+    <mask id="moonlight"><rect width="1440" height="900" fill="white"/><rect x="690" y="62" width="215" height="180" rx="73" fill="black"/></mask>
+    <rect id="night-shadows" width="1440" height="900" fill="url(#dusk)" mask="url(#moonlight)"/>
+    <radialGradient id="warm-light"><stop stop-color="#ffd797" stop-opacity=".72"/><stop offset=".46" stop-color="#ffcf8d" stop-opacity=".32"/><stop offset="1" stop-color="#ffe1ac" stop-opacity="0"/></radialGradient>
+    <path id="lampshade" d="m327 308 47-1 14 46h-76Z"/>
+    <g id="lamp-glow"><ellipse cx="350" cy="358" rx="240" ry="187" fill="url(#warm-light)"/><use href="#lampshade" fill="#ffdf95"/><ellipse cx="350" cy="352" rx="36" ry="3" fill="#fff0bd"/></g>
   </defs>
+  <g id="walls">
   <rect width="1440" height="535" fill="url(#wall)"/>
-  <rect x="682" y="55" width="231" height="196" rx="80" fill="#bf9e8e"/><rect x="690" y="62" width="215" height="180" rx="73" fill="#6876a3"/>
+  <rect x="682" y="55" width="231" height="196" rx="80" fill="#bf9e8e"/>
+  </g>
+  <g id="moon-sky">
+  <rect x="690" y="62" width="215" height="180" rx="73" fill="#6876a3"/>
   <path d="M771 95q-18 48 27 47-21 28-47 5t20-52Z" fill="#ffdf9f"/><use href="#star" x="840" y="104"/><use href="#star" x="865" y="162"/><use href="#star" x="717" y="164"/>
+  </g>
+  <g id="furniture">
   <path d="M695 196q48-30 86 0 43-23 120-13l-6 32-18 15H723Z" fill="#777c9b"/><path d="M797 62v180m-105-85h211" stroke="#e9d8c6" stroke-width="8"/>
   <path d="M188 102q167 136 350 18" fill="none" stroke="#a293a8" stroke-width="4"/>
   <g fill="#ffdf99"><circle cx="240" cy="140" r="7"/><circle cx="310" cy="167" r="8"/><circle cx="391" cy="174" r="7"/><circle cx="469" cy="157" r="8"/></g>
@@ -39,8 +60,11 @@
   <path d="m611 408 323 30q25 3 36 22l34 62-13 41-373-26Z" fill="#ce8f91"/>
   <path d="m623 418 305 26q23 2 32 19l27 53-13 34-345-22Z" fill="url(#quilt)"/>
   <path d="M421 508q295 20 583 7v38q-272 16-577-9Z" fill="#bd937d" stroke="#a27c6c" stroke-width="4"/>
-  <rect x="303" y="408" width="105" height="112" rx="9" fill="#b28a78"/><rect x="313" y="418" width="85" height="34" rx="4" fill="#d1aa8d"/><circle cx="354" cy="434" r="4" fill="#937564"/>
-  <path d="M352 405v-75" stroke="#a08771" stroke-width="6"/><path d="m327 308 47-1 14 46h-76Z" fill="#ffe4a3"/><ellipse cx="352" cy="403" rx="22" ry="5" fill="#ae927a"/>
   <ellipse cx="793" cy="714" rx="218" ry="47" fill="#bdacc8"/><ellipse cx="793" cy="714" rx="189" ry="33" fill="none" stroke="#e1cddc" stroke-width="4"/>
   <g transform="translate(1084 613)"><rect x="0" y="-35" width="59" height="47" rx="5" fill="#e6bb80"/><rect x="39" y="-74" width="43" height="45" rx="4" fill="#a6bca7"/><path d="m-12-45 40-37 40 37Z" fill="#bc8491"/></g>
+  </g>
+  <g id="nightstand">
+    <rect x="303" y="408" width="105" height="112" rx="9" fill="#b28a78"/><rect x="313" y="418" width="85" height="34" rx="4" fill="#d1aa8d"/><circle cx="354" cy="434" r="4" fill="#937564"/>
+    <path d="M352 405v-75" stroke="#a08771" stroke-width="6"/><use href="#lampshade" fill="#ffe4a3"/><ellipse cx="352" cy="403" rx="22" ry="5" fill="#ae927a"/>
+  </g>
 </svg>

@@ -11,7 +11,7 @@ import { BallIcon, FaceIcon, PropIcon } from './Illustrations'
 import { actions, soundAction, type ActionId, type Performance } from './actions'
 import { chime, pronounce, stopVoice } from './audio'
 import {
-  accessory, actorScaleLimits, addToStage, backgrounds, clamp, countries, faces, favoriteCodes, flagOf, items,
+  accessory, actorScaleLimits, addToStage, backgrounds, ballKeyPrefix, clamp, countries, faces, favoriteCodes, flagOf, items,
   nameOf, newBall, type Accessory, type BackgroundId,
   type Ball, type Code, type Face, type Item,
 } from './model'
@@ -28,7 +28,7 @@ function App() {
   const [page, setPage] = useState<Page>(route)
   const { game, setGame, storageError } = useSavedGame()
   useSceneMusic(game.backgroundId, game.music && page === 'park')
-  const [draft, setDraft] = useState<Ball>(newBall)
+  const [newDraft, setNewDraft] = useState<Ball>(newBall)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [tab, setTab] = useState<Tab>('flags')
   const [selectedProp, setSelectedProp] = useState<string | null>(null)
@@ -47,6 +47,7 @@ function App() {
   const [cached, setCached] = useState(false)
   const timers = useRef<number[]>([])
   const balls = game.collection
+  const draft = balls.find(ball => ball.id === editingId) ?? newDraft
   const currentActor = game.actors.find(item => item.id === actor)
   const currentBall = balls.find(ball => ball.id === currentActor?.ballId)
   const currentProp = draft.accessories.find(part => part.id === selectedProp)
@@ -99,24 +100,37 @@ function App() {
   useEffect(() => {
     if (panel !== 'settings') setConfirmReset(false)
   }, [panel])
+  useEffect(() => {
+    if (!editingId) return
+    const clearOldUndo = (event: StorageEvent) => {
+      if (event.key === ballKeyPrefix + editingId) setPast([])
+    }
+    window.addEventListener('storage', clearOldUndo)
+    return () => window.removeEventListener('storage', clearOldUndo)
+  }, [editingId])
 
   const go = (next: Page) => {
     if (next === page) setPage(next)
     else location.hash = next
   }
-  const resetDraft = (ball = newBall()) => {
-    setDraft(ball); setEditingId(null); setSelectedProp(null); setPast([]); setTab('flags'); setLook(0); setNotice('')
+  const resetDraft = (existing?: Ball) => {
+    if (!existing) setNewDraft(newBall())
+    setEditingId(existing?.id ?? null); setSelectedProp(null); setPast([]); setTab('flags'); setLook(0); setNotice('')
   }
-  const create = () => { resetDraft(newBall()); go('workshop') }
+  const create = () => { resetDraft(); go('workshop') }
   const edit = (ball: Ball) => {
-    resetDraft({ ...ball, accessories: ball.accessories.map(part => ({ ...part })) })
-    setEditingId(ball.id); go('workshop')
+    resetDraft(ball); setActor(game.actors.find(item => item.ballId === ball.id)?.id ?? null); go('workshop')
   }
-  const change = (next: Ball) => {
-    setPast(history => [...history.slice(-19), draft]); setDraft(next)
+  const applyEdit = (update: (ball: Ball) => Ball) => {
+    if (!editingId) { setNewDraft(update); return }
+    setGame(value => ({ ...value, collection: value.collection.map(ball => ball.id === editingId ? update(ball) : ball) }))
+  }
+  const rememberDraft = () => setPast(history => [...history.slice(-19), draft])
+  const change = (update: (ball: Ball) => Ball) => {
+    rememberDraft(); applyEdit(update)
   }
   const choose = (code: Code) => {
-    if (draft.code !== code) change({ ...draft, code })
+    if (draft.code !== code) change(ball => ({ ...ball, code }))
     setVoiceUnavailable(null)
     pronounce(code, game.voice, () => setVoiceUnavailable(code))
   }
@@ -126,15 +140,22 @@ function App() {
   }
   const add = (kind: Item) => {
     if (draft.accessories.length >= 20) return setNotice('Шарик уже очень нарядный!')
-    const part = accessory(kind), copies = draft.accessories.filter(item => item.kind === kind).length
-    if (copies) { part.x += (copies % 3 - 1) * 12 - 6; part.y += 5 * (copies % 3) }
-    change({ ...draft, accessories: [...draft.accessories, part] }); setSelectedProp(part.id); chime(game.sounds)
+    const part = accessory(kind)
+    change(ball => {
+      if (ball.accessories.length >= 20) return ball
+      const copies = ball.accessories.filter(item => item.kind === kind).length
+      const placed = copies ? { ...part, x: part.x + (copies % 3 - 1) * 12 - 6, y: part.y + 5 * (copies % 3) } : part
+      return { ...ball, accessories: [...ball.accessories, placed] }
+    })
+    setSelectedProp(part.id); chime(game.sounds)
   }
-  const editProp = (id: string, patch: Partial<Accessory>) =>
-    change({ ...draft, accessories: draft.accessories.map(part => part.id === id ? { ...part, ...patch } : part) })
+  const editProp = (id: string, patch: Partial<Accessory>, remember = true) => {
+    if (remember) rememberDraft()
+    applyEdit(ball => ({ ...ball, accessories: ball.accessories.map(part => part.id === id ? { ...part, ...patch } : part) }))
+  }
   const undo = () => {
     if (!past.length) return
-    setDraft(past[past.length - 1]); setPast(history => history.slice(0, -1)); setSelectedProp(null)
+    applyEdit(() => past[past.length - 1]); setPast(history => history.slice(0, -1)); setSelectedProp(null)
   }
   const watch = () => {
     timers.current.forEach(clearTimeout)
@@ -146,11 +167,6 @@ function App() {
     ]
   }
   const done = () => {
-    if (editingId) {
-      setGame(value => ({ ...value, collection: value.collection.map(ball => ball.id === editingId ? draft : ball) }))
-      setActor(game.actors.find(item => item.ballId === editingId)?.id ?? null)
-      chime(game.sounds, true); resetDraft(); go('park'); return
-    }
     const next = setGame(value => addToStage(value, draft, true))
     setActor(next.actors[next.actors.length - 1]?.id ?? null)
     chime(game.sounds, true); resetDraft(); go('park')
@@ -226,8 +242,8 @@ function App() {
           <div className="preview-top"><span>ТВОЙ ШАРИК</span>{iconButton('Отменить последнее изменение', Undo2, undo, !past.length)}</div>
           <div className="preview-canvas"><EditorCanvas ball={draft} look={look} editing={{
             selected: selectedProp, select: setSelectedProp, move: (id: string, x: number, y: number) => editProp(id, { x, y }),
-            startPinch: (id: string) => { setSelectedProp(id); setPast(history => [...history.slice(-19), draft]) },
-            transform: (id: string, patch: { scale: number; angle: number }) => setDraft(ball => ({ ...ball, accessories: ball.accessories.map(part => part.id === id ? { ...part, ...patch } : part) })),
+            startPinch: (id: string) => { setSelectedProp(id); rememberDraft() },
+            transform: (id, patch) => editProp(id, patch, false),
           }} /></div>
           <div className="ball-name"><img src={flagOf(draft.code)} alt="" /><strong>{nameOf(draft.code)}</strong>
             <button className={`icon-button voice-retry ${voiceUnavailable === draft.code ? 'unavailable' : ''}`}
@@ -235,7 +251,7 @@ function App() {
               title={voiceUnavailable === draft.code ? 'Запись недоступна — попробовать снова' : 'Повторить название страны'}
               onClick={repeatName} disabled={!game.voice}>{voiceUnavailable === draft.code ? <VolumeX /> : <Volume2 />}</button></div>
           <div className="preview-buttons"><button className="secondary-button icon-action" aria-label="Посмотреть вокруг" title="Посмотреть вокруг" onClick={watch}><Eye /></button>
-            <button className="primary-button done" onClick={done}><Check />{editingId ? 'Сохранить' : 'Готово'}</button></div>
+            {!editingId && <button className="primary-button done" onClick={done}><Check />Готово</button>}</div>
         </section>
         <section className="toolbox">
           <div className="tabs" aria-label="Настройки шарика">{tabs.map(([id, label, Icon]) =>
@@ -251,12 +267,12 @@ function App() {
           <div className="catalog" hidden={tab !== 'faces'}>
             <h2>Глаза</h2>
             <div className="prop-grid feature-grid">{(Object.keys(eyeStyles) as Eyes[]).map(eyes =>
-              <button key={eyes} aria-pressed={(draft.eyes ?? expressions[draft.face].eyes) === eyes} onClick={() => change({ ...draft, eyes })}>
+              <button key={eyes} aria-pressed={(draft.eyes ?? expressions[draft.face].eyes) === eyes} onClick={() => change(ball => ({ ...ball, eyes }))}>
                 <svg viewBox={eyes === 'streams' ? '-42 -21 84 63' : '-42 -28 84 47'} aria-hidden="true" dangerouslySetInnerHTML={{ __html: eyeArt(eyes) }}/><span>{eyeStyles[eyes]}</span>
               </button>)}</div>
             <h2>Рот</h2>
             <div className="prop-grid feature-grid">{(Object.keys(mouthStyles) as Mouth[]).map(mouth =>
-              <button key={mouth} aria-pressed={(draft.mouth ?? expressions[draft.face].mouth) === mouth} onClick={() => change({ ...draft, mouth })}>
+              <button key={mouth} aria-pressed={(draft.mouth ?? expressions[draft.face].mouth) === mouth} onClick={() => change(ball => ({ ...ball, mouth }))}>
                 <svg viewBox="-25 -16 50 32" aria-hidden="true" dangerouslySetInnerHTML={{ __html: mouth === 'none' ? '<circle r="9" fill="none" stroke="#aaa2b9"/><path d="m-6 6 12-12" stroke="#aaa2b9"/>' : mouthArt(mouth) }}/><span>{mouthStyles[mouth]}</span>
               </button>)}</div></div>
           <div className="catalog" hidden={tab !== 'items'}><h2>Наряди шарика</h2><p>Предмет можно двигать прямо на шарике.</p>
@@ -269,7 +285,7 @@ function App() {
               {iconButton('Уменьшить предмет', Minus, () => editProp(currentProp.id, { scale: clamp(currentProp.scale - .15, .4, 1.8) }))}
               {iconButton('Увеличить предмет', Plus, () => editProp(currentProp.id, { scale: clamp(currentProp.scale + .15, .4, 1.8) }))}
               {iconButton('Повернуть предмет', RotateCw, () => editProp(currentProp.id, { angle: (currentProp.angle + 15) % 360 }))}
-              {iconButton('Снять предмет', Trash2, () => { change({ ...draft, accessories: draft.accessories.filter(part => part.id !== currentProp.id) }); setSelectedProp(null) })}
+              {iconButton('Снять предмет', Trash2, () => { change(ball => ({ ...ball, accessories: ball.accessories.filter(part => part.id !== currentProp.id) })); setSelectedProp(null) })}
             </div>}
           </div>
         </section>
@@ -283,6 +299,11 @@ function App() {
     <Suspense fallback={<div className="loading">Готовим сцену…</div>}>
       <section className="stage-shell" aria-label={backgroundLabels[game.backgroundId]}>
         <ParkCanvas actors={displayActors} balls={displayBalls} selected={actor} target={!!targetAction}
+          bedroom={game.backgroundId === 'bedroom' ? {
+            night: game.bedroomNight, lampOn: game.bedroomLampOn,
+            toggleSky: () => setGame(value => ({ ...value, bedroomNight: !value.bedroomNight })),
+            toggleLamp: () => setGame(value => value.bedroomNight ? { ...value, bedroomLampOn: !value.bedroomLampOn } : value),
+          } : undefined}
           performance={performance} finish={finishPerformance} tap={tapActor}
           clear={() => { setActor(null); setTargetAction(null); setPerformance(null) }}
           grab={(id: string) => { setActor(id); setTargetAction(null); setPerformance(null) }}

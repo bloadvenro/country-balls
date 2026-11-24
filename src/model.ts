@@ -30,6 +30,8 @@ export type Game = {
   music: boolean
   sounds: boolean
   backgroundId: BackgroundId
+  bedroomNight: boolean
+  bedroomLampOn: boolean
 }
 
 export const id = () => crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`
@@ -53,6 +55,7 @@ export function initialGame(): Game {
     version: 1, collection: [...starterBalls],
     actors: [makeActor('friend-jp', .32, .62), makeActor('friend-br', .68, .62)],
     voice: true, sounds: true, music: true, backgroundId: 'park',
+    bedroomNight: true, bedroomLampOn: true,
   }
 }
 
@@ -116,6 +119,7 @@ export function loadGame(fallback: Game): Game {
     voice: old.voice !== false, sounds: old.sounds !== false,
     music: old.music ?? (old.sounds !== false),
     backgroundId: backgrounds.includes(old.backgroundId as BackgroundId) ? old.backgroundId as BackgroundId : 'park',
+    bedroomNight: old.bedroomNight !== false, bedroomLampOn: old.bedroomLampOn !== false,
   }
 }
 
