@@ -17,12 +17,12 @@ type PinchTarget = { scale: number; angle: number }
 function usePinch(container: React.RefObject<HTMLDivElement|null>, stage: React.RefObject<Konva.Stage|null>,
   find: (id:string)=>PinchTarget|undefined, select: (id:string)=>void,
   apply: (id:string, patch:PinchTarget)=>void, limits: readonly [number,number]) {
+  const pinching = useRef(false)
   const latest = useRef({find,select,apply,limits})
   latest.current = {find,select,apply,limits}
   useEffect(() => {
     const el = container.current!
     let gesture: { id:string; base:PinchTarget; dist:number; angle:number } | null = null
-    let suppress = false
     const geometry = (a:Touch,b:Touch) => ({dist:Math.hypot(a.clientX-b.clientX,a.clientY-b.clientY),angle:Math.atan2(b.clientY-a.clientY,b.clientX-a.clientX)*180/Math.PI})
     const block = (e:TouchEvent) => { if (e.cancelable) e.preventDefault(); e.stopPropagation() }
     const start = (e:TouchEvent) => {
@@ -34,26 +34,27 @@ function usePinch(container: React.RefObject<HTMLDivElement|null>, stage: React.
       const base = latest.current.find(first.id()), g = geometry(a,b)
       if (!base || g.dist < 4) return
       if (first.isDragging()) first.stopDrag()
-      latest.current.select(first.id()); gesture = {id:first.id(),base:{...base},...g}; suppress=true; block(e)
+      latest.current.select(first.id()); gesture = {id:first.id(),base:{...base},...g}; pinching.current=true; block(e)
     }
     const move = (e:TouchEvent) => {
-      if (!suppress) return
+      if (!pinching.current) return
       block(e)
       if (!gesture || e.touches.length!==2) return
       const g = geometry(e.touches[0],e.touches[1]), {id,base,dist,angle} = gesture
       latest.current.apply(id,{scale:clamp(base.scale*g.dist/dist,...latest.current.limits),angle:base.angle+g.angle-angle})
     }
     const end = (e:TouchEvent) => {
-      if (!suppress) return
+      if (!pinching.current) return
       gesture=null
       if (e.touches.length) block(e)
-      else suppress=false
+      else pinching.current=false
     }
     const opts = {capture:true,passive:false}
     el.addEventListener('touchstart',start,opts); el.addEventListener('touchmove',move,opts)
     el.addEventListener('touchend',end,opts); el.addEventListener('touchcancel',end,opts)
     return () => { el.removeEventListener('touchstart',start,true); el.removeEventListener('touchmove',move,true); el.removeEventListener('touchend',end,true); el.removeEventListener('touchcancel',end,true) }
   },[container,stage])
+  return pinching
 }
 
 const bitmaps = new Map<string, HTMLImageElement>()
@@ -245,14 +246,45 @@ type ParkProps = {
   toggleScenery: (key: SceneryFlag) => void
   bedroom?: BedroomLighting
   actors: Actor[]; balls: Ball[]; selected: string | null; target: boolean; performance: Performance | null
+  openEditor: (id: string) => void
   tap: (id: string) => void; clear: () => void; grab: (id: string) => void
   move: (id: string, x: number, y: number) => void; finish: () => void
   transform:(id:string,p:PinchTarget)=>void
 }
-export function ParkCanvas({ actors, balls, selected, target, performance: show, tap, clear, grab, move, finish,transform, scene, bedroom, scenery, toggleScenery }: ParkProps) {
+export function ParkCanvas({ actors, balls, selected, target, performance: show, tap, openEditor, clear, grab, move, finish,transform, scene, bedroom, scenery, toggleScenery }: ParkProps) {
   const { ref, width, height } = useFrame()
   const stage = useRef<Konva.Stage>(null), reduced = useReducedMotion()
-  usePinch(ref,stage,id=>actors.find(a=>a.id===id),grab,transform,actorScaleLimits)
+  const pinching = usePinch(ref,stage,id=>actors.find(a=>a.id===id),grab,transform,actorScaleLimits)
+  const lastTap = useRef<{ id: string; time: number; x: number; y: number; kind: string } | null>(null)
+  // Use one pointer stream: a compatibility mouse click after a tap would cancel a just-started pair.
+  const activateActor = (id: string, event: PointerEvent) => {
+    if (event.button !== 0 || !event.isPrimary || pinching.current) {
+      lastTap.current = null
+      return
+    }
+    const previous = lastTap.current
+    lastTap.current = null
+    if (!target && !show) {
+      if (previous?.id === id && previous.kind === event.pointerType &&
+          event.timeStamp - previous.time < Konva.dblClickWindow &&
+          Math.hypot(event.clientX - previous.x, event.clientY - previous.y) <= 24) {
+        openEditor(id)
+        return
+      }
+      lastTap.current = { id, time: event.timeStamp, x: event.clientX, y: event.clientY, kind: event.pointerType }
+    }
+    tap(id)
+  }
+  useEffect(() => {
+    lastTap.current = null
+  }, [scene, target, show])
+  useEffect(() => {
+    const resetOutside = (event: PointerEvent) => {
+      if (!event.isPrimary || !ref.current?.contains(event.target as Node)) lastTap.current = null
+    }
+    document.addEventListener('pointerdown', resetOutside, true)
+    return () => document.removeEventListener('pointerdown', resetOutside, true)
+  }, [ref])
   const zoom = Math.min(width/580,height/330,1.35)
   const [phase, setPhase] = useState(0), [look, setLook] = useState(0), [blink,setBlink] = useState(false)
   const [dragging, setDragging] = useState<string[]>([])
@@ -305,10 +337,17 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
         <SceneArt scene={scene}/>
       </div>
     )}
-    <Stage ref={stage} width={width} height={height} onClick={e => { if (e.target === e.target.getStage()) clear() }} onTap={e => { if (e.target === e.target.getStage()) clear() }}>
+    <Stage ref={stage} width={width} height={height} onPointerClick={e => {
+      if (e.target === e.target.getStage() && e.evt.button === 0 && e.evt.isPrimary && !pinching.current) {
+        lastTap.current = null
+        clear()
+      }
+    }}>
       <Layer>
       {switches.map(control => <Rect key={control.key} {...control.box} fill="transparent"
-        onPointerClick={e => { if (e.evt.button === 0) control.toggle() }}/>)}
+        onPointerClick={e => {
+          if (e.evt.button === 0) { lastTap.current = null; control.toggle() }
+        }}/>)}
       {actors.map((a,i) => {
         const ball = balls.find(b => b.id === a.ballId)
         if (!ball) return null
@@ -332,12 +371,12 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
           : key === 'bump' ? 'surprise' : key === 'tongue' ? 'cheeky' : key === 'reconcile' && phase < .42 ? 'angry'
           : participant && ['friend','reconcile','flower','hug','jump','greet'].includes(key!) ? 'happy' : undefined
         return <Group key={a.id} id={a.id} name="gesture-object" x={baseX+motion.x} y={baseY+motion.y-motion.jump}
-          scaleX={s} scaleY={s} draggable
-          onClick={() => tap(a.id)} onTap={() => tap(a.id)}
-          onDragStart={e => { e.currentTarget.position({x:baseX,y:baseY}); setDragging(ids => [...ids, a.id]); grab(a.id) }}
+          scaleX={s} scaleY={s} draggable dragDistance={10}
+          onPointerClick={e => activateActor(a.id, e.evt)}
+          onDragStart={e => { lastTap.current = null; e.currentTarget.position({x:baseX,y:baseY}); setDragging(ids => [...ids, a.id]); grab(a.id) }}
           dragBoundFunc={pos => ({x:clamp(pos.x,edgeX,width-edgeX),y:clamp(pos.y,edgeY,height-edgeY)})}
           onDragEnd={e => { setDragging(ids => ids.filter(id => id !== a.id)); move(a.id,e.currentTarget.x()/width,e.currentTarget.y()/height) }}>
-          <Circle radius={72} fill="transparent"/>
+          <Circle radius={Math.max(72, 24 / s)} fill="transparent"/>
           <Ellipse y={65+motion.jump} radiusX={53} radiusY={7} fill="#305c49" opacity={.2} listening={false}/>
           {(active || eligible) && <Circle radius={70} stroke={eligible ? '#6040b8' : '#fff'} shadowColor="#7960b7" shadowBlur={3} strokeWidth={eligible ? 4 : 3} dash={eligible ? [8,5] : undefined} listening={false}/>}
           <Group rotation={a.angle+motion.rotation} scaleX={motion.scaleX} scaleY={motion.scaleY} listening={false}>

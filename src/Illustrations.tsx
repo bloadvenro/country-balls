@@ -1,8 +1,8 @@
 import { useId } from 'react'
-import { accessoryArt, faceAccessoryShift, faceArt, faceX, glaze, isBehindProp } from './art'
+import { accessoryArt, eyeArt, faceAccessoryShift, faceArt, faceX, glaze, mouthArt, isBehindProp } from './art'
 import { type Ball } from './model'
 import { useBallFlag } from './ballFlag'
-import type { Face, Item } from './toys'
+import type { Eyes, Face, Item, Mouth } from './toys'
 
 
 export function BallDrawing({ ball, look = 0, face }: { ball: Ball; look?: number; face?: Face }) {
@@ -28,5 +28,16 @@ export function PropIcon({ kind }: { kind: Item }) {
   return <svg viewBox={kind === 'wings' ? '-104 -56 208 112' : '-60 -58 120 116'} aria-hidden="true"><g dangerouslySetInnerHTML={{ __html: accessoryArt[kind] }}/></svg>
 }
 export function FaceIcon({ face }: { face: Face }) {
-  return <svg viewBox="-48 -40 96 82" aria-hidden="true"><ellipse rx="43" ry="36" fill="#ffdf97" stroke="#29263b" strokeWidth="2"/><g dangerouslySetInnerHTML={{ __html: faceArt(face) }}/></svg>
+  return <svg viewBox={face === 'queasy' ? '-48 -40 96 90' : '-48 -40 96 82'} aria-hidden="true"><ellipse rx="43" ry="36" fill="#ffdf97" stroke="#29263b" strokeWidth="2"/><g dangerouslySetInnerHTML={{ __html: faceArt(face) }}/></svg>
+}
+
+export function EyeIcon({ eyes }: { eyes: Eyes }) {
+  return <svg viewBox={eyes === 'streams' ? '-42 -21 84 63' : '-42 -28 84 47'} aria-hidden="true"
+    dangerouslySetInnerHTML={{ __html: eyeArt(eyes) }}/>
+}
+
+export function MouthIcon({ mouth }: { mouth: Mouth }) {
+  const empty = '<circle r="9" fill="none" stroke="#aaa2b9"/><path d="m-6 6 12-12" stroke="#aaa2b9"/>'
+  return <svg viewBox={mouth === 'greenDrip' ? '-25 -10 50 42' : '-25 -16 50 32'} aria-hidden="true"
+    dangerouslySetInnerHTML={{ __html: mouth === 'none' ? empty : mouthArt(mouth) }}/>
 }

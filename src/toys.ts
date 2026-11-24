@@ -10,6 +10,7 @@ export const faces = {
   sobbing: 'Слёзы ручьём',
   angry: 'Сердитая',
   straining: 'Тужится',
+  queasy: 'Буэээ',
   shy: 'Смущение',
   cheeky: 'Озорная',
   worried: 'Встревоженная',
@@ -87,7 +88,7 @@ export const mouthStyles = {
   fang: 'Клычок', pout: 'Надутые губки', beam: 'До ушей', whistle: 'Свисток',
   none: 'Без рта', smile: 'Улыбка', laugh: 'Хохот', tongue: 'Язычок',
   cat: 'Кошачий', gasp: 'Удивление', breathing: 'Сопит', frown: 'Хмурый', zigzag: 'Зигзаг',
-  gritted: 'Стиснутые зубки',
+  gritted: 'Стиснутые зубки', greenDrip: 'Зелёная струйка',
 } as const
 export type Eyes = keyof typeof eyeStyles
 export type Mouth = keyof typeof mouthStyles
@@ -99,6 +100,7 @@ export const expressions: Record<Face, { eyes: Eyes; mouth: Mouth }> = {
   teary: { eyes: 'tears', mouth: 'frown' }, sobbing: { eyes: 'streams', mouth: 'gasp' },
   angry: { eyes: 'stern', mouth: 'zigzag' }, shy: { eyes: 'dots', mouth: 'smile' },
   straining: { eyes: 'squeeze', mouth: 'gritted' },
+  queasy: { eyes: 'droop', mouth: 'greenDrip' },
   cheeky: { eyes: 'wink', mouth: 'tongue' }, worried: { eyes: 'wide', mouth: 'zigzag' },
   adoring: { eyes: 'hearts', mouth: 'cat' }, dazzled: { eyes: 'shimmer', mouth: 'beam' },
   dizzy: { eyes: 'spiral', mouth: 'gasp' },

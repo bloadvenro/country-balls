@@ -5,9 +5,9 @@ import {
   FlipHorizontal2, Check, ChevronLeft, Eye, Flag, Heart, Maximize2, Minimize2, Minus, Music2, Pencil, Plus, RotateCw,
   Settings2, Sparkles, Trash2, Undo2, UserRound, UsersRound, Volume2, VolumeX, WandSparkles, X,
 } from 'lucide-react'
-import { eyeArt, mouthArt } from './art'
+import { StageEditor } from './StageEditor'
 import { expressions, eyeStyles, mouthStyles, type Eyes, type Mouth } from './toys'
-import { BallIcon, FaceIcon, PropIcon } from './Illustrations'
+import { BallIcon, EyeIcon, FaceIcon, MouthIcon, PropIcon } from './Illustrations'
 import { actions, soundAction, type ActionId, type Performance } from './actions'
 import { chime, pronounce, stopVoice } from './audio'
 import {
@@ -35,6 +35,7 @@ function App() {
   const [past, setPast] = useState<Ball[]>([])
   const [look, setLook] = useState(0)
   const [actor, setActor] = useState<string | null>(null)
+  const [quickActor, setQuickActor] = useState<string | null>(null)
   const [targetAction, setTargetAction] = useState<ActionId | null>(null)
   const [performance, setPerformance] = useState<Performance | null>(null)
   const [actorFaces, setActorFaces] = useState<Record<string, Face>>({})
@@ -52,6 +53,7 @@ function App() {
   const draft = editingBall ?? newDraft
   const currentActor = game.actors.find(item => item.id === actor)
   const currentBall = balls.find(ball => ball.id === currentActor?.ballId)
+  const quickOpen = !!currentActor && quickActor === currentActor.id
   const currentProp = draft.accessories.find(part => part.id === selectedProp)
   const finishPerformance = useCallback(() => setPerformance(null), [])
   const displayBalls = game.actors.map(instance => {
@@ -62,7 +64,7 @@ function App() {
 
   useEffect(() => {
     const hash = () => {
-      setPage(route()); setPanel(null); setTargetAction(null); setPerformance(null); setVoiceUnavailable(null); stopVoice()
+      setPage(route()); setQuickActor(null); setPanel(null); setTargetAction(null); setPerformance(null); setVoiceUnavailable(null); stopVoice()
     }
     const hidden = () => { if (document.hidden) stopVoice() }
     window.addEventListener('hashchange', hash)
@@ -77,7 +79,7 @@ function App() {
   }, [])
   useEffect(() => {
     const escape = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape' || deleteDialog.current?.open) return
+      if (event.key !== 'Escape' || deleteDialog.current?.open || quickOpen) return
       if (panel) {
         setPanel(null); setConfirmReset(false); return
       }
@@ -88,7 +90,7 @@ function App() {
     }
     document.addEventListener('keydown', escape)
     return () => document.removeEventListener('keydown', escape)
-  }, [panel, performance, targetAction])
+  }, [panel, performance, targetAction, quickOpen])
   useEffect(() => {
     if (!fullscreenAvailable) return
     const update = () => setIsFullscreen(!!document.fullscreenElement)
@@ -136,9 +138,12 @@ function App() {
     setActor(null)
     stopVoice()
   }
+  const changeDesign = (id: string, update: (ball: Ball) => Ball) => {
+    setGame(value => ({ ...value, collection: value.collection.map(ball => ball.id === id ? update(ball) : ball) }))
+  }
   const applyEdit = (update: (ball: Ball) => Ball) => {
     if (!editingId) { setNewDraft(update); return }
-    setGame(value => ({ ...value, collection: value.collection.map(ball => ball.id === editingId ? update(ball) : ball) }))
+    changeDesign(editingId, update)
   }
   const rememberDraft = () => setPast(history => [...history.slice(-19), draft])
   const change = (update: (ball: Ball) => Ball) => {
@@ -219,6 +224,41 @@ function App() {
     setPerformance(null); setTargetAction(null)
     setGame(value => ({ ...value, actors: value.actors.map(item => item.id === actor ? { ...item, ...patch } : item) }))
   }
+  const openStageEditor = (id: string) => {
+    setActor(id); setQuickActor(id); setTargetAction(null); setPerformance(null); setPanel(null)
+  }
+  const resizeActor = (step: number) => {
+    if (currentActor) transformActor({ scale: clamp(currentActor.scale + step, ...actorScaleLimits) })
+  }
+  const rotateActor = () => {
+    if (currentActor) transformActor({ angle: (currentActor.angle + 15) % 360 })
+  }
+  const chooseMood = (face: Face) => {
+    if (!actor) return
+    setActorFaces(value => ({ ...value, [actor]: face })); setPerformance(null); setTargetAction(null)
+  }
+  const removeStageActor = () => {
+    if (!actor) return
+    setGame(value => ({ ...value, actors: value.actors.filter(item => item.id !== actor) }))
+    setActorFaces(value => { const next = { ...value }; delete next[actor]; return next })
+    setQuickActor(null); setActor(null); setPerformance(null); setTargetAction(null)
+  }
+  const toggleStageItem = (kind: Item) => {
+    if (!currentBall) return
+    changeDesign(currentBall.id, ball => {
+      if (ball.accessories.some(part => part.kind === kind)) {
+        return { ...ball, accessories: ball.accessories.filter(part => part.kind !== kind) }
+      }
+      if (ball.accessories.length >= 20) return ball
+      return { ...ball, accessories: [...ball.accessories, accessory(kind)] }
+    })
+  }
+  const chooseStageFeature = (patch: Pick<Ball, 'eyes' | 'mouth'>) => {
+    if (!currentBall || !actor) return
+    const mood = actorFaces[actor]
+    changeDesign(currentBall.id, ball => ({ ...ball, ...(mood ? expressions[mood] : {}), ...patch }))
+    setActorFaces(value => { const next = { ...value }; delete next[actor]; return next })
+  }
   const toggleFullscreen = () => {
     if (!fullscreenAvailable) return
     try {
@@ -292,12 +332,12 @@ function App() {
             <h2>Глаза</h2>
             <div className="prop-grid feature-grid">{(Object.keys(eyeStyles) as Eyes[]).map(eyes =>
               <button key={eyes} aria-pressed={(draft.eyes ?? expressions[draft.face].eyes) === eyes} onClick={() => change(ball => ({ ...ball, eyes }))}>
-                <svg viewBox={eyes === 'streams' ? '-42 -21 84 63' : '-42 -28 84 47'} aria-hidden="true" dangerouslySetInnerHTML={{ __html: eyeArt(eyes) }}/><span>{eyeStyles[eyes]}</span>
+                <EyeIcon eyes={eyes}/><span>{eyeStyles[eyes]}</span>
               </button>)}</div>
             <h2>Рот</h2>
             <div className="prop-grid feature-grid">{(Object.keys(mouthStyles) as Mouth[]).map(mouth =>
               <button key={mouth} aria-pressed={(draft.mouth ?? expressions[draft.face].mouth) === mouth} onClick={() => change(ball => ({ ...ball, mouth }))}>
-                <svg viewBox="-25 -16 50 32" aria-hidden="true" dangerouslySetInnerHTML={{ __html: mouth === 'none' ? '<circle r="9" fill="none" stroke="#aaa2b9"/><path d="m-6 6 12-12" stroke="#aaa2b9"/>' : mouthArt(mouth) }}/><span>{mouthStyles[mouth]}</span>
+                <MouthIcon mouth={mouth}/><span>{mouthStyles[mouth]}</span>
               </button>)}</div></div>
           <div className="catalog" hidden={tab !== 'items'}><h2>Наряди шарика</h2><p>Предмет можно двигать прямо на шарике.</p>
             {!!draft.accessories.length && <div className="worn"><h3>На шарике</h3><div className="worn-list">{draft.accessories.map((part, index) =>
@@ -334,7 +374,7 @@ function App() {
             toggleSky: () => setGame(value => ({ ...value, bedroomNight: !value.bedroomNight })),
             toggleLamp: () => setGame(value => value.bedroomNight ? { ...value, bedroomLampOn: !value.bedroomLampOn } : value),
           } : undefined}
-          performance={performance} finish={finishPerformance} tap={tapActor}
+          performance={performance} finish={finishPerformance} tap={tapActor} openEditor={openStageEditor}
           clear={() => { setActor(null); setTargetAction(null); setPerformance(null) }}
           grab={(id: string) => { setActor(id); setTargetAction(null); setPerformance(null) }}
           move={(id: string, x: number, y: number) => setGame(value => ({ ...value, actors: value.actors.map(item => item.id === id ? { ...item, x, y } : item) }))}
@@ -383,11 +423,21 @@ function App() {
     <div className="stage-keyboard">
       {game.actors.map((instance, index) => <button key={instance.id}
         style={{ left: `${instance.x*100}%`, top: `${instance.y*100}%` }}
-        aria-pressed={actor === instance.id} onClick={() => tapActor(instance.id)}>
+        aria-pressed={actor === instance.id}
+        onClick={event => {
+          if (event.detail === 0 && actor === instance.id && !targetAction) openStageEditor(instance.id)
+          else tapActor(instance.id)
+        }}>
         {targetAction ? 'Выбрать партнёра' : 'Выбрать героя'}: {nameOf(balls.find(ball => ball.id === instance.ballId)!.code)}, {index+1}
       </button>)}
     </div>
-    {currentActor && <aside className="actor-bar glass" aria-label={`Действия: ${currentBall ? nameOf(currentBall.code) : 'шарик'}`}>
+    {quickOpen && currentBall && <StageEditor key={currentActor.id} actor={currentActor} ball={currentBall}
+      mood={actorFaces[currentActor.id]} canPair={game.actors.length > 1} close={() => setQuickActor(null)}
+      toggleItem={toggleStageItem} chooseFeature={chooseStageFeature}
+      chooseFlag={code => changeDesign(currentBall.id, ball => ({ ...ball, code }))}
+      chooseMood={chooseMood} run={id => { setQuickActor(null); runAction(id) }}
+      remove={removeStageActor} rotate={rotateActor} resize={resizeActor}/>}
+    {currentActor && !quickOpen && <aside className="actor-bar glass" aria-label={`Действия: ${currentBall ? nameOf(currentBall.code) : 'шарик'}`}>
       <div className="selected-ball"><BallIcon ball={currentBall!} /></div>
       <div className="action-groups">
         {(Object.entries(actions) as [ActionId, typeof actions[ActionId]][]).map(([id, action]) => {
@@ -398,18 +448,14 @@ function App() {
       </div>
       <div className="mood-tools" aria-label="Настроение этого героя">{(Object.entries(faces) as [Face, string][]).map(([face, label]) =>
         <button key={face} aria-label={`Настроение: ${label}`} title={label} aria-pressed={(actorFaces[currentActor.id] ?? currentBall?.face) === face}
-          onClick={() => { setActorFaces(value => ({ ...value, [currentActor.id]: face })); setPerformance(null); setTargetAction(null) }}><FaceIcon face={face} /></button>)}</div>
+          onClick={() => chooseMood(face)}><FaceIcon face={face} /></button>)}</div>
       <div className="actor-transform">
-        {iconButton('Уменьшить шарика', Minus, () => transformActor({ scale: clamp(currentActor.scale - .15, ...actorScaleLimits) }))}
-        {iconButton('Увеличить шарика', Plus, () => transformActor({ scale: clamp(currentActor.scale + .15, ...actorScaleLimits) }))}
-        {iconButton('Повернуть шарика', RotateCw, () => transformActor({ angle: (currentActor.angle + 15) % 360 }))}
+        {iconButton('Уменьшить шарика', Minus, () => resizeActor(-.15))}
+        {iconButton('Увеличить шарика', Plus, () => resizeActor(.15))}
+        {iconButton('Повернуть шарика', RotateCw, rotateActor)}
         {iconButton(currentActor.facing === -1 ? 'Лицо вправо' : 'Лицо влево', FlipHorizontal2, () =>
           setGame(value => ({ ...value, actors: value.actors.map(item => item.id === actor ? { ...item, facing: item.facing === -1 ? 1 : -1 } : item) })))}
-        {iconButton('Убрать шарика со сцены', Trash2, () => {
-          setGame(value => ({ ...value, actors: value.actors.filter(item => item.id !== actor) }))
-          setActorFaces(value => { const next = { ...value }; if (actor) delete next[actor]; return next })
-          setActor(null); setPerformance(null); setTargetAction(null)
-        })}
+        {iconButton('Убрать шарика со сцены', Trash2, removeStageActor)}
       </div>
     </aside>}
     {targetAction && <div className="target-hint" role="status">{actions[targetAction].label} · Выбери подсвеченного друга

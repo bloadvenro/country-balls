@@ -188,6 +188,7 @@ const mouths: Record<Mouth,string> = {
   breathing: '<ellipse cy="2" rx="5.4" ry="3.8" fill="#5d3e50"/><path d="M-2.5 3.5q2.5-1.2 5 .1" fill="none" stroke="#e9a1ab" stroke-width="1.5"/>',
   frown: '<path d="M-10 4Q1-7 12 3" fill="none"/>',
   zigzag: '<path d="m-12 3 5-6 5 6 5-6 6 4" fill="none"/>',
+  greenDrip: '<ellipse cy="-1" rx="10" ry="6.5" fill="#613653"/><path d="M-7-2q4-4 9-1t5 0q3 3 1 7t1 8q1 4-2 5-3 1-4-3l-1-4q-1-2-2 0l-1 10q-1 5-4 3-2-1-1-5l1-10q0-3-2-4-3-3 0-6Z" fill="#9ed44c" stroke="#497a43" stroke-width="1.8"/><path d="M-3 1q2-2 4 0" fill="none" stroke="#e7ffa2" stroke-width="1.6"/><path d="M7 21q5 6 1 8-6 1-1-8Z" fill="#9ed44c" stroke="#497a43" stroke-width="1.5"/>',
   gritted: '<path d="M-12 0q1-7 8-6l11 1q6 1 5 8-1 5-6 4l-12-1q-6 0-6-6Z" fill="#fff9e7"/><path d="m-10 0 20 2m-13-6v4m7 2v4" stroke="#937b79" stroke-width="1.4" fill="none"/>',
 }
 export function mouthArt(style: Mouth) {
