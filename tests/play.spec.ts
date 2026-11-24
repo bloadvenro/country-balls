@@ -66,6 +66,45 @@ test('парк: независимые копии друзей, клавиату
   await expect(page.getByRole('heading', { name: 'Сцена готова!' })).toBeVisible()
 })
 
+test.describe('выбор места', () => {
+  test.use({ hasTouch: true, viewport: { width: 1100, height: 820 } })
+
+  test('касание шарика или щелчок по фону закрывает панель и сохраняет сцену', async ({ page }) => {
+    await page.goto('/')
+    const canvas = page.locator('.park-canvas canvas')
+    await expect(canvas).toBeVisible()
+    const before = await saved(page)
+    const picker = page.getByRole('complementary', { name: 'Выбрать место' })
+    const open = page.getByRole('button', { name: 'Место', exact: true })
+    const hero = page.getByRole('button', { name: 'Выбрать героя: Япония, 1' })
+    const x = Math.round(before.actors[0].x * 1100)
+    const y = Math.round(before.actors[0].y * 820)
+
+    await open.tap()
+    await picker.getByText('Куда отправимся?').tap()
+    await expect(picker).toBeVisible()
+    await page.touchscreen.tap(x, y)
+    await expect(picker).toBeHidden()
+    await expect(hero).toHaveAttribute('aria-pressed', 'false')
+    await expect(page.locator('.park-page')).toHaveAttribute('data-background', before.backgroundId)
+    expect((await saved(page)).actors).toEqual(before.actors)
+
+    await page.touchscreen.tap(x, y)
+    await expect(hero).toHaveAttribute('aria-pressed', 'true')
+    await open.click()
+    await page.mouse.click(80, 250)
+    await expect(picker).toBeHidden()
+    await expect(hero).toHaveAttribute('aria-pressed', 'true')
+    await expect(page.locator('.park-page')).toHaveAttribute('data-background', before.backgroundId)
+
+    await open.tap()
+    await page.getByTestId('background-bathroom').tap()
+    await expect(picker).toBeHidden()
+    await page.reload()
+    await expect(page.locator('.park-page')).toHaveAttribute('data-background', 'bathroom')
+  })
+})
+
 test('старая коллекция объединяется с друзьями и сохраняет правки готового шарика', async ({ page }) => {
   const custom = { id: 'my-japan', code: 'jp', face: 'cheeky', accessories: [] }
   const actor = { id: 'placed-japan', ballId: 'friend-jp', x: .3, y: .7, scale: 1.2, angle: 25 }

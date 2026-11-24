@@ -299,6 +299,8 @@ function App() {
       <button data-testid="open-backgrounds" onClick={() => setPanel(panel === 'backgrounds' ? null : 'backgrounds')} aria-pressed={panel === 'backgrounds'}><Sparkles /><span>Место</span></button>
       <button data-testid="open-workshop" onClick={() => create()}><WandSparkles /><span>Мастерская</span></button>
     </nav>
+    {panel === 'backgrounds' && <button type="button" className="location-backdrop" tabIndex={-1}
+      aria-label="Закрыть выбор места" onClick={() => setPanel(null)} />}
     {panel && <aside className={`floating-panel ${panel}`} aria-label={panel === 'friends' ? 'Добавить друга' : panel === 'backgrounds' ? 'Выбрать место' : 'Настройки'}>
       <div className="panel-head"><strong>{panel === 'friends' ? 'Кто идёт играть?' : panel === 'backgrounds' ? 'Куда отправимся?' : 'Настройки'}</strong>
         {iconButton('Закрыть панель', X, () => setPanel(null))}</div>
