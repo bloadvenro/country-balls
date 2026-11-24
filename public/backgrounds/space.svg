@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+ <defs>
+  <linearGradient id="sky" x2=".35" y2="1"><stop stop-color="#141936"/><stop offset=".54" stop-color="#434179"/><stop offset="1" stop-color="#b283a3"/></linearGradient>
+  <linearGradient id="dust" x2=".2" y2="1"><stop stop-color="#ceb6da"/><stop offset=".38" stop-color="#a899c3"/><stop offset="1" stop-color="#71658e"/></linearGradient>
+  <pattern id="stars" width="243" height="173" patternUnits="userSpaceOnUse"><g fill="#fbf0cf"><circle cx="31" cy="19" r="2"/><circle cx="72" cy="106" r="1.2"/><circle cx="210" cy="87" r="1.7"/><circle cx="142" cy="142" r="2.3"/><circle cx="22" cy="150" r=".9"/></g></pattern>
+  <clipPath id="planet"><circle r="87"/></clipPath>
+  <g id="crater"><ellipse rx="63" ry="12" fill="#e1cee5"/><ellipse cy="-3" rx="61" ry="11" fill="#76698e"/><path d="M-52 0Q0-13 52 0Q0-5-52 0" fill="#635975"/></g>
+  <path id="spark" d="m0-9 2 7 7 2-7 2-2 7-2-7-7-2 7-2Z" fill="#fef5d8"/>
+ </defs>
+ <rect width="1440" height="900" fill="url(#sky)"/><rect width="1440" height="660" fill="url(#stars)"/>
+ <g opacity=".25" fill="none" stroke="#a598ca"><path d="M-80 479Q325 425 613 161T1360-60" stroke-width="18"/><path d="M-80 491Q325 443 624 178T1380-48" stroke-width="4"/></g>
+ <g transform="translate(865 185) rotate(-18)"><ellipse rx="151" ry="34" fill="none" stroke="#e4bd98" stroke-width="11"/>
+ <g clip-path="url(#planet)"><circle r="87" fill="#edac92"/><path d="M-100-40Q-10-16 100-34M-100 10Q10 42 102 15" fill="none" stroke="#cf847e" stroke-width="18"/><path d="M-94-61Q0-35 100-57" fill="none" stroke="#ffcfab" stroke-width="7"/><path d="M36-86Q110-3 10 92H98V-90Z" fill="#765f87" opacity=".27"/></g>
+ <path d="M-151 0A151 34 0 0 0 151 0" fill="none" stroke="#ffe0ae" stroke-width="10"/></g>
+ <circle cx="368" cy="269" r="28" fill="#9acece"/><path d="M367 242q35 28-4 54a28 28 0 0 0 4-54Z" fill="#68a4b3"/>
+ <use href="#spark" x="533" y="143"/><use href="#spark" x="714" y="309"/><use href="#spark" x="1180" y="230"/>
+ <path d="m0 590 135-67 79 18 147-72 94 58 186 37 158-52 111 42 252-94 146 59 132-55v436H0Z" fill="#73698e"/>
+ <path d="M0 589Q345 496 712 570T1440 541V900H0Z" fill="url(#dust)"/>
+ <g opacity=".7"><use href="#crater" transform="translate(258 650) scale(1.2)"/><use href="#crater" transform="translate(904 579) scale(.46)"/><use href="#crater" transform="translate(1190 739) scale(1.5)"/><use href="#crater" transform="translate(637 815)"/><use href="#crater" transform="translate(522 617) scale(.28)"/></g>
+</svg>

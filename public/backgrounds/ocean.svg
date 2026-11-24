@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+ <defs>
+  <linearGradient id="water" x2=".12" y2="1"><stop stop-color="#a1efda"/><stop offset=".32" stop-color="#51c9c6"/><stop offset="1" stop-color="#176f89"/></linearGradient>
+  <linearGradient id="sand" x2=".15" y2="1"><stop stop-color="#fae6ae"/><stop offset="1" stop-color="#d7ad89"/></linearGradient>
+  <g id="kelp" fill="#216f79"><path d="M0 0Q-53-80-21-166q-8 80 21 99 20-67 4-138 43 63 11 166 27-23 34-91Q70-56 19 0Z"/></g>
+  <g id="coral" stroke="#e9827a" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M0 0q-8-58 4-121m-5 87-33-35-3-32m31 44 30-26 4-42m-26 32-19-20v-21" stroke-width="13"/><path d="m-33-70-17-12m75 2 22-18m-45-19 13-16" stroke-width="8"/></g>
+  <g id="fish"><path d="M-21 0Q-1-18 16 0-1 18-21 0Zm34 0 14-12v24Z" fill="#287e99"/><circle cx="-12" cy="-2" r="1.8" fill="#b3e3de"/></g>
+  <g id="bubble" fill="none" stroke="#d8fff2"><circle r="9" opacity=".52"/><path d="M-6-1q0-4 4-5" opacity=".85" stroke-width="2" stroke-linecap="round"/></g>
+ </defs>
+ <rect width="1440" height="900" fill="url(#water)"/>
+ <path d="m394 0-213 557L522 0m163 0L441 685 843 0m267 0L974 481 1211 0" fill="#edfff0" opacity=".17"/>
+ <path d="M0 13q162 33 309 0t301 0 313 0 329 0 225 0" fill="none" stroke="#d6ffee" stroke-width="12" opacity=".64"/>
+ <g opacity=".7"><use href="#fish" x="789" y="212"/><use href="#fish" transform="translate(742 235) scale(.78)"/><use href="#fish" transform="translate(844 241) scale(.84)"/><use href="#fish" transform="translate(800 260) scale(.6)"/></g>
+ <path d="M0 590Q214 455 403 557T800 573Q1227 399 1440 524V900H0Z" fill="#449b9f"/>
+ <g opacity=".72"><use href="#kelp" transform="translate(207 640)"/><use href="#kelp" transform="translate(1207 647) scale(1.25)"/><use href="#kelp" transform="translate(940 601) scale(.47)"/></g>
+ <path d="M0 642Q228 550 504 626T991 628Q1243 539 1440 612V900H0Z" fill="url(#sand)"/>
+ <path d="M-32 745q166-89 357-41m270 70q86 26 177 9m236-107q102-32 192-12" fill="none" stroke="#fff1c8" stroke-width="7" stroke-linecap="round" opacity=".7"/>
+ <use href="#coral" transform="translate(212 730) scale(1.18)"/><use href="#coral" transform="translate(1038 645) scale(.65)"/><use href="#kelp" transform="translate(1305 780) scale(1.4)"/>
+ <g fill="#f49376" stroke="#d87c68" stroke-width="2"><path d="m535 767 6-16 8 13 19 1-13 9 3 15-16-8-14 8 4-15-13-6Z"/></g>
+ <g><use href="#bubble" x="565" y="374"/><use href="#bubble" transform="translate(580 336) scale(.57)"/><use href="#bubble" x="991" y="390"/><use href="#bubble" transform="translate(979 432) scale(.65)"/></g>
+</svg>

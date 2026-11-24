@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+ <defs>
+  <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#778dcc"/><stop offset=".43" stop-color="#b4d4e5"/><stop offset=".68" stop-color="#ffe5d7"/><stop offset="1" stop-color="#c5dfed"/></linearGradient>
+  <linearGradient id="lake" x2=".14" y2="1"><stop stop-color="#88b8d4"/><stop offset=".55" stop-color="#c7e9ed"/><stop offset="1" stop-color="#92b8d5"/></linearGradient>
+  <linearGradient id="light" x2=".24" y2="1"><stop stop-color="#9cf7d3" stop-opacity="0"/><stop offset=".76" stop-color="#c1ffe5" stop-opacity=".7"/><stop offset="1" stop-color="#dbddfd" stop-opacity=".1"/></linearGradient>
+  <g id="pine"><path d="m0-78-24 43h12l-23 36h68L12-35h12Z" fill="#7295b0"/><path d="m0-78-17 30 15-5 12 8Z" fill="#eef7fc"/></g>
+  <g id="shard"><path d="m0 0-17-63 10-40 24 32L15-4Z" fill="#a4deeb"/><path d="m-7-103 10 42-3 61 15-4 2-67Z" fill="#76add3"/><path d="m-17-63 10-40 10 42Z" fill="#e2ffff"/></g>
+ </defs>
+ <rect width="1440" height="900" fill="url(#sky)"/>
+ <path d="M-30 286C191 201 362 34 556 119S826 254 1092 84 1321 51 1470-28v113c-215-62-387 194-616 183S548 114 369 174 82 345-30 351Z" fill="url(#light)"/>
+ <circle cx="866" cy="276" r="49" fill="#fff4d6"/>
+ <path d="m0 483 175-194 84 88 143-130 201 223 136-130 111 106 216-232 207 199 104-110 83 99v173H0Z" fill="#9aafce"/>
+ <path d="m175 289-53 59 36-12 16 11 12-21 33 10Zm227-42-80 76 47-16 17 17 19-33 41 16Zm664-33-97 107 64-29 23 13 21-34 63 11Z" fill="#f4f8ff"/>
+ <path d="M0 454Q238 382 448 473t443 12q262-96 549-68v210H0Z" fill="#d8e8f3"/>
+ <g><use href="#pine" x="326" y="454"/><use href="#pine" transform="translate(374 459) scale(.68)"/><use href="#pine" transform="translate(1003 460) scale(.76)"/></g>
+ <path d="M0 519Q334 483 719 525t721-17v392H0Z" fill="url(#lake)"/>
+ <path d="M0 518q211-58 500-12l-80 17-282 8-138 34Zm1440-18q-214-16-407 25l110 13 201-12 96 9Z" fill="#f5fcff"/>
+ <path d="m442 737 126-28 61 10 91-26m-152 16 32-26m221-74 132 4 68-16m-68 16 40 16" fill="none" stroke="#f2ffff" stroke-linecap="round" stroke-width="4"/>
+ <path d="M0 748q109-45 235-22l94 43-138 49-191-8Zm1440-29-155-37-142 36 109 31 188 4Z" fill="#edf9ff"/>
+ <use href="#shard" transform="translate(201 757) rotate(-16)"/><use href="#shard" transform="translate(216 758) rotate(14) scale(.67)"/><use href="#shard" transform="translate(1199 718) rotate(7) scale(.8)"/>
+</svg>
