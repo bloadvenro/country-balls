@@ -34,6 +34,7 @@ export type Game = {
 
 export const id = () => crypto.randomUUID?.() ?? `${Date.now()}-${Math.random()}`
 export const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v))
+export const actorScaleLimits = [.4, 1.6] as const
 export function accessory(kind: Item): Accessory {
   const [x, y] = itemAnchor(kind)
   return { id: id(), kind, x, y, scale: 1, angle: 0 }

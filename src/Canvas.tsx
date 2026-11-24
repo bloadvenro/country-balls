@@ -4,7 +4,7 @@ import { Circle, Ellipse, Group, Image as KImage, Layer, Line, Rect, Stage } fro
 import { actions, type Action, type Performance } from './actions'
 import { accessoryArt, faceAccessoryShift, faceArt, faceX, glaze, isBehindProp, svgUri } from './art'
 import { useBallFlag } from './ballFlag'
-import { clamp, type Accessory, type Actor, type Ball } from './model'
+import { actorScaleLimits, clamp, type Accessory, type Actor, type Ball } from './model'
 import type { Face } from './toys'
 
 // A second finger must be able to hit another actor while the first actor is moving.
@@ -13,7 +13,7 @@ Konva.hitOnDragEnabled = true
 type PinchTarget = { scale: number; angle: number }
 function usePinch(container: React.RefObject<HTMLDivElement|null>, stage: React.RefObject<Konva.Stage|null>,
   find: (id:string)=>PinchTarget|undefined, select: (id:string)=>void,
-  apply: (id:string, patch:PinchTarget)=>void, limits: [number,number]) {
+  apply: (id:string, patch:PinchTarget)=>void, limits: readonly [number,number]) {
   const latest = useRef({find,select,apply,limits})
   latest.current = {find,select,apply,limits}
   useEffect(() => {
@@ -225,7 +225,7 @@ type ParkProps = {
 export function ParkCanvas({ actors, balls, selected, target, performance: show, tap, clear, grab, move, finish,transform }: ParkProps) {
   const { ref, width, height } = useFrame()
   const stage = useRef<Konva.Stage>(null), reduced = useReducedMotion()
-  usePinch(ref,stage,id=>actors.find(a=>a.id===id),grab,transform,[.55,1.6])
+  usePinch(ref,stage,id=>actors.find(a=>a.id===id),grab,transform,actorScaleLimits)
   const zoom = Math.min(width/580,height/330,1.35)
   const [phase, setPhase] = useState(0), [look, setLook] = useState(0), [blink,setBlink] = useState(false)
   const [dragging, setDragging] = useState<string[]>([])

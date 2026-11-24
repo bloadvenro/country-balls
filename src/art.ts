@@ -30,6 +30,46 @@ export const accessoryArt: Record<Item, string> = {
   medal: `<g ${stroke}><path d="m-15-31 13 25 15-25M-2-6l-13-25M12-31-1-6" stroke="#5e83ce" stroke-width="9"/><circle cy="12" r="18" fill="#ffd158"/><path d="m0 1 3 7 8 1-6 5 2 8-7-4-7 4 2-8-6-5 8-1Z" fill="#fff1ad" stroke="none"/></g>`,
   magicWand: `<g ${stroke}><path d="m-20 34 35-49" stroke="#7662ad" stroke-width="8"/><path d="m18-35 6 14 15 2-12 10 4 15-13-8L5 6l4-15-12-10 15-2Z" fill="#ffd45d"/></g>`,
   sailor: `<g ${stroke}><path d="M-30 4q3-28 30-28T31 4Q0-7-30 4Z" fill="white"/><path d="M-35 5Q0-8 35 5L31 16Q0 7-31 16Z" fill="#72aee5"/><circle cy="-28" r="5" fill="#72aee5"/></g>`,
+  doctorCap: `<g ${stroke}>
+    <path d="M-34 5l-2-24c-1-8 10-12 32-13 18-1 35 2 37 9l-2 26q-30 11-65 2Z" fill="#fffdfa"/>
+    <path d="M-33-3Q-3 1 32-7l-1 12q-32 10-64 3Z" fill="#e1f1f1"/>
+    <path d="m-1-25 7-1v6l6-1v7l-6 1v6l-7 1v-6h-6v-7l6-1Z" fill="#298981" stroke="none"/>
+    <path d="M-28-19q1-4 9-5" fill="none" stroke="#bad9da" stroke-width="2.5"/>
+  </g>`,
+  doctorMask: `<g ${stroke}>
+    <path d="M-22-7q-18-13-19-3-1 12 21 17m40-15q18-13 19-4 3 12-17 20" fill="none"/>
+    <path d="M-26-10q10 2 20-2 7-4 12-1 8 3 17 1l-2 18q-8 11-21 13-14-2-23-12Z" fill="#fffdfa"/>
+    <path d="M-18-4q16 6 33-1m-32 8q16 6 30-1" fill="none" stroke="#a0c5ca" stroke-width="2.4"/>
+  </g>`,
+  doctorHeadMirror: `<g ${stroke}>
+    <path d="M-45-6Q-1 4 45-7l7 12Q1 19-52 6Z" fill="#fffdfa"/>
+    <path d="M-43 3q18 4 37 4m32-2 17-3" fill="none" stroke="#b6cdcf" stroke-width="2"/>
+    <circle cx="11" cy="-3" r="15" fill="#bdcbd3"/><circle cx="11" cy="-3" r="11.7" fill="#e2f3f6" stroke="#7c96a5" stroke-width="1.8"/>
+    <path d="M3-6q2-5 7-6" fill="none" stroke="white" stroke-width="3.5"/>
+    <circle cx="11" cy="-3" r="2.8" fill="#516775" stroke="none"/>
+  </g>`,
+  syringe: `<g transform="rotate(34)" ${stroke}>
+    <path d="M0-27v-11" fill="none" stroke="#506775" stroke-width="2.4"/>
+    <path d="M-4-18v-9h8v9M-4 14v16h8V14" fill="#b9ced4"/>
+    <rect x="-10" y="-19" width="20" height="37" rx="4" fill="#ecfafb"/>
+    <path d="M-8-3Q0-6 8-3v17H-8Z" fill="#71cfc9" stroke="none"/>
+    <path d="M8-12H3m5 6H5m3 6H3" fill="none" stroke-width="2"/>
+    <path d="M-14 18h28" fill="none"/><rect x="-11" y="29" width="22" height="6" rx="3" fill="#a6dfda"/>
+  </g>`,
+  scalpel: `<g transform="rotate(-34)" ${stroke}>
+    <path d="M-5 2v-16q0-15 13-25 3 23-1 33L3 2Z" fill="#d9ecf0"/>
+    <path d="M0-7q5-8 6-17" stroke="#92b3c1" stroke-width="2" fill="none"/>
+    <path d="M-5-2h10l2 32q0 7-7 7t-7-7Z" fill="#67b7b1"/>
+    <path d="m-2 6 4-2m-4 8 4-2m-4 8 4-2" stroke="#316e74" stroke-width="2"/>
+  </g>`,
+  stethoscope: `<g ${stroke} fill="none">
+    <path d="M-43-21q-8 27 7 36 17 9 21-6 5-15 1-31" stroke-width="6"/>
+    <path d="M-43-21q-8 27 7 36 17 9 21-6 5-15 1-31" stroke="#c2d9df" stroke-width="3"/>
+    <path d="M-30 17q0 18 17 20 16 1 24-14 8-13 16-8 7 3 6 11" stroke-width="8"/>
+    <path d="M-30 17q0 18 17 20 16 1 24-14 8-13 16-8 7 3 6 11" stroke="#318a87" stroke-width="4"/>
+    <path d="m-45-20 4-4m26 1 4 3" stroke-width="8"/>
+    <circle cx="33" cy="29" r="9" fill="#a8c9d1"/><circle cx="33" cy="29" r="4.5" fill="#e7f6f5" stroke-width="1.8"/>
+  </g>`,
 }
 
 const behindProps = new Set<Item>(['tail', 'backpack', 'wings'])
@@ -41,7 +81,7 @@ export const svgUri = (content: string, box: number) =>
 // Saved accessory positions use the workshop view (facing right, looking straight ahead).
 export const faceX = (facing: -1 | 1 = 1, look = 0) => 10 * facing + 2 * look
 export const faceAccessoryShift = (kind: Item, x: number) =>
-  kind === 'glasses' || kind === 'moustache' || kind === 'pirate' ? x - faceX() : 0
+  kind === 'glasses' || kind === 'moustache' || kind === 'pirate' || kind === 'doctorMask' ? x - faceX() : 0
 
 const line = 'stroke="#211f25" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"'
 const shellEye = '<path d="M-14 5C-16-6-12-20-1-21 10-22 17-12 15 3 6 2-4 3-14 5Z"/>'

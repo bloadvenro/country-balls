@@ -11,7 +11,7 @@ import { BallIcon, FaceIcon, PropIcon } from './Illustrations'
 import { actions, soundAction, type ActionId, type Performance } from './actions'
 import { chime, pronounce, stopVoice } from './audio'
 import {
-  accessory, addToStage, backgrounds, clamp, countries, faces, favoriteCodes, flagOf, items,
+  accessory, actorScaleLimits, addToStage, backgrounds, clamp, countries, faces, favoriteCodes, flagOf, items,
   nameOf, newBall, type Accessory, type BackgroundId,
   type Ball, type Code, type Face, type Item,
 } from './model'
@@ -346,8 +346,8 @@ function App() {
         <button key={face} aria-label={`Настроение: ${label}`} title={label} aria-pressed={(actorFaces[currentActor.id] ?? currentBall?.face) === face}
           onClick={() => { setActorFaces(value => ({ ...value, [currentActor.id]: face })); setPerformance(null); setTargetAction(null) }}><FaceIcon face={face} /></button>)}</div>
       <div className="actor-transform">
-        {iconButton('Уменьшить шарика', Minus, () => transformActor({ scale: clamp(currentActor.scale - .15, .55, 1.6) }))}
-        {iconButton('Увеличить шарика', Plus, () => transformActor({ scale: clamp(currentActor.scale + .15, .55, 1.6) }))}
+        {iconButton('Уменьшить шарика', Minus, () => transformActor({ scale: clamp(currentActor.scale - .15, ...actorScaleLimits) }))}
+        {iconButton('Увеличить шарика', Plus, () => transformActor({ scale: clamp(currentActor.scale + .15, ...actorScaleLimits) }))}
         {iconButton('Повернуть шарика', RotateCw, () => transformActor({ angle: (currentActor.angle + 15) % 360 }))}
         {iconButton(currentActor.facing === -1 ? 'Лицо вправо' : 'Лицо влево', FlipHorizontal2, () =>
           setGame(value => ({ ...value, actors: value.actors.map(item => item.id === actor ? { ...item, facing: item.facing === -1 ? 1 : -1 } : item) })))}

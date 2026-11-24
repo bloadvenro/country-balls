@@ -40,6 +40,12 @@ export const items = {
   sailor: 'Матросская шапочка',
   bunny: 'Заячьи ушки', beret: 'Берет художника', moonPin: 'Лунная заколка',
   tiara: 'Ледяная диадема', neckerchief: 'Пионерский платок', ribbon: 'Лента с колокольчиком',
+  doctorCap: 'Шапочка врача',
+  doctorMask: 'Белая медицинская маска',
+  doctorHeadMirror: 'Повязка с зеркальцем',
+  syringe: 'Шприц',
+  scalpel: 'Скальпель',
+  stethoscope: 'Стетоскоп',
 } as const
 
 export type Face = keyof typeof faces
@@ -52,6 +58,8 @@ const anchors: Record<Item, [number, number]> = {
   wings: [0, 5], partyHat: [4, -53], antenna: [0, -51], medal: [0, 45],
   magicWand: [49, 21], sailor: [0, -49],
   bunny: [0, -47], beret: [-5, -48], moonPin: [31, -39], tiara: [0, -48], neckerchief: [0, 42], ribbon: [0, 44],
+  doctorCap: [-3, -53], doctorMask: [10, 21], doctorHeadMirror: [0, -36],
+  syringe: [55, 20], scalpel: [-53, 24], stethoscope: [0, 24],
 }
 
 export function itemAnchor(kind: Item): [number, number] {

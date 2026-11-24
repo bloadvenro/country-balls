@@ -260,6 +260,17 @@ test('C14–C15: действие активно до drag, партнёр вы�
   expect(pinched.actors[0].scale).toBeGreaterThan(game.actors[0].scale + .2)
   expect(Math.abs(pinched.actors[0].angle - game.actors[0].angle)).toBeGreaterThan(5)
   expect(pinched.actors[1]).toEqual(game.actors[1])
+
+  await touch('touchStart', [{ x: x - 24, y, id: 1 }])
+  await touch('touchStart', [{ x: x - 24, y, id: 1 }, { x: x + 24, y, id: 2 }])
+  await touch('touchMove', [{ x: x - 4, y, id: 1 }, { x: x + 4, y, id: 2 }])
+  await touch('touchEnd', [])
+  expect((await saved(page)).actors[0].scale).toBeCloseTo(.4)
+  await page.getByRole('button', { name: 'Увеличить шарика' }).click()
+  expect((await saved(page)).actors[0].scale).toBeCloseTo(.55)
+  await page.getByRole('button', { name: 'Уменьшить шарика' }).click()
+  await page.reload()
+  expect((await saved(page)).actors[0].scale).toBeCloseTo(.4)
 })
 
 test('сцена сохраняет больше десяти героев, направление и фон после перезагрузки', async ({ page }) => {
