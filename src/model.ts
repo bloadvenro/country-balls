@@ -41,7 +41,7 @@ export function accessory(kind: Item): Accessory {
 export const newBall = (code: Code = favoriteCodes[0] ?? countries[0][0]): Ball => ({
   id: id(), code, face: 'smile', eyes: 'classic', mouth: 'none', accessories: [], personalityId: 'cheerful',
 })
-export const starterBalls: Ball[] = [
+const starterBalls: Ball[] = [
   { id: 'friend-jp', code: 'jp' as Code, face: 'smile' as Face, accessories: [], personalityId: 'cheerful' },
   { id: 'friend-br', code: 'br' as Code, face: 'laugh' as Face, accessories: [], personalityId: 'mischievous' },
 ]
@@ -49,7 +49,7 @@ export const makeActor = (ballId: string, x: number, y: number): Actor =>
   ({ id: id(), ballId, x, y, scale: 1, angle: 0 })
 export function initialGame(): Game {
   return {
-    version: 1, collection: [],
+    version: 1, collection: [...starterBalls],
     actors: [makeActor('friend-jp', .32, .62), makeActor('friend-br', .68, .62)],
     voice: true, sounds: true, music: true, backgroundId: 'park',
   }
@@ -69,13 +69,16 @@ export function loadGame(): Game {
   try {
     const raw = JSON.parse(localStorage.getItem(storageKey) || 'null') as Partial<Game> | null
     if (!raw || raw.version !== 1 || !Array.isArray(raw.collection) || !Array.isArray(raw.actors)) return initialGame()
-    const collection = raw.collection.filter((ball): ball is Ball =>
+    const savedBalls = raw.collection.filter((ball): ball is Ball =>
       !!ball && typeof ball.id === 'string' && codeOK(ball.code) && faceOK(ball.face) &&
       (!ball.personalityId || personalityOK(ball.personalityId)) && Array.isArray(ball.accessories) &&
       ball.accessories.every(part => poseOK(part) && typeof part.id === 'string' && itemOK(part.kind)))
       .map(ball => ({ ...ball, eyes: ball.eyes && Object.hasOwn(eyeStyles, ball.eyes) ? ball.eyes : undefined,
         mouth: ball.mouth && Object.hasOwn(mouthStyles, ball.mouth) ? ball.mouth : undefined }))
-    const ids = new Set([...starterBalls, ...collection].map(ball => ball.id))
+    // Older v1 saves kept the two ready-made friends outside the collection.
+    const missingStarters = starterBalls.filter(starter => !savedBalls.some(ball => ball.id === starter.id))
+    const collection = [...missingStarters, ...savedBalls]
+    const ids = new Set(collection.map(ball => ball.id))
     return {
       version: 1,
       collection,

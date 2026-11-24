@@ -11,7 +11,7 @@ import { actions, soundAction, type ActionId, type Performance } from './actions
 import { chime, pronounce, stopVoice } from './audio'
 import {
   accessory, addToStage, backgrounds, clamp, countries, faces, favoriteCodes, flagOf, items,
-  loadGame, nameOf, newBall, starterBalls, storageKey, type Accessory, type BackgroundId,
+  loadGame, nameOf, newBall, storageKey, type Accessory, type BackgroundId,
   type Ball, type Code, type Face, type Game, type Item,
 } from './model'
 
@@ -46,7 +46,7 @@ function App() {
   const [storageError, setStorageError] = useState(false)
   const [cached, setCached] = useState(false)
   const timers = useRef<number[]>([])
-  const balls = [...starterBalls, ...game.collection]
+  const balls = game.collection
   const currentActor = game.actors.find(item => item.id === actor)
   const currentBall = balls.find(ball => ball.id === currentActor?.ballId)
   const currentProp = draft.accessories.find(part => part.id === selectedProp)
@@ -225,13 +225,11 @@ function App() {
         </button>
       </header>
       <section className="my-balls" aria-labelledby="my-balls-title">
-        <div className="section-title"><div><span className="kicker">МОЯ КОЛЛЕКЦИЯ</span><h1 id="my-balls-title">Мои шарики <small>{game.collection.length}</small></h1></div>
+        <div className="section-title"><div><span className="kicker">МОЯ КОЛЛЕКЦИЯ</span><h1 id="my-balls-title">Мои шарики <small>{balls.length}</small></h1></div>
         <button className="primary-button" data-testid="create-ball" onClick={() => create()}><Plus />Создать нового</button></div>
-        {game.collection.length
-          ? <div className="collection-row">{game.collection.map(ball => <button key={ball.id} className="collection-ball" onClick={() => edit(ball)}>
-              <BallIcon ball={ball} /><span>{nameOf(ball.code)}</span><i><Pencil /> Изменить</i>
-            </button>)}</div>
-          : <p className="empty-note"><Sparkles /> Здесь появятся придуманные тобой шарики.</p>}
+        <div className="collection-row">{balls.map(ball => <button key={ball.id} className="collection-ball" onClick={() => edit(ball)}>
+          <BallIcon ball={ball} /><span>{nameOf(ball.code)}</span><i><Pencil /> Изменить</i>
+        </button>)}</div>
       </section>
       <div className="workbench">
         <section className="preview-card">

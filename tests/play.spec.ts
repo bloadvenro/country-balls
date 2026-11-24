@@ -10,6 +10,12 @@ test('парк: независимые копии друзей, клавиату
   await expect(page.locator('.park-canvas canvas')).toBeVisible()
   expect(await page.evaluate(() => document.fullscreenElement)).toBeNull()
   expect((await saved(page)).actors).toHaveLength(2)
+  await page.getByTestId('open-friends').click()
+  await expect(page.locator('.friend-picker button span')).toHaveText(['Япония', 'Бразилия'])
+  await page.getByTestId('open-workshop').click()
+  await expect(page.getByRole('heading', { name: 'Мои шарики 2' })).toBeVisible()
+  await expect(page.locator('.collection-ball span')).toHaveText(['Япония', 'Бразилия'])
+  await page.getByRole('button', { name: 'В парк' }).click()
 
   for (let copy = 0; copy < 2; copy++) {
     await page.getByTestId('open-friends').click()
@@ -58,6 +64,33 @@ test('парк: независимые копии друзей, клавиату
   expect((await saved(page)).collection.map(ball => ball.id)).toContain('kept-ball')
   await page.reload()
   await expect(page.getByRole('heading', { name: 'Сцена готова!' })).toBeVisible()
+})
+
+test('старая коллекция объединяется с друзьями и сохраняет правки готового шарика', async ({ page }) => {
+  const custom = { id: 'my-japan', code: 'jp', face: 'cheeky', accessories: [] }
+  const actor = { id: 'placed-japan', ballId: 'friend-jp', x: .3, y: .7, scale: 1.2, angle: 25 }
+  await page.addInitScript(({ key, custom, actor }) => {
+    if (!localStorage.getItem(key)) localStorage.setItem(key, JSON.stringify({
+      version: 1, collection: [custom], actors: [actor], backgroundId: 'kitchen',
+    }))
+  }, { key: storageKey, custom, actor })
+  await page.goto('/#workshop')
+  const cards = page.locator('.collection-ball')
+  await expect(cards.locator('span')).toHaveText(['Япония', 'Бразилия', 'Япония'])
+  await cards.first().click()
+  await page.locator('.catalog-flag[aria-label="Италия"]').click()
+  await page.getByRole('button', { name: 'Сохранить' }).click()
+  await expect(page.locator('.stage-keyboard button')).toHaveAccessibleName('Выбрать героя: Италия, 1')
+  await page.reload()
+  await page.getByTestId('open-friends').click()
+  await expect(page.locator('.friend-picker button span')).toHaveText(['Италия', 'Бразилия', 'Япония'])
+  await page.getByTestId('open-workshop').click()
+  await expect(page.getByRole('heading', { name: 'Мои шарики 3' })).toBeVisible()
+  await expect(cards.locator('span')).toHaveText(['Италия', 'Бразилия', 'Япония'])
+  const restored = await saved(page)
+  expect(restored.actors).toEqual([actor])
+  expect(restored.backgroundId).toBe('kitchen')
+  expect(restored.collection.find(ball => ball.id === custom.id)).toMatchObject(custom)
 })
 
 test('аудио: play/pause, повтор, быстрый выбор, mute и полный офлайн-декод', async ({ page, context }) => {
@@ -173,7 +206,7 @@ test('мастерская C07–C10: независимые предметы, d
   await page.locator('.catalog-flag[aria-label="Франция"]').click()
   await page.getByRole('button', { name: 'Готово' }).click()
 
-  const ball = (await saved(page)).collection[0]
+  const ball = (await saved(page)).collection.find(ball => ball.code === 'fr')!
   expect(ball.code).toBe('fr')
   expect(ball.accessories.map(part => part.kind)).toEqual(['ears', 'tail', 'bow', 'bow'])
   expect(ball.accessories[0]).toMatchObject({ x: 0, y: -40, scale: 1, angle: 0 })
@@ -183,7 +216,7 @@ test('мастерская C07–C10: независимые предметы, d
 
   const actorCount = (await saved(page)).actors.length
   await page.getByTestId('open-workshop').click()
-  await page.locator('.collection-ball').click()
+  await page.getByRole('button', { name: 'Франция Изменить' }).click()
   await page.getByRole('button', { name: 'Мордочки' }).click()
   await page.getByRole('button', { name: 'Галактики', exact: true }).click()
   await page.getByRole('button', { name: 'Язычок', exact: true }).click()
@@ -191,8 +224,8 @@ test('мастерская C07–C10: независимые предметы, d
   await page.getByRole('button', { name: 'Сохранить' }).click()
   const edited = await saved(page)
   expect(edited.actors).toHaveLength(actorCount)
-  expect(edited.collection).toHaveLength(1)
-  expect(edited.collection[0]).toMatchObject({ eyes: 'galaxy', mouth: 'tongue' })
+  expect(edited.collection).toHaveLength(3)
+  expect(edited.collection.find(savedBall => savedBall.id === ball.id)).toMatchObject({ eyes: 'galaxy', mouth: 'tongue' })
 })
 
 test('C14–C15: действие активно до drag, партнёр выбирается с клавиатуры, pinch меняет угол и размер одного', async ({ page, context }) => {
@@ -244,7 +277,7 @@ test('сцена сохраняет больше десяти героев, на
   await expect(page.locator('.park-canvas canvas')).toBeVisible()
   const full = await saved(page)
   expect(full.actors).toHaveLength(11)
-  expect(full.collection).toHaveLength(1)
+  expect(full.collection).toHaveLength(3)
 
   await page.getByRole('button', {name:'Лицо влево'}).click()
   for (const place of ['space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom']) {
@@ -258,11 +291,11 @@ test('сцена сохраняет больше десяти героев, на
   expect((await saved(page)).actors[10].facing).toBe(-1)
   expect((await saved(page)).backgroundId).toBe('bedroom')
   await page.getByTestId('open-workshop').click()
-  await page.locator('.collection-ball').click()
+  await page.getByRole('button', { name: 'Казахстан Изменить' }).click()
   await page.getByRole('button', { name: 'Сохранить' }).click()
   const edited = await saved(page)
   expect(edited.actors).toHaveLength(11)
-  expect(edited.collection).toHaveLength(1)
+  expect(edited.collection).toHaveLength(3)
 })
 
 test.describe('узкий экран', () => {
@@ -329,7 +362,7 @@ test('крыло можно выбрать за край, сдвинуть и у
   await expect(page.locator('.transform-tools strong')).toHaveText('Крылышки')
   await page.getByRole('button', { name: 'Увеличить предмет' }).click()
   await page.getByRole('button', { name: 'Готово' }).click()
-  const wings = (await saved(page)).collection[0].accessories[0]
+  const wings = (await saved(page)).collection.find(ball => ball.code === 'kz')!.accessories[0]
   expect(wings.kind).toBe('wings')
   expect(wings.x).toBeGreaterThan(4)
   expect(wings.scale).toBeCloseTo(1.15)
