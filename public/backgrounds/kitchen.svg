@@ -31,4 +31,16 @@
   <path d="M680 537h95q-5 28-45 28t-50-28Z" fill="#739f99"/>
   <g stroke="#af765a" stroke-width="2"><circle cx="703" cy="533" r="13" fill="#e39b68"/><circle cx="729" cy="525" r="14" fill="#e78168"/><circle cx="755" cy="534" r="12" fill="#ecc073"/></g>
   <path d="M730 515q-9-12-18-7 3 9 18 7Z" fill="#759465"/>
+  <!-- Child-sized place setting and a high chair with its own tray and footrest. -->
+  <g transform="translate(523 632)" stroke-linejoin="round">
+    <ellipse cy="83" rx="66" ry="11" fill="#ba926f" opacity=".4"/>
+    <path d="m-27-13-25 93m76-93 25 93" stroke="#a57858" stroke-width="9" stroke-linecap="round"/>
+    <path d="M-35-30q-16-20-17-83 0-15 17-15h47q16 0 19 18l12 76Z" fill="#e6bd83" stroke="#b98c64" stroke-width="4"/>
+    <path d="M-38-103q18-10 43-4l9 37h-46Z" fill="#99bdb1"/><rect x="-42" y="-37" width="91" height="16" rx="6" fill="#ba8b68"/>
+    <path d="m-28-36-9-29m71 28-1-31" stroke="#ba8b68" stroke-width="6"/><ellipse cx="9" cy="-65" rx="62" ry="12" fill="#f8deb3" stroke="#bb9270" stroke-width="3"/>
+    <rect x="-33" y="18" width="71" height="10" rx="4" fill="#c3946c"/>
+    <path d="M3-78q-13-5-11 4 0 7 12 6m21-10q13-5 11 4 0 7-12 6" fill="none" stroke="#689e9c" stroke-width="4"/>
+    <rect x="1" y="-85" width="25" height="18" rx="5" fill="#83b8b0"/><path d="M1-83q0-7 10-7l2-5h6l1 6 6 6Z" fill="#679c99"/>
+  </g>
+  <g transform="translate(1162 337) rotate(6)"><rect x="-31" y="-42" width="62" height="84" fill="#fcf3d3"/><path d="m-18 3 18-20L19 3m-32-4v23h26V0" fill="none" stroke="#d28c72" stroke-width="3"/><circle cx="17" cy="-22" r="6" fill="#e5bf62"/><circle cy="-40" r="5" fill="#879bae"/></g>
 </svg>

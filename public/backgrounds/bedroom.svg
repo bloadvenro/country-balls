@@ -16,6 +16,21 @@
   <path d="M0 502h1440v398H0Z" fill="url(#floor)"/>
   <path d="M0 502h1440" stroke="#aa8f92" stroke-width="12"/>
   <path d="M0 595h1440M0 752h1440m-956-240-69 83m488 0 32 157" stroke="#c5a59a" fill="none" stroke-width="3"/>
+  <!-- Small cot beside the parents' bed, with a moon-and-stars mobile. -->
+  <g transform="translate(897 310)" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="3" cy="151" rx="144" ry="17" fill="#a88f91" opacity=".3"/>
+    <path d="m-113 112-7 32m226-31 6 33" stroke="#ae8467" stroke-width="11"/>
+    <path d="M-119 114V-12q2-24 23-19l25 18h167q20-24 33-5v131Z" fill="#e7c99d" stroke="#b18b70" stroke-width="4"/>
+    <path d="M-105 71q2-16 25-16l164-3q19 0 26 11v30h-214Z" fill="#b6d6bf"/>
+    <rect x="-99" y="43" width="64" height="20" rx="10" fill="#fff2cb" transform="rotate(-4 -80 51)"/>
+    <path d="M-111 35v76m26-76v76m27-76v76m27-76v76m27-76v76m27-76v76m27-76v76m27-76v76m27-76v76" stroke="#f6e1b9" stroke-width="9"/>
+    <rect x="-126" y="26" width="255" height="13" rx="6" fill="#c99d7c"/>
+    <rect x="-126" y="106" width="255" height="17" rx="6" fill="#c99d7c"/>
+    <path d="M112-15v-66q0-22-22-22H24" fill="none" stroke="#a67d68" stroke-width="5"/>
+    <path d="M27-103v15m-43 12 43-13 47 14m-88 0v21m40-33v23m48-10v18" fill="none" stroke="#9f8593" stroke-width="2.5"/>
+    <use href="#star" transform="translate(-15 -47) scale(1.35)"/><use href="#star" transform="translate(71 -49)"/>
+    <path d="M29-71q-8 18 10 19-9 11-19 1t9-20Z" fill="#ffdb95" stroke="#c9a578" stroke-width="1.5"/>
+  </g>
   <ellipse cx="714" cy="611" rx="324" ry="25" fill="#a88f91" opacity=".35"/>
   <path d="M432 481v119m531-119 13 119" stroke="#976e60" stroke-width="16" stroke-linecap="round"/>
   <path d="M416 508V361q0-45 44-45h97q36 0 36 34v155" fill="#ba907a" stroke="#9c7566" stroke-width="5"/>

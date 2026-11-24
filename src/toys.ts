@@ -5,6 +5,8 @@ export const faces = {
   sleepy: 'Сонная мордочка',
   happy: 'Радость',
   sad: 'Грусть',
+  teary: 'Лёгкие слёзки',
+  sobbing: 'Слёзы ручьём',
   angry: 'Сердитая',
   shy: 'Смущение',
   cheeky: 'Озорная',
@@ -56,7 +58,7 @@ export function itemAnchor(kind: Item): [number, number] {
 }
 
 export const eyeStyles = {
-  hearts: 'Сердечки', shimmer: 'Сияние', spiral: 'Спиральки', tears: 'Слёзки',
+  hearts: 'Сердечки', shimmer: 'Сияние', spiral: 'Спиральки', tears: 'Слёзки', streams: 'Слёзы ручьём',
   classic: 'Белые', galaxy: 'Галактики', dots: 'Точки', squeeze: 'Зажмуренные',
   droop: 'Сонные', wink: 'Подмигивание', stern: 'Сердитые', wide: 'Круглые',
 } as const
@@ -71,6 +73,7 @@ export const expressions: Record<Face, { eyes: Eyes; mouth: Mouth }> = {
   smile: { eyes: 'classic', mouth: 'smile' }, laugh: { eyes: 'squeeze', mouth: 'laugh' },
   surprise: { eyes: 'wide', mouth: 'gasp' }, sleepy: { eyes: 'droop', mouth: 'none' },
   happy: { eyes: 'classic', mouth: 'cat' }, sad: { eyes: 'droop', mouth: 'frown' },
+  teary: { eyes: 'tears', mouth: 'frown' }, sobbing: { eyes: 'streams', mouth: 'gasp' },
   angry: { eyes: 'stern', mouth: 'zigzag' }, shy: { eyes: 'dots', mouth: 'smile' },
   cheeky: { eyes: 'wink', mouth: 'tongue' }, worried: { eyes: 'wide', mouth: 'zigzag' },
   adoring: { eyes: 'hearts', mouth: 'cat' }, dazzled: { eyes: 'shimmer', mouth: 'beam' },

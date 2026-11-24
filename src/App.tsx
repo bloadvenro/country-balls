@@ -264,7 +264,7 @@ function App() {
             <h2>Глаза</h2>
             <div className="prop-grid feature-grid">{(Object.keys(eyeStyles) as Eyes[]).map(eyes =>
               <button key={eyes} aria-pressed={(draft.eyes ?? expressions[draft.face].eyes) === eyes} onClick={() => change({ ...draft, eyes })}>
-                <svg viewBox="-42 -28 84 47" aria-hidden="true" dangerouslySetInnerHTML={{ __html: eyeArt(eyes) }}/><span>{eyeStyles[eyes]}</span>
+                <svg viewBox={eyes === 'streams' ? '-42 -21 84 63' : '-42 -28 84 47'} aria-hidden="true" dangerouslySetInnerHTML={{ __html: eyeArt(eyes) }}/><span>{eyeStyles[eyes]}</span>
               </button>)}</div>
             <h2>Рот</h2>
             <div className="prop-grid feature-grid">{(Object.keys(mouthStyles) as Mouth[]).map(mouth =>

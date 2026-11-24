@@ -48,6 +48,7 @@ export function eyeArt(style: Eyes, blink = false) {
     hearts: '<path d="M0 8C-25-7-10-24 0-13 12-26 26-8 0 8Z" fill="#f881a7"/>',
     shimmer: '<ellipse cy="-5" rx="13" ry="17" fill="#7560a8"/><path d="m-3-17 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" fill="white" stroke="none"/><circle cx="6" cy="2" r="3" fill="#edcaff" stroke="none"/>',
     spiral: '<ellipse cy="-6" rx="13" ry="14"/><path d="M9-3C13-18-9-22-9-8c-1 10 15 13 15 3 0-7-9-8-9-2q0 4 4 2" fill="none"/>',
+    streams: '<path d="M-13-5q10-10 23 0l-1 4q-13-6-22 1Z" fill="#383443"/><path d="M-13-2q6-4 11-1 2 8-2 17-4 9-3 16-1 5-6 4-6-1-5-8 0-8 4-16 3-8 1-12Z" fill="#64c8fa" stroke="#396d94" stroke-width="1.7"/><path d="M-8 2q2 7-3 17" fill="none" stroke="#d9f7ff" stroke-width="2.6"/>',
     tears: '<path d="M-13 0q11-10 26-4" fill="none"/><path d="M-10 0q-12 13-4 14 8 0 4-14Z" fill="#97deff"/>',
     classic: shellEye, wink: shellEye, galaxy: galaxyEye,
     dots: '<circle cy="-3" r="4.7" fill="#242126" stroke="none"/>',
@@ -56,8 +57,9 @@ export function eyeArt(style: Eyes, blink = false) {
     droop: '<path d="M-14-8 13-13Q15 9 1 9-10 10-14-8Z"/>',
     stern: '<path d="M-14-16 14-7Q13 8 0 7-12 8-14-16Z"/>',
   }
-  const left = blink ? closed : shapes[style]
-  const right = blink ? closed : style === 'wink' ? closed : shapes[style]
+  const closeEyes = blink && style !== 'streams' && style !== 'tears'
+  const left = closeEyes ? closed : shapes[style]
+  const right = closeEyes ? closed : style === 'wink' ? closed : shapes[style]
   const gap = style === 'dots' ? 8 : 16
   return `<g fill="white" ${line}><g transform="translate(${-gap} 2)">${left}</g><g transform="translate(${gap} -1) scale(-.94 1)">${right}</g></g>`
 }
