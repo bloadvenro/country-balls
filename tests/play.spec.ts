@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { storageKey, type Game } from '../src/model'
+import { backgrounds, storageKey, type Game } from '../src/model'
 
 const saved = (page: Page) => page.evaluate(key => JSON.parse(localStorage.getItem(key)!) as Game, storageKey)
 const mediaLog = (page: Page) => page.evaluate(() =>
@@ -428,6 +428,19 @@ test.describe('низкий landscape', () => {
   })
 })
 
+test('у каждого места движутся детали фона, а при снижении движения фон замирает', async ({ page }) => {
+  await page.goto('/')
+  const animations = () => page.locator('.scene-art, .bedroom-art').evaluate(el => el.getAnimations({ subtree: true }).length)
+  for (const id of backgrounds) {
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+    await page.getByTestId('open-backgrounds').click()
+    await page.getByTestId('background-' + id).click()
+    await expect.poll(animations, { message: id }).toBeGreaterThan(0)
+    await page.emulateMedia({ reducedMotion: 'reduce' })
+    await expect.poll(animations, { message: id }).toBe(0)
+  }
+})
+
 test('глянцевый шарик Украины сохраняет обе полосы флага', async ({ page }) => {
   await page.goto('/#workshop')
   await page.locator('.favorite-flag[aria-label="Украина"]').click()
@@ -567,6 +580,40 @@ test('друг с кодом страны на старой сцене попа�
   await expect(page.locator('.friend-picker button').filter({ hasText: 'Франция' })).toHaveText('Францияна сцене: 2')
   await page.getByTestId('open-workshop').click()
   await expect(page.locator('.collection-ball span')).toHaveText(['Япония', 'Бразилия', 'Франция'])
+})
+
+test.describe('жесты планшета', () => {
+  test.use({ isMobile: true, hasTouch: true, viewport: { width: 800, height: 1000 } })
+
+  test('разведение пальцев в меню и мастерской сохраняет масштаб страницы', async ({ page, context }) => {
+    const device = await context.newCDPSession(page)
+    const pinch = async (x: number, y: number) => {
+      const fingers = (gap: number) => [{ id: 1, x: x - gap, y }, { id: 2, x: x + gap, y }]
+      await device.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: fingers(22) })
+      for (const gap of [32, 46, 65, 88]) {
+        await device.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: fingers(gap) })
+      }
+      await device.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] })
+      expect(await page.evaluate(() => window.visualViewport!.scale)).toBe(1)
+    }
+    await page.goto('/')
+    for (const menu of ['open-friends', 'open-backgrounds']) {
+      await page.getByTestId(menu).tap()
+      const panel = page.locator('.floating-panel')
+      const box = (await panel.boundingBox())!
+      await pinch(box.x + box.width / 2, box.y + box.height / 2)
+      await panel.getByRole('button', { name: 'Закрыть панель' }).tap()
+    }
+    await page.getByTestId('open-workshop').tap()
+    await pinch(370, 170)
+    await page.getByRole('button', { name: 'Наряды', exact: true }).tap()
+    const cap = page.getByRole('button', { name: 'Полицейская фуражка' })
+    await cap.scrollIntoViewIfNeeded()
+    const box = (await cap.boundingBox())!
+    await pinch(Math.min(700, Math.max(100, box.x + box.width / 2)), box.y + box.height / 2)
+    await cap.tap()
+    await expect(page.locator('.worn button')).toHaveCount(1)
+  })
 })
 
 test('старое окно со своей сценой не стирает созданного или переодетого шарика', async ({ page, context }) => {

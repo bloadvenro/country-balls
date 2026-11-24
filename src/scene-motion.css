@@ -1,0 +1,73 @@
+.scene-art{position:absolute;inset:0;pointer-events:none}
+.scene-art svg{display:block;width:100%;height:100%}
+
+@media (prefers-reduced-motion: no-preference) {
+  .scene-art .swing { transform-origin: 730px 320px; animation: swing 2.5s ease-in-out infinite alternate }
+  .scene-art .clouds { animation: drift 17s ease-in-out infinite alternate }
+
+  .scene-art .wheel { animation: turn 65s linear infinite }
+  .scene-art .cabin { animation: turn 65s linear infinite reverse }
+
+  .scene-art .flames path { transform-box: fill-box; transform-origin: center bottom; animation: flame 1.4s ease-in-out infinite alternate }
+  .scene-art .flames path:nth-child(2) { animation-delay: -.9s }
+  .scene-art .flames path:nth-child(3) { animation-delay: -.4s }
+  .scene-art .curtains path { transform-box: fill-box; transform-origin: left top; animation: curtain 4s ease-in-out infinite alternate }
+  .scene-art .curtains path + path { transform-origin: right top; animation-delay: -1.2s }
+
+  .scene-art .starlight use { animation: twinkle 3.4s ease-in-out infinite alternate }
+  .scene-art .starlight use:nth-child(2) { animation-delay: -2s }
+  .scene-art .starlight use:nth-child(3) { animation-delay: -1s }
+  .scene-art .camera { transform-origin: 35px -71px; animation: scan 5s ease-in-out infinite alternate }
+
+  .scene-art .shoal { animation: swim 15s linear infinite }
+  .scene-art .bubbles { animation: rise 4.4s ease-in-out infinite }
+
+  .scene-art .aurora { animation: aurora 7s ease-in-out infinite alternate }
+  .scene-art .bobber { animation: bob 2.2s ease-in-out infinite alternate }
+
+  .scene-art .sailboat { animation: sailing 7s ease-in-out infinite alternate }
+  .scene-art .cloud { animation: drifting 19s ease-in-out infinite alternate }
+
+  .scene-art .steam path { animation: steam 3.8s ease-out infinite }
+  .scene-art .steam path + path { animation-delay: -1.8s }
+  .scene-art .drop { animation: drip 4s ease-in infinite }
+
+  .scene-art .shower { animation: droplets 1.8s linear infinite }
+  .scene-art .duck { animation: paddle 4.5s ease-in-out infinite alternate }
+  .scene-art .suds { animation: bubbles 4s ease-in-out infinite alternate }
+
+  .scene-art .pulse { opacity: 1; animation: sweep 2.9s linear infinite }
+}
+
+@keyframes swing { from { transform: skewX(-5deg) } to { transform: skewX(5deg) } }
+@keyframes drift { to { transform: translateX(55px) } }
+@keyframes turn { to { transform: rotate(360deg) } }
+@keyframes flame { from { transform: skewX(-7deg) scaleY(.9) } to { transform: skewX(5deg) scaleY(1.12) } }
+@keyframes curtain { to { transform: scaleX(.87) } }
+@keyframes twinkle { from { opacity: .32 } to { opacity: 1 } }
+@keyframes scan { from { transform: rotate(-9deg) } to { transform: rotate(9deg) } }
+@keyframes swim {
+  0% { opacity: 0; transform: translate(145px,8px) }
+  12%,85% { opacity: .7 }
+  100% { opacity: 0; transform: translate(-145px,-13px) }
+}
+@keyframes rise {
+  0%,100% { opacity: 0 }
+  0% { transform: translateY(24px) }
+  24%,73% { opacity: .95 }
+  100% { transform: translate(9px,-45px) }
+}
+@keyframes aurora { from { opacity: .62; transform: scaleY(.93) } to { opacity: 1; transform: translate(7px,5px) scaleY(1.09) } }
+@keyframes bob { to { transform: translateY(-4px) } }
+@keyframes sailing { from { transform: translate(-7px,1px) rotate(-2deg) } to { transform: translate(40px,-3px) rotate(2deg) } }
+@keyframes drifting { to { transform: translateX(74px) } }
+@keyframes steam {
+  0%,100% { opacity: 0 }
+  30%,65% { opacity: .8 }
+  to { transform: translate(5px,-26px) }
+}
+@keyframes drip { 0%,55% { opacity: 0; transform: translateY(0) } 65%,95% { opacity: .85 } 100% { opacity: 0; transform: translateY(32px) } }
+@keyframes droplets { 0%,100% { opacity: 0 } 20%,65% { opacity: .9 } to { transform: translateY(45px) } }
+@keyframes paddle { from { transform: translate(1px,0) } to { transform: translate(-20px,2px) } }
+@keyframes bubbles { to { transform: translate(5px,-13px) } }
+@keyframes sweep { from { stroke-dashoffset: 14 } to { stroke-dashoffset: -100 } }

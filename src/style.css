@@ -7,8 +7,7 @@
 .icon-button,.sound-button,.round-control{width:48px;height:48px;border-radius:15px;display:inline-grid;place-items:center;background:#fff;border:1px solid var(--line)}.icon-button svg,.sound-button svg,.round-control svg{width:20px}.icon-button:hover:not(:disabled){background:#f3effb}
 
 /* The park is the product's home screen: the stage owns the viewport, controls float above it. */
-.park-page{height:100dvh;min-height:0;overflow:hidden;position:relative;background:#bce9ea}.stage-shell,.park-canvas{position:absolute;inset:0;width:100%;height:100%}.park-canvas{touch-action:none;background-position:center;background-size:cover;background-repeat:no-repeat}.park-page[data-background=park] .park-canvas{background-image:url('/backgrounds/park.svg')}.park-page[data-background=playground] .park-canvas{background-image:url('/backgrounds/playground.svg')}.park-page[data-background=party] .park-canvas{background-image:url('/backgrounds/party.svg')}
-.park-topbar{position:absolute;z-index:4;left:18px;right:18px;top:max(14px,env(safe-area-inset-top));display:grid;grid-template-columns:1fr auto 1fr;align-items:start;pointer-events:none}.park-topbar>*{pointer-events:auto}.park-topbar .brand{padding:7px 14px 7px 8px;border-radius:19px}.scene-name{justify-self:center;border-radius:17px;padding:8px 18px;text-align:center;line-height:1.1}.scene-name span{display:block;font-weight:950}.scene-name small{font-size:11px;color:var(--muted)}.round-control{justify-self:end;border-radius:50%}
+.park-page{height:100dvh;min-height:0;overflow:hidden;position:relative;background:#bce9ea}.stage-shell,.park-canvas{position:absolute;inset:0;width:100%;height:100%}.park-canvas{touch-action:none;background-position:center;background-size:cover;background-repeat:no-repeat}.park-topbar{position:absolute;z-index:4;left:18px;right:18px;top:max(14px,env(safe-area-inset-top));display:grid;grid-template-columns:1fr auto 1fr;align-items:start;pointer-events:none}.park-topbar>*{pointer-events:auto}.park-topbar .brand{padding:7px 14px 7px 8px;border-radius:19px}.scene-name{justify-self:center;border-radius:17px;padding:8px 18px;text-align:center;line-height:1.1}.scene-name span{display:block;font-weight:950}.scene-name small{font-size:11px;color:var(--muted)}.round-control{justify-self:end;border-radius:50%}
 .park-dock{position:absolute;z-index:4;left:50%;bottom:max(15px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;padding:6px;border-radius:22px;gap:3px}.park-dock button{min-width:106px;min-height:59px;border-radius:17px;background:transparent;display:flex;align-items:center;justify-content:center;gap:7px}.park-dock button:hover,.park-dock button[aria-pressed=true]{background:#eee8fa;color:var(--purple-dark)}.park-dock svg{width:21px}
 .floating-panel{position:absolute;z-index:6;background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);border-radius:24px;padding:18px;max-height:min(65dvh,560px);overflow:auto}.floating-panel.friends,.floating-panel.backgrounds{left:50%;bottom:92px;transform:translateX(-50%);width:min(710px,calc(100% - 28px))}.floating-panel.settings{right:18px;top:82px;width:min(330px,calc(100% - 28px))}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px;font-size:20px}.panel-head .icon-button{width:40px;height:40px}
 .friend-picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:9px}.friend-picker button,.collection-ball{border:1px solid var(--line);border-radius:17px;background:#faf8fd;padding:6px;min-height:48px;display:flex;flex-direction:column;align-items:center}.friend-picker button.full{background:#f4f1f6}.friend-picker svg{width:86px;height:68px}.friend-picker span{font-size:13px}.friend-picker small{font-size:10px;color:var(--muted)}
@@ -43,6 +42,8 @@
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 
 /* Park controls follow the viewport edges, leaving the middle free for play. */
+html{touch-action:pan-x pan-y}
+body,body *{touch-action:inherit}
 .location-backdrop{position:absolute;inset:0;z-index:8;padding:0;background:transparent;cursor:default;touch-action:manipulation}
 .floating-panel.backgrounds{z-index:9}
 .park-topbar{grid-template-columns:1fr auto}
@@ -54,13 +55,10 @@
 .stage-keyboard button{position:absolute;opacity:0;pointer-events:none;transform:translate(-50%,-50%)}
 .stage-keyboard button:focus-visible{opacity:1;border-radius:12px;background:white;padding:8px;z-index:4}
 .feature-grid{margin:12px 0 20px}.feature-grid button{min-height:84px}.feature-grid svg{width:min(100%,72px);height:44px}
-.park-page[data-background=space] .park-canvas{background-image:url('/backgrounds/space.svg')}
-.park-page[data-background=ocean] .park-canvas{background-image:url('/backgrounds/ocean.svg')}
-.park-page[data-background=kitchen] .park-canvas{background-image:url('/backgrounds/kitchen.svg')}
-.park-page[data-background=bathroom] .park-canvas{background-image:url('/backgrounds/bathroom.svg')}
-.park-page[data-background=maternity] .park-canvas{background-image:url('/backgrounds/maternity.svg')}
 .bedroom-art{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+@media(prefers-reduced-motion:no-preference){
+  .bedroom-mobile{transform-origin:924px 207px;animation:cot-rock 3.2s ease-in-out infinite alternate}
+}
+@keyframes cot-rock{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
 .bedroom-switch{position:absolute;pointer-events:none;background:transparent;padding:0;border-radius:14px}
-.park-page[data-background=apartment] .park-canvas{background-image:url('/backgrounds/apartment.svg')}
-.park-page[data-background=ice] .park-canvas{background-image:url('/backgrounds/ice.svg')}
 @media(max-width:680px){.park-dock{right:10px}.background-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.background-picker button{display:block;text-align:center}.background-picker span{font-size:12px}.floating-panel.backgrounds,.floating-panel.friends{right:10px;top:70px;width:calc(100% - 20px)}}

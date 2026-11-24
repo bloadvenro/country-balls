@@ -19,6 +19,11 @@
     <radialGradient id="warm-light"><stop stop-color="#ffd797" stop-opacity=".72"/><stop offset=".46" stop-color="#ffcf8d" stop-opacity=".32"/><stop offset="1" stop-color="#ffe1ac" stop-opacity="0"/></radialGradient>
     <path id="lampshade" d="m327 308 47-1 14 46h-76Z"/>
     <g id="lamp-glow"><ellipse cx="350" cy="358" rx="240" ry="187" fill="url(#warm-light)"/><use href="#lampshade" fill="#ffdf95"/><ellipse cx="350" cy="352" rx="36" ry="3" fill="#fff0bd"/></g>
+    <g id="mobile-charms" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M27-103v15m-43 12 43-13 47 14m-88 0v21m40-33v23m48-10v18" fill="none" stroke="#9f8593" stroke-width="2.5"/>
+    <use href="#star" transform="translate(-15 -47) scale(1.35)"/><use href="#star" transform="translate(71 -49)"/>
+    <path d="M29-71q-8 18 10 19-9 11-19 1t9-20Z" fill="#ffdb95" stroke="#c9a578" stroke-width="1.5"/>
+    </g>
   </defs>
   <g id="walls">
   <rect width="1440" height="535" fill="url(#wall)"/>
@@ -48,9 +53,6 @@
     <rect x="-126" y="26" width="255" height="13" rx="6" fill="#c99d7c"/>
     <rect x="-126" y="106" width="255" height="17" rx="6" fill="#c99d7c"/>
     <path d="M112-15v-66q0-22-22-22H24" fill="none" stroke="#a67d68" stroke-width="5"/>
-    <path d="M27-103v15m-43 12 43-13 47 14m-88 0v21m40-33v23m48-10v18" fill="none" stroke="#9f8593" stroke-width="2.5"/>
-    <use href="#star" transform="translate(-15 -47) scale(1.35)"/><use href="#star" transform="translate(71 -49)"/>
-    <path d="M29-71q-8 18 10 19-9 11-19 1t9-20Z" fill="#ffdb95" stroke="#c9a578" stroke-width="1.5"/>
   </g>
   <ellipse cx="714" cy="611" rx="324" ry="25" fill="#a88f91" opacity=".35"/>
   <path d="M432 481v119m531-119 13 119" stroke="#976e60" stroke-width="16" stroke-linecap="round"/>
@@ -63,6 +65,7 @@
   <ellipse cx="793" cy="714" rx="218" ry="47" fill="#bdacc8"/><ellipse cx="793" cy="714" rx="189" ry="33" fill="none" stroke="#e1cddc" stroke-width="4"/>
   <g transform="translate(1084 613)"><rect x="0" y="-35" width="59" height="47" rx="5" fill="#e6bb80"/><rect x="39" y="-74" width="43" height="45" rx="4" fill="#a6bca7"/><path d="m-12-45 40-37 40 37Z" fill="#bc8491"/></g>
   </g>
+  <use href="#mobile-charms" x="897" y="310"/>
   <g id="nightstand">
     <rect x="303" y="408" width="105" height="112" rx="9" fill="#b28a78"/><rect x="313" y="418" width="85" height="34" rx="4" fill="#d1aa8d"/><circle cx="354" cy="434" r="4" fill="#937564"/>
     <path d="M352 405v-75" stroke="#a08771" stroke-width="6"/><use href="#lampshade" fill="#ffe4a3"/><ellipse cx="352" cy="403" rx="22" ry="5" fill="#ae927a"/>

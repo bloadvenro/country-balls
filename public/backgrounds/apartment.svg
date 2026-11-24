@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+<svg preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
   <defs>
     <linearGradient id="wall" x2=".8" y2="1"><stop stop-color="#f7e3be"/><stop offset="1" stop-color="#ebbe9d"/></linearGradient>
     <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#91cbdb"/><stop offset="1" stop-color="#f6dfb7"/></linearGradient>
@@ -18,7 +18,7 @@
   <g clip-path="url(#pane)">
     <rect x="260" y="70" width="426" height="229" fill="url(#sky)"/>
     <circle cx="582" cy="128" r="31" fill="#ffedb4"/>
-    <path d="M275 148q10-17 28-12 12-28 40-14 13 6 14 17 17-3 24 9Z" fill="#f5f1dc"/>
+    <path class="cloud" d="M275 148q10-17 28-12 12-28 40-14 13 6 14 17 17-3 24 9Z" fill="#f5f1dc"/>
     <path d="M255 222h72v-45h90v33h57v-53h82v76h52v-55h89v128H255Z" fill="#92b2b2"/>
     <path d="M255 222h72v-45h90v33h57v-53h82v76h52v-55h89v128H255Z" fill="url(#windows)" opacity=".65"/>
     <path d="M242 287q27-41 60-22 27-48 71-19 29-22 58 11 42-43 77-10 47-49 86-7 40-33 102-3v83H240Z" fill="#8fba98"/>
@@ -94,7 +94,7 @@
     <rect x="-77" y="-133" width="156" height="87" rx="4" fill="#95cfd6"/>
     <circle cx="47" cy="-110" r="12" fill="#fff2bb"/>
     <path d="M-77-56q40-42 88-12 32-19 68-12v34H-77Z" fill="#85b493"/>
-    <path d="m-30-74 26 0-8 9h-11Z" fill="#a66c51"/><path d="m-17-100-12 23h12Z" fill="#fff0c5"/>
+    <g class="sailboat"><path d="m-30-74 26 0-8 9h-11Z" fill="#a66c51"/><path d="m-17-100-12 23h12Z" fill="#fff0c5"/></g>
   </g>
   <!-- A picture taped to the wall, and a wooden train left on the living-room rug. -->
   <g transform="translate(758 223) rotate(5)">

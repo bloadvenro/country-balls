@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+<svg preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
  <defs>
   <linearGradient id="sky" x2=".35" y2="1"><stop stop-color="#141936"/><stop offset=".54" stop-color="#434179"/><stop offset="1" stop-color="#b283a3"/></linearGradient>
   <linearGradient id="dust" x2=".2" y2="1"><stop stop-color="#ceb6da"/><stop offset=".38" stop-color="#a899c3"/><stop offset="1" stop-color="#71658e"/></linearGradient>
@@ -13,7 +13,7 @@
  <g clip-path="url(#planet)"><circle r="87" fill="#edac92"/><path d="M-100-40Q-10-16 100-34M-100 10Q10 42 102 15" fill="none" stroke="#cf847e" stroke-width="18"/><path d="M-94-61Q0-35 100-57" fill="none" stroke="#ffcfab" stroke-width="7"/><path d="M36-86Q110-3 10 92H98V-90Z" fill="#765f87" opacity=".27"/></g>
  <path d="M-151 0A151 34 0 0 0 151 0" fill="none" stroke="#ffe0ae" stroke-width="10"/></g>
  <circle cx="368" cy="269" r="28" fill="#9acece"/><path d="M367 242q35 28-4 54a28 28 0 0 0 4-54Z" fill="#68a4b3"/>
- <use href="#spark" x="533" y="143"/><use href="#spark" x="714" y="309"/><use href="#spark" x="1180" y="230"/>
+ <g class="starlight"><use href="#spark" x="533" y="143"/><use href="#spark" x="714" y="309"/><use href="#spark" x="1180" y="230"/></g>
  <path d="m0 590 135-67 79 18 147-72 94 58 186 37 158-52 111 42 252-94 146 59 132-55v436H0Z" fill="#73698e"/>
  <path d="M0 589Q345 496 712 570T1440 541V900H0Z" fill="url(#dust)"/>
  <g opacity=".7"><use href="#crater" transform="translate(258 650) scale(1.2)"/><use href="#crater" transform="translate(904 579) scale(.46)"/><use href="#crater" transform="translate(1190 739) scale(1.5)"/><use href="#crater" transform="translate(637 815)"/><use href="#crater" transform="translate(522 617) scale(.28)"/></g>
@@ -30,7 +30,7 @@
     <path d="m-72-35 13-67h37l16 66" fill="#ba9a77" stroke="#736c77" stroke-width="5"/>
     <path d="M-13-35v-37h54l16 38" fill="none" stroke="#8c797d" stroke-width="7"/>
     <path d="M-89-41H63l26 22-10 21H-72Z" fill="#e1b775" stroke="#8f7b78" stroke-width="4"/>
-    <path d="M35-71v-42l21-9" fill="none" stroke="#797884" stroke-width="5"/><rect x="48" y="-133" width="30" height="19" rx="4" fill="#718a99"/><circle cx="69" cy="-124" r="5" fill="#cae3d7"/>
+    <g class="camera"><path d="M35-71v-42l21-9" fill="none" stroke="#797884" stroke-width="5"/><rect x="48" y="-133" width="30" height="19" rx="4" fill="#718a99"/><circle cx="69" cy="-124" r="5" fill="#cae3d7"/></g>
     <g fill="#57586a" stroke="#a6a0a7" stroke-width="7"><circle cx="-58" r="21"/><circle cx="4" r="21"/><circle cx="66" r="21"/></g>
   </g>
 </svg>

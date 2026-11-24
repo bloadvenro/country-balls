@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+<svg preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
   <defs>
     <linearGradient id="wall" x2=".25" y2="1"><stop stop-color="#d8f1e4"/><stop offset="1" stop-color="#aed8cf"/></linearGradient>
     <linearGradient id="floor" x2=".2" y2="1"><stop stop-color="#98c7c6"/><stop offset="1" stop-color="#ccdfd5"/></linearGradient>
@@ -17,15 +17,15 @@
   <path d="m246 341 9 162h154l9-162" fill="#8cb6ad"/><path d="M225 329h210q-21 55-104 55t-106-55Z" fill="#f7fbeb" stroke="#9bbdb5" stroke-width="4"/><path d="M328 328v-27q0-22 26-18" fill="none" stroke="#84a3a1" stroke-width="8"/>
   <path d="M542 430V252q0-48 47-48 38 0 38 37" fill="none" stroke="#779da0" stroke-width="11"/>
   <path d="M595 249q32-31 65 0l-2 7h-62Z" fill="#e1eddb" stroke="#7fa4a0" stroke-width="4"/>
-  <g stroke="#90c8cd" stroke-linecap="round" stroke-width="4"><path d="m608 271-5 16m25-16-2 17m21-16 2 16m-47 14-3 12m29-12v12"/></g>
+  <g class="shower" stroke="#90c8cd" stroke-linecap="round" stroke-width="4"><path d="m608 271-5 16m25-16-2 17m21-16 2 16m-47 14-3 12m29-12v12"/></g>
   <ellipse cx="789" cy="598" rx="258" ry="22" fill="#83afa9" opacity=".45"/>
   <path d="m586 547 6 43 15 3 13-39m327-1 10 40 16-2 9-44" fill="#a98d70"/>
   <path d="M519 436q10 124 93 134 143 23 295-2 94-14 116-132Z" fill="#f7f6e5" stroke="#8eafaa" stroke-width="5"/>
   <ellipse cx="774" cy="434" rx="259" ry="37" fill="#fffbed" stroke="#97b9b0" stroke-width="5"/>
   <ellipse cx="774" cy="437" rx="232" ry="23" fill="#a2d8d7"/>
   <g fill="#eefbf5"><circle cx="612" cy="426" r="18"/><circle cx="635" cy="416" r="20"/><circle cx="657" cy="426" r="18"/></g>
-  <use href="#bubble" x="664" y="378"/><use href="#bubble" transform="translate(686 351) scale(.6)"/>
-  <path d="M896 426q22 5 30-13 9-13 20-1 7 12-8 16-14 25-42 7Z" fill="#f4c35b"/><circle cx="939" cy="414" r="2"/><path d="m945 417 10 3-10 4Z" fill="#d98857"/>
+  <g class="suds"><use href="#bubble" x="664" y="378"/><use href="#bubble" transform="translate(686 351) scale(.6)"/></g>
+  <g class="duck"><path d="M896 426q22 5 30-13 9-13 20-1 7 12-8 16-14 25-42 7Z" fill="#f4c35b"/><circle cx="939" cy="414" r="2"/><path d="m945 417 10 3-10 4Z" fill="#d98857"/></g>
   <ellipse cx="778" cy="685" rx="214" ry="43" fill="#e5b198"/><ellipse cx="778" cy="685" rx="181" ry="31" fill="none" stroke="#f6d4bc" stroke-width="4"/>
   <!-- Step stool for the basin and a child's bath boat. -->
   <g transform="translate(460 553)"><ellipse cy="35" rx="69" ry="10" fill="#84aba5" opacity=".45"/>

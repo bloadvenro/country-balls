@@ -298,7 +298,7 @@ function App() {
   return <main className="park-page" data-background={game.backgroundId} data-performing={!!performance} data-action={performance?.action}>
     <Suspense fallback={<div className="loading">Готовим сцену…</div>}>
       <section className="stage-shell" aria-label={backgroundLabels[game.backgroundId]}>
-        <ParkCanvas actors={displayActors} balls={displayBalls} selected={actor} target={!!targetAction}
+        <ParkCanvas scene={game.backgroundId} actors={displayActors} balls={displayBalls} selected={actor} target={!!targetAction}
           bedroom={game.backgroundId === 'bedroom' ? {
             night: game.bedroomNight, lampOn: game.bedroomLampOn,
             toggleSky: () => setGame(value => ({ ...value, bedroomNight: !value.bedroomNight })),

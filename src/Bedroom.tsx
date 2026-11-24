@@ -28,6 +28,7 @@ export function BedroomArt({ night, lampOn, dx, dy }: Pick<BedroomLighting, 'nig
     <use href={file + 'walls'}/>
     <use href={file + (night ? 'moon-sky' : 'sun-sky')}/>
     <use href={file + 'furniture'}/>
+    <g className="bedroom-mobile"><use href={file + 'mobile-charms'} x="897" y="310"/></g>
     <use href={file + 'nightstand'} x={dx} y={dy}/>
     {night && <use href={file + 'night-shadows'}/>}
     {night && lampOn && <use href={file + 'lamp-glow'} x={dx} y={dy}/>}

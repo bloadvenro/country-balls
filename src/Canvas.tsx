@@ -5,7 +5,8 @@ import { actions, type Action, type Performance } from './actions'
 import { accessoryArt, faceAccessoryShift, faceArt, faceX, glaze, isBehindProp, strainingHands, svgUri } from './art'
 import { useBallFlag } from './ballFlag'
 import { BedroomArt, bedroomLayout, type BedroomLighting } from './Bedroom'
-import { actorScaleLimits, clamp, type Accessory, type Actor, type Ball } from './model'
+import { SceneArt } from './SceneArt'
+import { actorScaleLimits, clamp, type Accessory, type Actor, type Ball, type BackgroundId } from './model'
 import type { Face } from './toys'
 
 // A second finger must be able to hit another actor while the first actor is moving.
@@ -238,13 +239,14 @@ function Gesture({ kind, side, phase, reduced }: { kind:string|undefined; side:-
 }
 
 type ParkProps = {
+  scene: BackgroundId
   bedroom?: BedroomLighting
   actors: Actor[]; balls: Ball[]; selected: string | null; target: boolean; performance: Performance | null
   tap: (id: string) => void; clear: () => void; grab: (id: string) => void
   move: (id: string, x: number, y: number) => void; finish: () => void
   transform:(id:string,p:PinchTarget)=>void
 }
-export function ParkCanvas({ actors, balls, selected, target, performance: show, tap, clear, grab, move, finish,transform, bedroom }: ParkProps) {
+export function ParkCanvas({ actors, balls, selected, target, performance: show, tap, clear, grab, move, finish,transform, scene, bedroom }: ParkProps) {
   const { ref, width, height } = useFrame()
   const stage = useRef<Konva.Stage>(null), reduced = useReducedMotion()
   usePinch(ref,stage,id=>actors.find(a=>a.id===id),grab,transform,actorScaleLimits)
@@ -288,7 +290,7 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
   ] : []
 
   return <><div ref={ref} className="park-canvas" role="img" aria-label="Игровая сцена">
-    {bedroom && layout && <BedroomArt night={bedroom.night} lampOn={bedroom.lampOn} dx={layout.dx} dy={layout.dy}/>}
+    {bedroom && layout ? <BedroomArt night={bedroom.night} lampOn={bedroom.lampOn} dx={layout.dx} dy={layout.dy}/> : <SceneArt scene={scene}/>}
     <Stage ref={stage} width={width} height={height} onClick={e => { if (e.target === e.target.getStage()) clear() }} onTap={e => { if (e.target === e.target.getStage()) clear() }}>
       <Layer>
       {switches.map(control => <Rect key={control.key} {...control.box} fill="transparent" onClick={control.toggle} onTap={control.toggle}/>)}
