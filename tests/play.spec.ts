@@ -133,6 +133,11 @@ test.describe('выбор места', () => {
     await expect(sun).toHaveCount(0)
     await selectScene('bedroom')
     await sun.press('Enter')
+    const garland = page.locator('.bedroom-art use[href$="#garland-glow"]')
+    await expect(lamp).toHaveAttribute('aria-pressed', 'true')
+    await expect(garland).toBeVisible()
+    await lamp.press('Space')
+    await expect(garland).toHaveCount(0)
     await expect(lamp).toHaveAttribute('aria-pressed', 'false')
     await lamp.press('Space')
     await expect(lamp).toHaveAttribute('aria-pressed', 'true')
@@ -602,7 +607,7 @@ test('музыка меняется на всех сценах, играет о�
   await page.reload()
   await page.waitForFunction(() => !!navigator.serviceWorker.controller)
   await context.setOffline(true)
-  for (const scene of ['park', 'playground', 'party', 'space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom', 'maternity']) {
+  for (const scene of ['park', 'playground', 'party', 'space', 'ocean', 'beach', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom', 'maternity']) {
     await page.getByTestId('open-backgrounds').click()
     await page.getByTestId('background-' + scene).click()
     await expect.poll(playing).toEqual(['/music/' + scene + '.mp3'])

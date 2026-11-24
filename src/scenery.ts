@@ -1,6 +1,10 @@
 import { clamp, type BackgroundId, type SceneryFlag } from './model'
 
+const kitchenPivots = { oven: [415, 320], sink: [852, 311], fridge: [1170, 492] } as const
+type KitchenUnit = keyof typeof kitchenPivots
+
 type Target = {
+  unit?: KitchenUnit
   key: SceneryFlag
   label: string
   cx: number
@@ -15,8 +19,10 @@ const targets: Partial<Record<BackgroundId, Target[]>> = {
   ice: [{ key: 'night', label: 'Небо в Ледяной бухте', cx: 866, cy: 276, w: 104, h: 104 }],
   maternity: [{ key: 'night', label: 'Небо за окном палаты', cx: 1120, cy: 153, w: 87, h: 87 }],
   kitchen: [
-    { key: 'night', label: 'Окно кухни', cx: 852, cy: 132, w: 208, h: 169 },
-    { key: 'tapRunning', label: 'Кухонный кран', cx: 866, cy: 281, w: 62, h: 69 },
+    { unit: 'oven', key: 'ovenOpen', label: 'Духовка', cx: 415, cy: 418, w: 222, h: 174 },
+    { unit: 'fridge', key: 'fridgeOpen', label: 'Холодильник', cx: 1179, cy: 300, w: 203, h: 384 },
+    { unit: 'sink', key: 'night', label: 'Окно кухни', cx: 852, cy: 132, w: 208, h: 169 },
+    { unit: 'sink', key: 'tapRunning', label: 'Кухонный кран', cx: 866, cy: 281, w: 62, h: 69 },
   ],
   apartment: [
     { key: 'night', label: 'Окно гостиной', cx: 473, cy: 182, w: 456, h: 256 },
@@ -35,8 +41,26 @@ export function sceneryLayout(scene: BackgroundId, width: number, height: number
   const scale = Math.max(width / 1440, height / 900)
   // Slide the basin and its mirror along the wall to fit beside the shower.
   const basinX = scene === 'bathroom' ? clamp(408 - (width - 108) / scale, 0, 110) : 0
-  const objects = (targets[scene] ?? []).map(object => basinX && object.key === 'tapRunning'
-    ? { ...object, cx: object.cx + basinX } : object)
+  // On a narrow wall bring the kitchen fixtures together, scaling about the
+  // countertop or floor line. The same matrix places the drawing and its target.
+  const wallWidth = (width - 20) / scale
+  const kitchenSize = clamp(wallWidth / 590, .4, 1)
+  const kitchenSpacing = clamp((wallWidth - 201 * kitchenSize) / 755, .14, 1)
+  const kitchenStyle: Record<string, string> = {}
+  const objects = (targets[scene] ?? []).map(object => {
+    if (object.unit) {
+      const [x, y] = kitchenPivots[object.unit]
+      // In short landscape the first starting hero otherwise covers the oven door.
+      const offset = object.unit === 'oven' && width > height && height <= 500 ? -165 : 0
+      const dx = 780 + (x - 780) * kitchenSpacing - x * kitchenSize + offset
+      const dy = y * (1 - kitchenSize)
+      kitchenStyle['--kitchen-' + object.unit] = `matrix(${kitchenSize},0,0,${kitchenSize},${dx},${dy})`
+      return { ...object, cx: object.cx * kitchenSize + dx, cy: object.cy * kitchenSize + dy,
+        w: object.w * kitchenSize, h: object.h * kitchenSize }
+    }
+    if (basinX && object.key === 'tapRunning') return { ...object, cx: object.cx + basinX }
+    return object
+  })
   const artWidth = 1440 * scale, artHeight = 900 * scale
   let left = (width - artWidth) / 2, top = (height - artHeight) / 2
   const looseSun = scene === 'park' || scene === 'playground' || scene === 'ice'
@@ -45,7 +69,7 @@ export function sceneryLayout(scene: BackgroundId, width: number, height: number
     const anchors = objects.map(object => {
       // Frame the sun inside each window, while the whole pane responds to touch.
       if (object.key === 'night' && scene === 'apartment') return { x: 582, y: 128, rx: 31 }
-      if (object.key === 'night' && scene === 'kitchen') return { x: 894, y: 99, rx: 23 }
+      if (object.key === 'night' && object.unit === 'sink') return { x: object.cx + 42 * kitchenSize, y: object.cy - 33 * kitchenSize, rx: 23 * kitchenSize }
       return { x: object.cx, y: object.cy, rx: object.w / 2 }
     })
     // The living room screen sits directly above a starting hero in landscape.
@@ -77,5 +101,5 @@ export function sceneryLayout(scene: BackgroundId, width: number, height: number
       width: Math.min(width, x + hitWidth) - Math.max(0, x), height: Math.min(height, y + hitHeight) - Math.max(0, y) }
     return { key, label, box }
   })
-  return { frame: { left, top, width: artWidth, height: artHeight }, sunX, sunY, basinX, switches }
+  return { frame: { left, top, width: artWidth, height: artHeight, ...kitchenStyle }, sunX, sunY, basinX, switches }
 }

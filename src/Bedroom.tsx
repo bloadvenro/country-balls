@@ -24,13 +24,20 @@ export function bedroomLayout(width: number, height: number) {
 
 export function BedroomArt({ night, lampOn, dx, dy }: Pick<BedroomLighting, 'night' | 'lampOn'> & { dx: number; dy: number }) {
   const file = './backgrounds/bedroom.svg#'
+  // On a narrow screen the movable nightstand and its string of lights share a wall.
+  const lightsX = Math.max(0, dx)
+  const lightsY = -Math.min(88, lightsX * .45)
   return <svg className="bedroom-art" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMin slice" aria-hidden="true">
     <use href={file + 'walls'}/>
     <use href={file + (night ? 'moon-sky' : 'sun-sky')}/>
+    <use href={file + 'garland'} x={lightsX} y={lightsY}/>
     <use href={file + 'furniture'}/>
     <g className="bedroom-mobile"><use href={file + 'mobile-charms'} x="897" y="310"/></g>
     <use href={file + 'nightstand'} x={dx} y={dy}/>
     {night && <use href={file + 'night-shadows'}/>}
-    {night && lampOn && <use href={file + 'lamp-glow'} x={dx} y={dy}/>}
+    {night && lampOn && <>
+      <use href={file + 'garland-glow'} x={lightsX} y={lightsY}/>
+      <use href={file + 'lamp-glow'} x={dx} y={dy}/>
+    </>}
   </svg>
 }

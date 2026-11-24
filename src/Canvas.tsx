@@ -332,6 +332,7 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
   return <><div ref={ref} className="park-canvas" role="img" aria-label="Игровая сцена">
     {bedroom && layout ? <BedroomArt night={bedroom.night} lampOn={bedroom.lampOn} dx={layout.dx} dy={layout.dy}/> : (
       <div className="scene-frame" data-night={!!scenery.night} data-tv-off={!!scenery.tvOff}
+        data-oven-open={!!scenery.ovenOpen} data-fridge-open={!!scenery.fridgeOpen}
         data-chest-closed={!!scenery.chestClosed} data-tap-running={!!scenery.tapRunning} data-shower-running={!!scenery.showerRunning}
         style={{ ...background.frame, '--sun-x': background.sunX + 'px', '--sun-y': background.sunY + 'px', '--basin-x': background.basinX + 'px' } as CSSProperties}>
         <SceneArt scene={scene}/>

@@ -20,7 +20,7 @@ type Page = 'park' | 'workshop'
 type Tab = 'flags' | 'faces' | 'items'
 const route = (): Page => location.hash.slice(1) === 'workshop' ? 'workshop' : 'park'
 const tabs = [['flags', 'Флаги', Flag], ['faces', 'Мордочки', Heart], ['items', 'Наряды', Sparkles]] as const
-const backgroundLabels: Record<BackgroundId, string> = { park: 'Парк', playground: 'Парк аттракционов', party: 'Праздник', space: 'Космос', ocean: 'Под водой', ice: 'Ледяная бухта', apartment: 'Гостиная', kitchen: 'Кухня', bathroom: 'Ванная', bedroom: 'Спальня', maternity: 'Родильное отделение' }
+const backgroundLabels: Record<BackgroundId, string> = { park: 'Парк', playground: 'Парк аттракционов', party: 'Праздник', space: 'Космос', ocean: 'Под водой', beach: 'Морской пляж', ice: 'Ледяная бухта', apartment: 'Гостиная', kitchen: 'Кухня', bathroom: 'Ванная', bedroom: 'Спальня', maternity: 'Родильное отделение' }
 const EditorCanvas = lazy(() => import('./Canvas').then(module => ({ default: module.EditorCanvas })))
 const ParkCanvas = lazy(() => import('./Canvas').then(module => ({ default: module.ParkCanvas })))
 
@@ -371,7 +371,7 @@ function App() {
           })}
           bedroom={game.backgroundId === 'bedroom' ? {
             night: game.bedroomNight, lampOn: game.bedroomLampOn,
-            toggleSky: () => setGame(value => ({ ...value, bedroomNight: !value.bedroomNight })),
+            toggleSky: () => setGame(value => ({ ...value, bedroomNight: !value.bedroomNight, bedroomLampOn: !value.bedroomNight })),
             toggleLamp: () => setGame(value => value.bedroomNight ? { ...value, bedroomLampOn: !value.bedroomLampOn } : value),
           } : undefined}
           performance={performance} finish={finishPerformance} tap={tapActor} openEditor={openStageEditor}

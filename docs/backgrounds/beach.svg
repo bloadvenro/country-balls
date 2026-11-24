@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+  <defs>
+    <linearGradient id="beachSky" x2=".15" y2="1"><stop stop-color="#89ccd9"/><stop offset="1" stop-color="#ffedc9"/></linearGradient>
+    <linearGradient id="beachSea" x2=".12" y2="1"><stop stop-color="#7db8bf"/><stop offset=".5" stop-color="#81c8c4"/><stop offset="1" stop-color="#badfcb"/></linearGradient>
+    <linearGradient id="beachSand" x2=".25" y2="1"><stop stop-color="#edcd99"/><stop offset=".55" stop-color="#f4ddaf"/><stop offset="1" stop-color="#e9c592"/></linearGradient>
+    <pattern id="sandGrains" width="98" height="72" patternUnits="userSpaceOnUse"><g fill="#c99b65" opacity=".38"><ellipse cx="21" cy="17" rx="2.7" ry="1.4"/><ellipse cx="26" cy="15" rx="1.6" ry="1"/><circle cx="77" cy="56" r="1.2"/></g></pattern>
+    <g id="beachShell" stroke="#c38271" stroke-width="2" stroke-linecap="round"><path d="M0 8C-6 5-22-2-18-9q2-5 8-3 2-8 9-4 5-6 10 1 8-2 8 5 4 8-17 18Z" fill="#e9aa91"/><path d="m-9-8 8 13m2-16-2 16m12-13L2 5" fill="none"/></g>
+    <g id="sandTower" stroke-linejoin="round"><path d="m-31 4 7-98-5-5v-26h13v12h12v-12h13v12h12v-12h12v24l-7 8 8 97Z" fill="#dfb57d" stroke="#bc9468" stroke-width="3"/><path d="m10-91 4 89h17l-8-89Z" fill="#cda16d"/><path d="M-8-60q0-14 14-14v20H-8Z" fill="#9f835e"/><path d="M-26-93h49" stroke="#be986f" stroke-width="3"/></g>
+  </defs>
+
+  <rect width="1440" height="370" fill="url(#beachSky)"/>
+  <circle cx="958" cy="119" r="44" fill="#ffeab2"/><circle cx="958" cy="119" r="57" fill="#ffedb3" opacity=".2"/>
+  <g fill="#fff6dd" opacity=".88">
+    <path d="M89 130q7-21 26-18 11-36 42-24 18 6 21 23 25-7 35 19Z"/>
+    <path d="M528 94q10-23 31-19 13-35 43-28 20 4 27 25 29-8 44 22Z"/>
+    <path d="M1183 181q9-18 26-15 13-26 37-19 11 4 17 17 22-4 33 17Z"/>
+  </g>
+  <g class="beach-gulls" fill="none" stroke="#768f98" stroke-width="3.5" stroke-linecap="round"><path d="M650 139q16-4 24 5 6-13 19-15m24 32q10-4 16 2 4-9 14-11"/></g>
+  <!-- Lighthouse and a low pine-covered headland at the entrance to the bay. -->
+  <path d="M0 285q84-50 171-40 61 6 118 23 42 13 96 17Z" fill="#a0ae91"/>
+  <g stroke-linejoin="round"><path d="m185 245 6-63h19l7 66Z" fill="#f7e6ce" stroke="#9c9687" stroke-width="2"/><path d="m189 204 22-1 2 12-25 1Z" fill="#cd8e7d"/>
+    <rect x="190" y="174" width="22" height="10" fill="#9baba2"/><path d="m185 174 16-13 15 13Z" fill="#c18c7b"/><path d="M196 180h9" stroke="#fff0bb" stroke-width="4"/>
+  </g>
+  <path d="M0 284q166-5 349 2t408 0 381-2 302 1v213H0Z" fill="url(#beachSea)"/>
+  <g fill="none" stroke-linecap="round"><path d="M0 286q253 4 438 0m46 1 141 0m430-1 385-1" stroke="#e0ecd5" stroke-width="3"/>
+    <path d="m98 354 98 1m51-34 100 1m88 34 95-1m103-44 48 0m368 39 64 1m161-40 87 0" stroke="#d6edcf" stroke-width="3"/>
+    <path d="m128 392 61 1m302-14 78 0m431-75 39 0m85 23 112 1" stroke="#70b8b6" stroke-width="2"/>
+  </g>
+  <g class="beach-boat" stroke-linejoin="round">
+    <path d="M821 285v-89" stroke="#9a7a66" stroke-width="4"/>
+    <path d="m815 201-49 76q25-7 49-3Z" fill="#f6e2b7" stroke="#cbbd9e" stroke-width="2"/>
+    <path d="m826 207 39 65q-20-6-39 1Z" fill="#d88f78"/><path d="m826 232 16 26-16-4Z" fill="#edb496"/>
+    <path d="m765 281 101-2-17 14h-63Z" fill="#527c88"/><path d="m775 284 83-2" stroke="#dfb28d" stroke-width="3"/>
+    <path d="M775 298q39 4 76-1" stroke="#daf1d7" stroke-width="3" fill="none"/>
+  </g>
+
+  <path d="M0 461q166-42 366-27t370 5 356-24 348 17v468H0Z" fill="url(#beachSand)"/>
+  <path d="M0 461q166-42 366-27t370 5 356-24 348 17v468H0Z" fill="url(#sandGrains)"/>
+  <path d="M0 454q167-39 365-27t372 5 359-25 344 19v14q-155-29-348-13t-354 22-377-5T0 472Z" fill="#dfd3a8"/>
+  <g class="beach-foam"><path d="M-16 442q171-40 377-24t375 5 359-25 363 20v11q-153-26-349-14t-374 22-372-6T-16 458Z" fill="#e3f3da"/><path d="M33 430q132-26 231-17m178 15q81 6 147 5m409-34q65-9 128-7m136 7 89 8" stroke="#eff7de" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+
+  <!-- A canvas deck chair and striped parasol leave room to play in the foreground. -->
+  <ellipse cx="527" cy="589" rx="145" ry="18" fill="#ad936e" opacity=".23"/>
+  <path d="m511 556 23-235" stroke="#a78367" stroke-width="8" stroke-linecap="round"/>
+  <path d="M413 364q19-69 119-77 85 10 122 89-24-17-44-4-24-20-49-6-27-19-51-4-25-19-48-4-27-12-49 6Z" fill="#f1dca6" stroke="#b28c75" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M413 363q33-73 119-75-51 26-70 70-27-12-49 5Zm119-75q10 29-22 74 22-15 51 4 10-46-29-78Zm0 0q62 26 78 84 18-14 44 2-35-76-122-86Z" fill="#d98171"/>
+  <circle cx="533" cy="286" r="5" fill="#b28364"/>
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <path d="m491 494 70 89m28-104-113 108m111-109 17 84m-103-34-16 55" fill="none" stroke="#a37e61" stroke-width="7"/>
+    <path d="m489 486-19-57 80-8 31 81-74 32Z" fill="#79a9a6" stroke="#95785f" stroke-width="5"/>
+    <path d="m487 429 18 55 16 26 13-5-17-27-16-51m22-3 17 53 18 24 13-4-17-25-17-50Z" fill="#f4e4b8"/>
+    <path d="m486 486 92 11 22 14-94 22Z" fill="#dfc9a4" stroke="#a38466" stroke-width="4"/>
+  </g>
+  <!-- A sandcastle with a shell above the gate, a bucket and a wooden spade. -->
+  <ellipse cx="816" cy="618" rx="146" ry="16" fill="#bd9a71" opacity=".4"/>
+  <g transform="translate(820 610)">
+    <path d="M-73 0q0-97 19-106l-2-11h75l2 16q17 16 18 101Z" fill="#d6ab74" stroke="#b89268" stroke-width="3"/>
+    <use href="#sandTower" transform="translate(-67 2) scale(.78)"/><use href="#sandTower" transform="translate(57 0) scale(.92)"/>
+    <path d="M-74 4v-51h15v9h16v-11h15v10h15v-10h15v10h16v-11h15v10h15v-10h15v52Z" fill="#e9bf85" stroke="#bb9569" stroke-width="3"/>
+    <path d="M-15 4v-17q0-21 17-24 17 3 17 24V4Z" fill="#977754"/>
+    <use href="#beachShell" transform="translate(1 -48) scale(.6)"/>
+    <path d="M-12-113v-48" stroke="#a48161" stroke-width="4"/><path d="m-10-161 38 7-13 7-25-1Z" fill="#d7806d"/>
+  </g>
+  <g transform="translate(716 641)" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cy="4" rx="28" ry="6" fill="#c7a378"/><path d="m-22-32 43 1-5 31q-15 9-32-1Z" fill="#7eaaa8" stroke="#608d90" stroke-width="3"/>
+    <ellipse cy="-32" rx="23" ry="6" fill="#a5c6b9" stroke="#648d8c" stroke-width="3"/><path d="M-20-31q4-36 27-20 7 6 10 20" fill="none" stroke="#c28a69" stroke-width="3"/>
+    <path d="m38-10 16-36m-3-1q6-15 12-9t-8 14" fill="none" stroke="#a98b69" stroke-width="4"/><path d="m31-11 14 6-5 9q-5 5-14-4Z" fill="#d89379"/>
+  </g>
+  <g opacity=".88"><use href="#beachShell" transform="translate(319 651) rotate(-19) scale(.7)"/><use href="#beachShell" transform="translate(1021 727) rotate(20) scale(.6)"/></g>
+  <g transform="translate(634 742) rotate(9)" fill="#d99377" stroke="#bd876f" stroke-width="2"><path d="m0-19 6 13 16 2-12 9 3 14-14-8-13 7 3-14-12-10 16-1Z"/><circle r="2" fill="#f7c9a3" stroke="none"/></g>
+</svg>

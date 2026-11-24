@@ -19,6 +19,12 @@
     <radialGradient id="warm-light"><stop stop-color="#ffd797" stop-opacity=".72"/><stop offset=".46" stop-color="#ffcf8d" stop-opacity=".32"/><stop offset="1" stop-color="#ffe1ac" stop-opacity="0"/></radialGradient>
     <path id="lampshade" d="m327 308 47-1 14 46h-76Z"/>
     <g id="lamp-glow"><ellipse cx="350" cy="358" rx="240" ry="187" fill="url(#warm-light)"/><use href="#lampshade" fill="#ffdf95"/><ellipse cx="350" cy="352" rx="36" ry="3" fill="#fff0bd"/></g>
+    <g id="garland">
+  <path d="M188 102q167 136 350 18" fill="none" stroke="#a293a8" stroke-width="4"/>
+  <g fill="#d6c4a6"><circle cx="240" cy="140" r="7"/><circle cx="310" cy="167" r="8"/><circle cx="391" cy="174" r="7"/><circle cx="469" cy="157" r="8"/></g>
+    </g>
+    <g id="lit-bulb"><circle r="30" fill="url(#warm-light)"/><circle r="8" fill="#ffe39a"/><circle cy="-2" r="4" fill="#fff7ce"/></g>
+    <g id="garland-glow"><use href="#lit-bulb" x="240" y="140"/><use href="#lit-bulb" x="310" y="167"/><use href="#lit-bulb" x="391" y="174"/><use href="#lit-bulb" x="469" y="157"/></g>
     <g id="mobile-charms" stroke-linecap="round" stroke-linejoin="round">
     <path d="M27-103v15m-43 12 43-13 47 14m-88 0v21m40-33v23m48-10v18" fill="none" stroke="#9f8593" stroke-width="2.5"/>
     <use href="#star" transform="translate(-15 -47) scale(1.35)"/><use href="#star" transform="translate(71 -49)"/>
@@ -33,10 +39,9 @@
   <rect x="690" y="62" width="215" height="180" rx="73" fill="#6876a3"/>
   <path d="M771 95q-18 48 27 47-21 28-47 5t20-52Z" fill="#ffdf9f"/><use href="#star" x="840" y="104"/><use href="#star" x="865" y="162"/><use href="#star" x="717" y="164"/>
   </g>
+  <use href="#garland"/>
   <g id="furniture">
   <path d="M695 196q48-30 86 0 43-23 120-13l-6 32-18 15H723Z" fill="#777c9b"/><path d="M797 62v180m-105-85h211" stroke="#e9d8c6" stroke-width="8"/>
-  <path d="M188 102q167 136 350 18" fill="none" stroke="#a293a8" stroke-width="4"/>
-  <g fill="#ffdf99"><circle cx="240" cy="140" r="7"/><circle cx="310" cy="167" r="8"/><circle cx="391" cy="174" r="7"/><circle cx="469" cy="157" r="8"/></g>
   <rect x="1062" y="158" width="197" height="10" rx="4" fill="#af8874"/><path d="m1084 156 0-51 13 0 0 51m4 0v-40h15v40" fill="#769e98"/>
   <path d="M1147 151q-14-19 3-31-5-9 3-13 9-4 12 6l12-1q6-12 14-4 4 5-1 12 15 14 3 30Z" fill="#c79e80"/><circle cx="1163" cy="129" r="2" fill="#69525b"/><circle cx="1180" cy="129" r="2" fill="#69525b"/>
   <path d="M0 502h1440v398H0Z" fill="url(#floor)"/>

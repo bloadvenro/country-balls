@@ -15,7 +15,7 @@
   <rect x="0" y="202" width="1440" height="125" fill="url(#tiles)"/>
   <g fill="#f4d9ab" stroke="#c69e75" stroke-width="4"><rect x="250" y="76" width="228" height="123" rx="8"/><rect x="484" y="76" width="164" height="123" rx="8"/></g>
   <path d="M365 79v117m-18-54v23m34-23v23m171-3h29" stroke="#ba9169" stroke-width="5" stroke-linecap="round"/>
-  <rect x="748" y="47" width="208" height="169" rx="9" fill="#fff3d7"/><rect x="759" y="58" width="186" height="145" fill="#aad9df"/>
+  <g class="kitchen-sink"><rect x="748" y="47" width="208" height="169" rx="9" fill="#fff3d7"/><rect x="759" y="58" width="186" height="145" fill="#aad9df"/>
   <g class="at-night" display="none"><rect x="759" y="58" width="186" height="145" fill="url(#nightSky)"/><rect x="759" y="58" width="186" height="145" fill="url(#stars)"/></g>
   <g transform="translate(894 99) scale(0.46)">
       <circle class="by-day" r="50" fill="#ffeeb7"/>
@@ -25,22 +25,72 @@
         <path d="m28-28 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" fill="#fff7d5"/>
       </g>
     </g><path d="M759 168q49-38 94 0 52-51 92-21v56H759Z" fill="#91b59a"/><path d="M852 57v146" stroke="#fff1d6" stroke-width="8"/>
+  </g>
   <rect x="132" y="318" width="1073" height="179" rx="5" fill="#86aa95"/><rect x="119" y="311" width="1099" height="17" rx="5" fill="#b88b66"/>
   <g stroke="#608877" stroke-width="4" fill="none"><path d="M255 333v155m336-155v155m179-155v155m176-155v155m156-155v155"/><path d="M636 354h43m151 0h46m123 0h44" stroke-linecap="round"/></g>
-  <rect x="303" y="331" width="224" height="158" rx="7" fill="#e0c8a1"/><rect x="325" y="366" width="181" height="99" rx="10" fill="#4f6563"/><path d="m344 437 42-49m-12 51 42-50" stroke="#77908a" stroke-width="8"/>
-  <g fill="#947962"><circle cx="339" cy="349" r="6"/><circle cx="363" cy="349" r="6"/><circle cx="389" cy="349" r="6"/></g>
+  <g class="kitchen-oven">
+    <rect x="303" y="331" width="224" height="158" rx="7" fill="#e0c8a1"/>
+    <g fill="#947962"><circle cx="339" cy="349" r="6"/><circle cx="363" cy="349" r="6"/><circle cx="389" cy="349" r="6"/></g>
+    <rect class="oven-interior" x="315" y="363" width="200" height="115" rx="8" fill="#794e48"/>
+    <rect x="324" y="371" width="182" height="94" rx="6" fill="#a16b4d"/>
+    <path d="M325 444h180l-13 13H337Z" fill="#515959"/><path d="M333 443h165" stroke="#d1b18b" stroke-width="4"/>
+    <!-- A bunny bread roll and a pair of star biscuits on the baking tray. -->
+    <g stroke="#a56b3e" stroke-linejoin="round" stroke-width="2.5">
+      <path d="M385 421q-26-34-18-40 11-7 26 31-2-35 7-35 12 0 4 40Z" fill="#efbb71"/>
+      <ellipse cx="391" cy="429" rx="32" ry="17" fill="#f5c780"/>
+      <path d="m455 404 7 10 12 2-8 9 1 12-12-5-10 5 1-12-9-8 12-3Z" fill="#f4c47a"/>
+      <path d="m348 422 3 7 8 1-6 5 1 7-7-3-6 3 1-7-5-5 8-1Z" fill="#f4cf90"/>
+    </g>
+    <g fill="#684b41"><circle cx="383" cy="425" r="2.6"/><circle cx="400" cy="425" r="2.6"/><path d="m388 428h6l-3 4Z"/></g>
+    <g class="oven-door">
+      <rect x="312" y="360" width="206" height="121" rx="9" fill="#cab18f" stroke="#9e8169" stroke-width="3"/>
+      <rect x="325" y="371" width="180" height="94" rx="8" fill="#4f6563"/>
+      <path d="m344 445 44-54m-11 51 40-47" stroke="#78918a" stroke-width="7"/>
+      <path d="M354 367h122" stroke="#6d7771" stroke-width="7" stroke-linecap="round"/>
+    </g>
   <g class="steam" fill="none" stroke="#fff9ed" stroke-width="4" stroke-linecap="round">
     <path opacity="0" d="M406 269q-8-8-2-15t-1-15"/><path opacity="0" d="M426 267q9-9 3-15t3-13"/>
   </g>
   <path d="M380 283h74l-6 22q-28 10-58 0Z" fill="#d78067"/><path d="M376 282h81m-43-7h12" stroke="#836f60" stroke-width="6" stroke-linecap="round"/>
+  </g>
+  <g class="kitchen-sink">
   <g class="tap-stream" display="none" fill="none" stroke-linecap="round">
     <path d="M883 272v36" stroke="#6ec8d9" stroke-width="7"/>
     <path class="running-water" d="M882 272v36" stroke="#e5fcff" stroke-width="2.3" stroke-dasharray="5 8"/>
     <path d="m874 305 4 2m10 0 4-3" stroke="#8ac9cf" stroke-width="3"/>
   </g>
   <path class="faucet" d="M848 311v-34q0-23 18-23 17 0 17 17" fill="none" stroke="#7d9794" stroke-width="8"/>
-  <rect x="1081" y="107" width="177" height="385" rx="20" fill="#f7e7c5" stroke="#b99e80" stroke-width="4"/><path d="M1084 248h171m-145-56v27m0 51v41" stroke="#c0a385" stroke-width="6"/>
-  <path d="m1152 162 32 4-5 44-34-4Z" fill="#f5bd99"/><circle cx="1168" cy="164" r="5" fill="#7b9c92"/>
+  </g>
+  <g class="kitchen-fridge">
+    <rect x="1081" y="107" width="177" height="385" rx="20" fill="#ebdec1" stroke="#b99e80" stroke-width="4"/>
+    <rect class="fridge-interior" x="1090" y="118" width="158" height="360" rx="13" fill="#a5cfcd"/>
+    <rect x="1097" y="125" width="143" height="341" rx="10" fill="#dcf1de"/>
+    <ellipse cx="1168" cy="134" rx="19" ry="4" fill="#fffaab"/>
+    <!-- Popsicles upstairs, a strawberry cake and milk below. -->
+    <g stroke-linejoin="round" stroke-width="3">
+      <path d="M1128 215v-21m61 21v-21" stroke="#b3895e" stroke-width="7" stroke-linecap="round"/>
+      <rect x="1114" y="157" width="29" height="43" rx="12" fill="#e99891" stroke="#cb827a"/>
+      <path d="M1121 169v13m8-15v11" stroke="#ffd4b5"/>
+      <rect x="1175" y="157" width="29" height="43" rx="12" fill="#a2be8c" stroke="#829f7e"/>
+      <path d="m1179 177 20-7m-20 18 20-6" stroke="#d8e4ae"/>
+      <path d="M1114 308v-37q44-17 85 0v37Z" fill="#f4c281" stroke="#be976e"/>
+      <path d="M1115 287q42 9 83 0v8q-41 9-83 0Z" fill="#c77c7e" stroke="none"/>
+      <path d="M1114 274q0-12 40-13 45 0 45 13 0 7-11 5-3 12-9 5-4-7-14-2-8 8-15-1-3-4-12 1-8 8-12-2-12 5-12-6Z" fill="#fff0d8" stroke="#d8bca2"/>
+      <path d="M1144 258q-1-9 9-8 10-4 13 4-2 11-12 13Z" fill="#d77b76" stroke="#b86760"/>
+      <path d="m1147 248 7 3 1-7 4 6 7-3" fill="none" stroke="#729880"/>
+      <path d="m1110 416 1-44 9-10h21l9 11v43Z" fill="#faf0ce" stroke="#9db6aa"/>
+      <path d="M1111 394h39v12h-39Z" fill="#8bbeb6" stroke="none"/>
+      <path d="m1119 362 21 0" stroke="#8daf9e" stroke-width="5"/>
+      <path d="M1175 411q-13-17-4-27 7-8 14-3 11-7 18 1 10 12-3 29-7 11-13 4-7 5-12-4Z" fill="#df9377" stroke="#ba886d"/>
+      <path d="M1185 383q-3-12 8-16" stroke="#84976c" fill="none"/>
+    </g>
+    <g stroke="#91b9ac" stroke-width="4" fill="#f6f6d8"><path d="M1093 216h151v6h-151ZM1093 310h151v7h-151ZM1093 417h151v6h-151Z"/></g>
+    <g class="fridge-door">
+      <rect x="1081" y="107" width="177" height="385" rx="20" fill="#f7e7c5" stroke="#b99e80" stroke-width="4"/><path d="M1084 248h171m-145-56v27m0 51v41" stroke="#c0a385" stroke-width="6"/>
+      <path d="m1152 162 32 4-5 44-34-4Z" fill="#f5bd99"/><circle cx="1168" cy="164" r="5" fill="#7b9c92"/>
+  <g transform="translate(1162 337) rotate(6)"><rect x="-31" y="-42" width="62" height="84" fill="#fcf3d3"/><path d="m-18 3 18-20L19 3m-32-4v23h26V0" fill="none" stroke="#d28c72" stroke-width="3"/><circle cx="17" cy="-22" r="6" fill="#e5bf62"/><circle cy="-40" r="5" fill="#879bae"/></g>
+    </g>
+  </g>
   <path d="M0 502h1440v398H0Z" fill="url(#floor)"/>
   <path d="M0 502h1440" stroke="#ad8769" stroke-width="12"/>
   <path d="M0 611h1440M0 792h1440" stroke="#cda77f" stroke-width="3"/>
@@ -63,6 +113,6 @@
     <path d="M3-78q-13-5-11 4 0 7 12 6m21-10q13-5 11 4 0 7-12 6" fill="none" stroke="#689e9c" stroke-width="4"/>
     <rect x="1" y="-85" width="25" height="18" rx="5" fill="#83b8b0"/><path d="M1-83q0-7 10-7l2-5h6l1 6 6 6Z" fill="#679c99"/>
   </g>
-  <g transform="translate(1162 337) rotate(6)"><rect x="-31" y="-42" width="62" height="84" fill="#fcf3d3"/><path d="m-18 3 18-20L19 3m-32-4v23h26V0" fill="none" stroke="#d28c72" stroke-width="3"/><circle cx="17" cy="-22" r="6" fill="#e5bf62"/><circle cy="-40" r="5" fill="#879bae"/></g>
+
   <rect class="at-night" display="none" width="1440" height="900" fill="#343663" opacity=".25"/>
 </svg>
