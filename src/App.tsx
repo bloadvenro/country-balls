@@ -11,7 +11,7 @@ import { BallIcon, FaceIcon, PropIcon } from './Illustrations'
 import { actions, soundAction, type ActionId, type Performance } from './actions'
 import { chime, pronounce, stopVoice } from './audio'
 import {
-  accessory, actorScaleLimits, addToStage, backgrounds, ballKeyPrefix, clamp, countries, faces, favoriteCodes, flagOf, items,
+  accessory, actorScaleLimits, addToStage, backgrounds, ballKeyPrefix, clamp, countries, deleteBall, faces, favoriteCodes, flagOf, items,
   nameOf, newBall, type Accessory, type BackgroundId,
   type Ball, type Code, type Face, type Item,
 } from './model'
@@ -46,8 +46,10 @@ function App() {
   const [voiceUnavailable, setVoiceUnavailable] = useState<Code | null>(null)
   const [cached, setCached] = useState(false)
   const timers = useRef<number[]>([])
+  const deleteDialog = useRef<HTMLDialogElement>(null)
   const balls = game.collection
-  const draft = balls.find(ball => ball.id === editingId) ?? newDraft
+  const editingBall = balls.find(ball => ball.id === editingId)
+  const draft = editingBall ?? newDraft
   const currentActor = game.actors.find(item => item.id === actor)
   const currentBall = balls.find(ball => ball.id === currentActor?.ballId)
   const currentProp = draft.accessories.find(part => part.id === selectedProp)
@@ -75,7 +77,7 @@ function App() {
   }, [])
   useEffect(() => {
     const escape = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return
+      if (event.key !== 'Escape' || deleteDialog.current?.open) return
       if (panel) {
         setPanel(null); setConfirmReset(false); return
       }
@@ -113,13 +115,26 @@ function App() {
     if (next === page) setPage(next)
     else location.hash = next
   }
-  const resetDraft = (existing?: Ball) => {
+  const resetDraft = useCallback((existing?: Ball) => {
     if (!existing) setNewDraft(newBall())
-    setEditingId(existing?.id ?? null); setSelectedProp(null); setPast([]); setTab('flags'); setLook(0); setNotice('')
-  }
+    setEditingId(existing?.id ?? null); setSelectedProp(null); setPast([]); setTab('flags'); setLook(0); setNotice(''); setVoiceUnavailable(null)
+  }, [])
+  useEffect(() => {
+    // The design can also be deleted in another open window.
+    if (editingId && !editingBall) resetDraft()
+  }, [editingId, editingBall, resetDraft])
   const create = () => { resetDraft(); go('workshop') }
   const edit = (ball: Ball) => {
     resetDraft(ball); setActor(game.actors.find(item => item.ballId === ball.id)?.id ?? null); go('workshop')
+  }
+  const removeDesign = () => {
+    if (!editingBall) return
+    deleteDialog.current?.close()
+    const index = balls.indexOf(editingBall)
+    const next = setGame(value => deleteBall(value, editingBall.id))
+    resetDraft(next.collection[Math.min(index, next.collection.length - 1)])
+    setActor(null)
+    stopVoice()
   }
   const applyEdit = (update: (ball: Ball) => Ball) => {
     if (!editingId) { setNewDraft(update); return }
@@ -215,7 +230,8 @@ function App() {
   }
   const putBall = (ball: Ball) => {
     const next = setGame(value => addToStage(value, ball, false))
-    setActor(next.actors[next.actors.length - 1]?.id ?? null); setPanel(null)
+    if (next.collection.some(saved => saved.id === ball.id)) setActor(next.actors.at(-1)?.id ?? null)
+    setPanel(null)
   }
   const iconButton = (label: string, Icon: typeof Minus, click: () => void, disabled = false) =>
     <button type="button" className="icon-button" aria-label={label} title={label} onClick={click} disabled={disabled}><Icon /></button>
@@ -251,7 +267,15 @@ function App() {
               title={voiceUnavailable === draft.code ? 'Запись недоступна — попробовать снова' : 'Повторить название страны'}
               onClick={repeatName} disabled={!game.voice}>{voiceUnavailable === draft.code ? <VolumeX /> : <Volume2 />}</button></div>
           <div className="preview-buttons"><button className="secondary-button icon-action" aria-label="Посмотреть вокруг" title="Посмотреть вокруг" onClick={watch}><Eye /></button>
-            {!editingId && <button className="primary-button done" onClick={done}><Check />Готово</button>}</div>
+            {editingBall ? <button className="secondary-button icon-action delete-design" aria-label="Удалить шарик из коллекции"
+              title="Удалить шарик из коллекции" onClick={() => deleteDialog.current?.showModal()}><Trash2 /></button>
+              : <button className="primary-button done" onClick={done}><Check />Готово</button>}</div>
+          {editingBall && <dialog key={editingBall.id} ref={deleteDialog} className="delete-dialog" aria-labelledby="delete-title" aria-describedby="delete-detail">
+            <h2 id="delete-title">Удалить шарик «{nameOf(editingBall.code)}»?</h2>
+            <p id="delete-detail">Он исчезнет из коллекции и «Друзей». Все его копии на сцене тоже исчезнут.</p>
+            <form method="dialog"><button autoFocus className="secondary-button">Оставить</button>
+              <button type="button" className="primary-button delete-confirm" onClick={removeDesign}>Удалить</button></form>
+          </dialog>}
         </section>
         <section className="toolbox">
           <div className="tabs" aria-label="Настройки шарика">{tabs.map(([id, label, Icon]) =>
@@ -276,9 +300,7 @@ function App() {
                 <svg viewBox="-25 -16 50 32" aria-hidden="true" dangerouslySetInnerHTML={{ __html: mouth === 'none' ? '<circle r="9" fill="none" stroke="#aaa2b9"/><path d="m-6 6 12-12" stroke="#aaa2b9"/>' : mouthArt(mouth) }}/><span>{mouthStyles[mouth]}</span>
               </button>)}</div></div>
           <div className="catalog" hidden={tab !== 'items'}><h2>Наряди шарика</h2><p>Предмет можно двигать прямо на шарике.</p>
-            <div className="prop-grid">{(Object.entries(items) as [Item, string][]).map(([id, label]) =>
-              <button key={id} onClick={() => add(id)}><PropIcon kind={id} /><span>{label}</span></button>)}</div>
-            {!!draft.accessories.length && <div className="worn"><h3>На шарике</h3><div>{draft.accessories.map((part, index) =>
+            {!!draft.accessories.length && <div className="worn"><h3>На шарике</h3><div className="worn-list">{draft.accessories.map((part, index) =>
               <button key={part.id} aria-label={`Выбрать: ${items[part.kind]}, предмет ${index + 1}`} aria-pressed={selectedProp === part.id}
                 onClick={() => setSelectedProp(part.id)}><PropIcon kind={part.kind} /></button>)}</div></div>}
             {currentProp && <div className="transform-tools"><strong>{items[currentProp.kind]}</strong>
@@ -287,6 +309,9 @@ function App() {
               {iconButton('Повернуть предмет', RotateCw, () => editProp(currentProp.id, { angle: (currentProp.angle + 15) % 360 }))}
               {iconButton('Снять предмет', Trash2, () => { change(ball => ({ ...ball, accessories: ball.accessories.filter(part => part.id !== currentProp.id) })); setSelectedProp(null) })}
             </div>}
+            {!!draft.accessories.length && <h3>Все наряды</h3>}
+            <div className="prop-grid">{(Object.entries(items) as [Item, string][]).map(([id, label]) =>
+              <button key={id} onClick={() => add(id)}><PropIcon kind={id} /><span>{label}</span></button>)}</div>
           </div>
         </section>
       </div>
@@ -330,6 +355,7 @@ function App() {
     {panel && <aside className={`floating-panel ${panel}`} aria-label={panel === 'friends' ? 'Добавить друга' : panel === 'backgrounds' ? 'Выбрать место' : 'Настройки'}>
       <div className="panel-head"><strong>{panel === 'friends' ? 'Кто идёт играть?' : panel === 'backgrounds' ? 'Куда отправимся?' : 'Настройки'}</strong>
         {iconButton('Закрыть панель', X, () => setPanel(null))}</div>
+      {panel === 'friends' && !balls.length && <button className="primary-button" onClick={create}><Plus />Создать шарик</button>}
       {panel === 'friends' && <div className="friend-picker">{balls.map(ball => {
         const copies = game.actors.filter(item => item.ballId === ball.id).length
         return <button key={ball.id} onClick={() => putBall(ball)}><BallIcon ball={ball} /><span>{nameOf(ball.code)}</span>
@@ -388,7 +414,10 @@ function App() {
     </aside>}
     {targetAction && <div className="target-hint" role="status">{actions[targetAction].label} · Выбери подсвеченного друга
       <button aria-label="Отменить выбор друга" title="Отменить выбор друга" onClick={() => setTargetAction(null)}><X /></button></div>}
-    {!game.actors.length && <div className="empty-stage glass"><Sparkles /><h1>Сцена готова!</h1><p>Добавь друзей или создай нового шарика.</p><button className="primary-button" onClick={() => setPanel('friends')}><Plus />Добавить друга</button></div>}
+    {!game.actors.length && <div className="empty-stage glass"><Sparkles /><h1>Сцена готова!</h1>
+      {balls.length ? <><p>Добавь друзей или создай нового шарика.</p><button className="primary-button" onClick={() => setPanel('friends')}><Plus />Добавить друга</button></>
+        : <button className="primary-button" onClick={create}><Plus />Создать шарик</button>}
+    </div>}
     {storageError && <p className="toast" role="status">Не удалось сохранить игру в этом браузере.</p>}
   </main>
 }

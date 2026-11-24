@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
-import { backgrounds, storageKey, type Game } from '../src/model'
+import { backgrounds, ballKeyPrefix, storageKey, type Game } from '../src/model'
 
 const saved = (page: Page) => page.evaluate(key => JSON.parse(localStorage.getItem(key)!) as Game, storageKey)
 const mediaLog = (page: Page) => page.evaluate(() =>
@@ -377,6 +377,9 @@ test('мастерская C07–C10: независимые предметы, d
     await page.getByRole('button', { name: label, exact: true }).click()
   }
   await expect(page.locator('.worn button')).toHaveCount(4)
+  const tools = (await page.locator('.transform-tools').boundingBox())!
+  const catalog = (await page.getByRole('heading', { name: 'Все наряды' }).boundingBox())!
+  expect(tools.y + tools.height).toBeLessThanOrEqual(catalog.y)
   await page.getByRole('button', { name: 'Выбрать: Кошачьи ушки, предмет 1' }).click()
   await page.getByRole('button', { name: 'Снять предмет' }).click()
   await expect(page.locator('.worn button')).toHaveCount(3)
@@ -752,6 +755,75 @@ test('старое окно со своей сценой не стирает с�
   await other.getByRole('button', { name: 'Канада Изменить' }).click()
   await other.getByRole('button', { name: 'Наряды', exact: true }).click()
   await expect(other.locator('.worn button')).toHaveAccessibleName('Выбрать: Очки, предмет 1')
+})
+
+test('корзинка удаляет именно выбранный шарик и его копии даже при старом сохранении в другом окне', async ({ page, context }) => {
+  await page.goto('/')
+  await page.getByTestId('open-friends').click()
+  await page.locator('.friend-picker button').filter({ hasText: 'Япония' }).click()
+  await page.getByTestId('open-workshop').click()
+  await page.locator('.catalog-flag[aria-label="Япония"]').click()
+  await page.getByRole('button', { name: 'Готово' }).click()
+  const before = await saved(page)
+  const otherJapan = before.collection.find(ball => ball.code === 'jp' && ball.id !== 'friend-jp')!
+  expect(before.actors.filter(actor => actor.ballId === 'friend-jp')).toHaveLength(2)
+  const other = await context.newPage()
+  await other.goto('/#workshop')
+  await other.getByRole('button', { name: 'Япония Изменить' }).first().click()
+  await page.getByTestId('open-workshop').click()
+  await page.getByRole('button', { name: 'Япония Изменить' }).first().click()
+  const trash = page.getByRole('button', { name: 'Удалить шарик из коллекции' })
+  const dialog = page.getByRole('dialog')
+  await trash.click()
+  await expect(dialog).toHaveAccessibleName('Удалить шарик «Япония»?')
+  await dialog.getByRole('button', { name: 'Оставить' }).click()
+  expect((await saved(page)).collection).toEqual(before.collection)
+  await trash.click()
+  await page.keyboard.press('Escape')
+  await expect(dialog).toBeHidden()
+  await trash.click()
+  await dialog.getByRole('button', { name: 'Удалить', exact: true }).click()
+  const after = await saved(page)
+  expect(after.collection).toEqual(before.collection.filter(ball => ball.id !== 'friend-jp'))
+  expect(after.actors).toEqual(before.actors.filter(actor => actor.ballId !== 'friend-jp'))
+  await expect(other.getByRole('button', { name: 'Готово' })).toBeVisible()
+  await expect(other.locator('.collection-ball')).toHaveCount(2)
+
+  // A cached installation can rewrite both its old scene and an individual design.
+  await other.evaluate(({ key, prefix, game }) => {
+    const { deletedBallIds: _, ...legacy } = game
+    localStorage.setItem(prefix + 'friend-jp', JSON.stringify(game.collection.find(ball => ball.id === 'friend-jp')))
+    localStorage.setItem(key, JSON.stringify(legacy))
+  }, { key: storageKey, prefix: ballKeyPrefix, game: before })
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'Мои шарики 2' })).toBeVisible()
+  await expect.poll(async () => (await saved(page)).actors).toEqual(after.actors)
+  await page.getByRole('button', { name: 'В парк' }).click()
+  await page.getByTestId('open-friends').click()
+  await expect(page.locator('.friend-picker button span')).toHaveText(['Бразилия', 'Япония'])
+  expect((await saved(page)).collection.find(ball => ball.code === 'jp')).toEqual(otherJapan)
+})
+
+test('после удаления последнего шарика можно создать нового с таким же флагом', async ({ page }) => {
+  await page.goto('/#workshop')
+  await page.getByRole('button', { name: 'Япония Изменить' }).click()
+  for (const name of ['Япония', 'Бразилия']) {
+    await page.getByRole('button', { name: 'Удалить шарик из коллекции' }).click()
+    await page.getByRole('dialog', { name: 'Удалить шарик «' + name + '»?' }).getByRole('button', { name: 'Удалить', exact: true }).click()
+  }
+  await page.reload()
+  await expect(page.getByRole('heading', { name: 'Мои шарики 0' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Удалить шарик из коллекции' })).toHaveCount(0)
+  await page.getByRole('button', { name: 'В парк' }).click()
+  await page.getByRole('button', { name: 'Создать шарик' }).click()
+  await page.locator('.catalog-flag[aria-label="Япония"]').click()
+  await page.getByRole('button', { name: 'Готово' }).click()
+  await page.reload()
+  const rebuilt = await saved(page)
+  expect(rebuilt.collection).toHaveLength(1)
+  expect(rebuilt.collection[0].code).toBe('jp')
+  expect(rebuilt.collection[0].id).not.toBe('friend-jp')
+  expect(rebuilt.actors.map(actor => actor.ballId)).toEqual([rebuilt.collection[0].id])
 })
 
 test('два пальца ведут разных героев, второй продолжает после отпускания первого', async ({ page }) => {

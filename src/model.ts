@@ -38,6 +38,7 @@ export type Actor = Pose & { id: string; ballId: string; facing?: -1 | 1 }
 export type Game = {
   version: 1
   collection: Ball[]
+  deletedBallIds: string[]
   actors: Actor[]
   voice: boolean
   music: boolean
@@ -66,7 +67,7 @@ export const makeActor = (ballId: string, x: number, y: number): Actor =>
   ({ id: id(), ballId, x, y, scale: 1, angle: 0 })
 export function initialGame(): Game {
   return {
-    version: 1, collection: [...starterBalls],
+    version: 1, collection: [...starterBalls], deletedBallIds: [],
     actors: [makeActor('friend-jp', .32, .62), makeActor('friend-br', .68, .62)],
     voice: true, sounds: true, music: true, backgroundId: 'park',
     scenery: {}, bedroomNight: true, bedroomLampOn: true,
@@ -86,6 +87,9 @@ const personalityOK = (value: unknown): value is PersonalityId =>
 // Keep one record per design. Older installations can still write a whole v1
 // scene, but cannot remove a design created or edited by the updated game.
 export const ballKeyPrefix = 'sharomir.ball.v1.'
+// Older versions may rewrite both the scene and an individual design.
+// Keep explicit deletions separately so neither write can bring a design back.
+export const deletedBallKeyPrefix = 'sharomir.deleted-ball.v1.'
 
 function parseRecord(value: string | null) {
   try { return value ? JSON.parse(value) : null } catch { return null }
@@ -106,6 +110,8 @@ function restoreBall(raw: Partial<Ball> | null): Ball | undefined {
 export function loadGame(fallback: Game): Game {
   const raw = parseRecord(localStorage.getItem(storageKey)) as Partial<Game> | null
   const old = raw?.version === 1 ? raw : fallback
+  const deleted = new Set<string>(Array.isArray(old.deletedBallIds)
+    ? old.deletedBallIds.filter(id => typeof id === 'string') : [])
   const balls = new Map(starterBalls.map(ball => [ball.id, ball]))
   for (const record of Array.isArray(old.collection) ? old.collection : []) {
     const ball = restoreBall(record)
@@ -113,13 +119,16 @@ export function loadGame(fallback: Game): Game {
   }
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i)
+    if (key?.startsWith(deletedBallKeyPrefix)) deleted.add(key.slice(deletedBallKeyPrefix.length))
     if (!key?.startsWith(ballKeyPrefix)) continue
     const ball = restoreBall(parseRecord(localStorage.getItem(key)))
     if (ball && key === ballKeyPrefix + ball.id) balls.set(ball.id, ball)
   }
+  for (const id of deleted) balls.delete(id)
   const actors: Actor[] = []
   for (const actor of Array.isArray(old.actors) ? old.actors : []) {
     if (!poseOK(actor) || typeof actor.id !== 'string' || typeof actor.ballId !== 'string') continue
+    if (deleted.has(actor.ballId)) continue
     if (!balls.has(actor.ballId)) {
       // Named friends carry a country code. A random design ID alone has no flag to recover.
       const code = actor.ballId.startsWith('friend-') ? actor.ballId.slice('friend-'.length) : undefined
@@ -129,7 +138,7 @@ export function loadGame(fallback: Game): Game {
     actors.push(actor)
   }
   return {
-    version: 1, collection: [...balls.values()], actors,
+    version: 1, collection: [...balls.values()], deletedBallIds: [...deleted], actors,
     voice: old.voice !== false, sounds: old.sounds !== false,
     music: old.music ?? (old.sounds !== false),
     backgroundId: backgrounds.includes(old.backgroundId as BackgroundId) ? old.backgroundId as BackgroundId : 'park',
@@ -138,9 +147,16 @@ export function loadGame(fallback: Game): Game {
   }
 }
 
-export function rememberBalls(balls: Ball[], previous: Ball[]) {
+export function rememberBalls(game: Game, previous: Ball[]) {
+  for (const id of game.deletedBallIds) {
+    const marker = deletedBallKeyPrefix + id
+    if (localStorage.getItem(marker) === null) {
+      localStorage.setItem(marker, '1')
+      localStorage.removeItem(ballKeyPrefix + id)
+    }
+  }
   const previousById = new Map(previous.map(ball => [ball.id, ball]))
-  for (const ball of balls) {
+  for (const ball of game.collection) {
     const key = ballKeyPrefix + ball.id
     if (previousById.get(ball.id) !== ball || localStorage.getItem(key) === null) {
       localStorage.setItem(key, JSON.stringify(ball))
@@ -148,8 +164,19 @@ export function rememberBalls(balls: Ball[], previous: Ball[]) {
   }
 }
 
+export function deleteBall(game: Game, id: string): Game {
+  if (!game.collection.some(ball => ball.id === id)) return game
+  return {
+    ...game,
+    collection: game.collection.filter(ball => ball.id !== id),
+    actors: game.actors.filter(actor => actor.ballId !== id),
+    deletedBallIds: [...game.deletedBallIds, id],
+  }
+}
+
 /** Stage positions are fractions; accessory coordinates are local to a radius-62 ball. */
 export function addToStage(game: Game, ball: Ball, fresh: boolean): Game {
+  if (game.deletedBallIds.includes(ball.id) || (!fresh && !game.collection.some(saved => saved.id === ball.id))) return game
   const collection = fresh
     ? [...game.collection.filter(saved => saved.id !== ball.id), ball]
     : game.collection

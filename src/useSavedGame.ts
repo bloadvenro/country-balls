@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { ballKeyPrefix, initialGame, loadGame, rememberBalls, storageKey, type Game } from './model'
+import { ballKeyPrefix, deletedBallKeyPrefix, initialGame, loadGame, rememberBalls, storageKey, type Game } from './model'
 
 export function useSavedGame() {
   const [game, renderGame] = useState(() => {
@@ -17,7 +17,7 @@ export function useSavedGame() {
     }
     const next = change(base)
     try {
-      rememberBalls(next.collection, unsaved.current ? [] : base.collection)
+      rememberBalls(next, unsaved.current ? [] : base.collection)
       localStorage.setItem(storageKey, JSON.stringify(next))
       unsaved.current = false
     } catch { unsaved.current = true }
@@ -33,13 +33,13 @@ export function useSavedGame() {
       if (unsaved.current) return
       try {
         const next = loadGame(current.current)
-        rememberBalls(next.collection, next.collection)
+        rememberBalls(next, next.collection)
         current.current = next
         renderGame(next)
       } catch { setStorageError(true) }
     }
     const storage = (event: StorageEvent) => {
-      if (event.key === storageKey || event.key?.startsWith(ballKeyPrefix)) refresh()
+      if (event.key === storageKey || event.key?.startsWith(ballKeyPrefix) || event.key?.startsWith(deletedBallKeyPrefix)) refresh()
     }
     const visible = () => { if (!document.hidden) refresh() }
     window.addEventListener('storage', storage)
