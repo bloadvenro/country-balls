@@ -41,6 +41,15 @@ export const accessoryArt: Record<Item, string> = {
     <path d="M-26-10q10 2 20-2 7-4 12-1 8 3 17 1l-2 18q-8 11-21 13-14-2-23-12Z" fill="#fffdfa"/>
     <path d="M-18-4q16 6 33-1m-32 8q16 6 30-1" fill="none" stroke="#a0c5ca" stroke-width="2.4"/>
   </g>`,
+  anesthesiaMask: `<g ${stroke}>
+    <path d="M-9-12q4-7 10-7 5 0 9 6l10 16q5 9-3 13-16 8-33 1-7-3-5-10Z" fill="#c5f0ea" fill-opacity=".55" stroke="#34636c" stroke-width="5"/>
+    <path d="M-9-12q4-7 10-7 5 0 9 6l10 16q5 9-3 13-16 8-33 1-7-3-5-10Z" fill="none" stroke="#83d8c8" stroke-width="2.6"/>
+    <path d="M-12-1l5-8q2-4 5-4" fill="none" stroke="#f3fffe" stroke-width="3"/>
+    <path d="M3 8q8 14 20 15 11 1 14 8l3 8" fill="none" stroke-width="9"/>
+    <path d="M3 8q8 14 20 15 11 1 14 8l3 8" fill="none" stroke="#a6dce1" stroke-width="5.5"/>
+    <path d="m10 14-3 4m9-1-2 5m10-2-1 6m9-4-3 5m9 0-5 3m8 2-5 2" fill="none" stroke="#558e9a" stroke-width="2"/>
+    <ellipse cx="2" cy="8" rx="8" ry="6.5" transform="rotate(27 2 8)" fill="#63c4bb" stroke-width="2.5"/>
+  </g>`,
   doctorHeadMirror: `<g ${stroke}>
     <path d="M-45-6Q-1 4 45-7l7 12Q1 19-52 6Z" fill="#fffdfa"/>
     <path d="M-43 3q18 4 37 4m32-2 17-3" fill="none" stroke="#b6cdcf" stroke-width="2"/>
@@ -77,6 +86,57 @@ export const accessoryArt: Record<Item, string> = {
     <g fill="#91cecb" stroke="#618d96" stroke-width="2"><rect x="-45" y="-9" width="15" height="8" rx="3" transform="rotate(12 -38 -5)"/><rect x="30" y="-9" width="15" height="8" rx="3" transform="rotate(-12 37 -5)"/></g>
     <path d="m0 3 2.4 4.8 5.3.8-3.9 3.8.9 5.3L0 15.2l-4.7 2.5.9-5.3-3.9-3.8 5.3-.8Z" fill="#ffd57d" stroke="#cd9f60" stroke-width="1.5"/>
   </g>`,
+  policeCap: `<g ${stroke}>
+    <path d="M-34-1Q-50-10-42-19q5-8 20-9l21-4q12-3 23 1l20 9q10 5 6 12L30 0Z" fill="#4979b5"/>
+    <path d="M-34-7Q-3-1 34-11l-4 14Q-3 12-31 6Z" fill="#263a60"/>
+    <path d="M-30 0Q0 6 31-4" fill="none" stroke="#efc263" stroke-width="3"/>
+    <path d="M-21 8Q2 10 30 1l12 1q6 2-2 7-21 13-47 7Z" fill="#243044"/>
+    <path d="M-2-21q6 2 11-2l3 6q0 8-8 12-8-2-10-9Z" fill="#ffd66d" stroke-width="2.2"/>
+    <path d="M-34-18q7-5 17-5" fill="none" stroke="#8bb2db" stroke-width="3"/>
+  </g>`,
+  policeBadge: `<g ${stroke}>
+    <path d="M0-19q7 6 15 5l2 9Q17 9 1 20-14 14-17-1l1-13q9 1 16-5Z" fill="#f6bd50"/>
+    <path d="M0-14q6 4 11 4l1 7Q12 7 1 15-9 10-12 0l1-10q5 0 11-4Z" stroke="#bc7d35" stroke-width="1.8" fill="#ffe59a"/>
+    <path d="m0-8 2.6 5.1 5.7.8-4.2 4.1 1 5.7L0 5l-5.1 2.7 1-5.7-4.2-4.1 5.7-.8Z" fill="#47658e" stroke="none"/>
+  </g>`,
+  radio: `<g transform="rotate(10)" ${stroke}>
+    <rect x="-11" y="-38" width="5" height="21" rx="2.5" fill="#42475a"/>
+    <rect x="4" y="-24" width="7" height="8" rx="2" fill="#728197"/>
+    <rect x="-15" y="-19" width="31" height="47" rx="7" fill="#465770"/>
+    <rect x="-10" y="-12" width="21" height="13" rx="3" fill="#b7eadd" stroke-width="2"/>
+    <path d="M-7-4h3m2 0v-3m4 3v-5" fill="none" stroke="#498d89" stroke-width="2"/>
+    <rect x="-18" y="-7" width="5" height="12" rx="2" fill="#f4ba64" stroke-width="2"/>
+    <path d="M-7 10H8m-15 5H8m-15 5H3" fill="none" stroke="#26384c" stroke-width="2.8"/>
+  </g>`,
+  fireHelmet: `<g ${stroke}>
+    <path d="M-40 0q2-24 20-30 23-9 40 4Q33-17 35-4l10 5-9 7-73 2Z" fill="#eb5950"/>
+    <path d="M-24-4q3-18 14-25m-1 23q4-17 2-23" fill="none" stroke="#bc3e41" stroke-width="3"/>
+    <path d="M-14-29q5-7 15-6l11 4-1 5q-12-4-22 2Z" fill="#ff9b72" stroke-width="2.5"/>
+    <path d="M-42-2Q-6 6 35-5l12 3q4 4-4 7-40 12-85 7l-8-2q-3-3 8-12Z" fill="#c94543"/>
+    <path d="M-37 5Q-6 11 31 1" fill="none" stroke="#ffd477" stroke-width="3"/>
+    <path d="M11-24q5 3 12 0l1 10q-1 6-7 9-7-2-9-8Z" fill="#ffda73" stroke-width="2.2"/>
+    <path d="M17-21q1 4 4 7 1 4-3 5-6 1-6-4 0-2 3-5l1 3q2-2 1-6Z" fill="#cc5140" stroke="none"/>
+  </g>`,
+  fireCoat: `<g ${stroke}>
+    <path d="M-54-16q11-4 21-2 11 6 32 9 18-2 34-9 12-2 21 2l4 16-11 9-6-3q-9 13-22 18-19 6-38 0-13-5-22-18l-6 3-11-9Z" fill="#d68b49"/>
+    <path d="m-52-9 11 11m93-11L41 2" fill="none" stroke="#ffdf78" stroke-width="5"/>
+    <path d="M-44-1q19 12 43 13Q24 12 44-1l-4 9Q22 21 0 21-23 20-40 8Z" fill="#ffdf78" stroke="none"/>
+    <path d="M-40 5Q0 29 40 5" fill="none" stroke="#f4f3d9" stroke-width="2"/>
+    <path d="M-33-18q16 6 31 7l-8 8-20-8Zm66 0q-16 6-30 7l8 8 19-8Z" fill="#584b4c" stroke-width="2"/>
+    <path d="M0-9v34" fill="none" stroke-width="2.6"/>
+    <path d="m-31-2 10 4m40 0 10-4" fill="none" stroke="#845631" stroke-width="2.6"/>
+  </g>`,
+  extinguisher: `<g transform="rotate(6)" ${stroke}>
+    <path d="M3-21q16-7 17 10l1 14" fill="none" stroke-width="4"/>
+    <path d="m18-1 5-1 5 13-8 2Z" fill="#455266" stroke-width="2.5"/>
+    <path d="M-6-16v-9h9v9" fill="#a3b5bb"/>
+    <path d="m-8-24 2-5 16-5 1 5-10 4 11 2-1 4Z" fill="#43546a" stroke-width="2.5"/>
+    <rect x="-15" y="-17" width="29" height="48" rx="12" fill="#ed6259"/>
+    <path d="M-9-8q-1 3-1 7" fill="none" stroke="#ffaaa0" stroke-width="3"/>
+    <rect x="-11" y="2" width="21" height="13" rx="3" fill="#fff2d1" stroke-width="1.7"/>
+    <path d="M0 4q4 4 4 6a4 4 0 0 1-8 0q0-2 4-6Z" fill="#559ba7" stroke="none"/>
+    <path d="M-10 28q9 3 19 0" fill="none" stroke="#ac4544" stroke-width="3"/>
+  </g>`,
 }
 
 const behindProps = new Set<Item>(['tail', 'backpack', 'wings'])
@@ -87,8 +147,8 @@ export const svgUri = (content: string, box: number) =>
 
 // Saved accessory positions use the workshop view (facing right, looking straight ahead).
 export const faceX = (facing: -1 | 1 = 1, look = 0) => 10 * facing + 2 * look
-export const faceAccessoryShift = (kind: Item, x: number) =>
-  kind === 'glasses' || kind === 'moustache' || kind === 'pirate' || kind === 'doctorMask' ? x - faceX() : 0
+const faceProps = new Set<Item>(['glasses', 'moustache', 'pirate', 'doctorMask', 'anesthesiaMask'])
+export const faceAccessoryShift = (kind: Item, x: number) => faceProps.has(kind) ? x - faceX() : 0
 
 const line = 'stroke="#211f25" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"'
 const shellEye = '<path d="M-14 5C-16-6-12-20-1-21 10-22 17-12 15 3 6 2-4 3-14 5Z"/>'
