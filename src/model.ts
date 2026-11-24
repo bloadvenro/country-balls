@@ -7,7 +7,7 @@ import {
 
 export { countries, favoriteCodes, faces, flagOf, items, nameOf, type Code, type Face, type Item }
 
-export const backgrounds = ['park', 'playground', 'party', 'space', 'ocean', 'ice'] as const
+export const backgrounds = ['park', 'playground', 'party', 'space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom'] as const
 export type BackgroundId = typeof backgrounds[number]
 export type PersonalityId = 'cheerful' | 'shy' | 'mischievous' | 'calm'
 export type Pose = { x: number; y: number; scale: number; angle: number }

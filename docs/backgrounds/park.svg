@@ -7,4 +7,16 @@
   <g fill="#4f9c69" stroke="#3f8058" stroke-width="5"><circle cx="172" cy="420" r="111"/><circle cx="91" cy="467" r="73"/><circle cx="247" cy="466" r="79"/><circle cx="1265" cy="385" r="125"/><circle cx="1174" cy="444" r="78"/><circle cx="1350" cy="449" r="82"/></g>
   <g fill="none" stroke="#e8dfc8" stroke-width="44" stroke-linecap="round" opacity=".65"><path d="M420 900q71-197 306-171t300 171"/></g>
   <g fill="#fff4bd"><circle cx="342" cy="705" r="7"/><circle cx="1084" cy="741" r="7"/><circle cx="997" cy="649" r="6"/></g>
+  <!-- A climbing tree with a broad branch, lookout deck and rope swing. -->
+  <ellipse cx="600" cy="568" rx="151" ry="18" fill="#659d68" opacity=".48"/>
+  <path d="M552 568q21-69 12-157l-92-84 11-13 88 61 19-152 23 1-4 135 116-60 14 18-133 86q-8 102 19 165Z" fill="#ab7954" stroke="#835f48" stroke-width="5"/>
+  <g fill="#6da873" stroke="#609465" stroke-width="3"><ellipse cx="509" cy="276" rx="117" ry="71"/><ellipse cx="649" cy="234" rx="144" ry="83"/><ellipse cx="741" cy="292" rx="101" ry="59"/></g>
+  <path d="M460 371v-93l85-56 88 55v94Z" fill="#e8ba7d" stroke="#977654" stroke-width="4"/>
+  <path d="m442 280 103-73 106 70-10 16-97-60-91 60Z" fill="#b77360" stroke="#885f51" stroke-width="4"/>
+  <rect x="502" y="288" width="70" height="77" rx="22" fill="#786c54"/><rect x="581" y="290" width="32" height="36" rx="3" fill="#a6d6c9"/>
+  <rect x="427" y="366" width="258" height="15" rx="4" fill="#946f4f"/>
+  <g fill="none" stroke-linecap="round"><path d="m497 381-29 166m66-166-28 166m-16-136h36m-42 29h37m-41 30h37m-44 30h36m-41 29h36" stroke="#b88c5c" stroke-width="7"/>
+  <path d="M672 325q68 4 124-17" stroke="#8e6a4c" stroke-width="13"/><path d="M690 324v158m80-166v166" stroke="#caab72" stroke-width="4"/></g>
+  <rect x="675" y="478" width="112" height="13" rx="6" fill="#bd7956"/>
+  <g transform="translate(993 596)"><path d="m-112 6-8 64m208-64 8 64" stroke="#63736a" stroke-width="9"/><rect x="-124" y="-42" width="233" height="27" rx="6" fill="#cf976d"/><rect x="-124" y="-8" width="233" height="20" rx="5" fill="#c78b63"/></g>
 </svg>

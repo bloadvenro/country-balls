@@ -247,7 +247,7 @@ test('сцена сохраняет больше десяти героев, на
   expect(full.collection).toHaveLength(1)
 
   await page.getByRole('button', {name:'Лицо влево'}).click()
-  for (const place of ['space', 'ocean', 'ice']) {
+  for (const place of ['space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom']) {
     await page.getByTestId('open-backgrounds').click()
     const card = page.getByTestId('background-' + place)
     await card.locator('img').evaluate((img: HTMLImageElement) => img.decode())
@@ -256,7 +256,7 @@ test('сцена сохраняет больше десяти героев, на
   }
   await page.reload()
   expect((await saved(page)).actors[10].facing).toBe(-1)
-  expect((await saved(page)).backgroundId).toBe('ice')
+  expect((await saved(page)).backgroundId).toBe('bedroom')
   await page.getByTestId('open-workshop').click()
   await page.locator('.collection-ball').click()
   await page.getByRole('button', { name: 'Сохранить' }).click()
@@ -335,7 +335,7 @@ test('крыло можно выбрать за край, сдвинуть и у
   expect(wings.scale).toBeCloseTo(1.15)
 })
 
-test('музыка меняется на всех шести сценах, играет офлайн и запоминает выключатель', async ({ page, context }) => {
+test('музыка меняется на всех десяти сценах, играет офлайн и запоминает выключатель', async ({ page, context }) => {
   await page.addInitScript(() => {
     const tracks = new Set<HTMLMediaElement>()
     const play = HTMLMediaElement.prototype.play
@@ -352,7 +352,7 @@ test('музыка меняется на всех шести сценах, иг�
   await page.reload()
   await page.waitForFunction(() => !!navigator.serviceWorker.controller)
   await context.setOffline(true)
-  for (const scene of ['park', 'playground', 'party', 'space', 'ocean', 'ice']) {
+  for (const scene of ['park', 'playground', 'party', 'space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom']) {
     await page.getByTestId('open-backgrounds').click()
     await page.getByTestId('background-' + scene).click()
     await expect.poll(playing).toEqual(['/music/' + scene + '.mp3'])
@@ -360,7 +360,7 @@ test('музыка меняется на всех шести сценах, иг�
   await page.getByTestId('open-workshop').click()
   await expect.poll(playing).toEqual([])
   await page.getByRole('button', { name: 'В парк' }).click()
-  await expect.poll(playing).toEqual(['/music/ice.mp3'])
+  await expect.poll(playing).toEqual(['/music/bedroom.mp3'])
   await page.getByRole('button', { name: 'Настройки' }).click()
   await page.getByRole('switch', { name: 'Музыка сцены' }).click()
   await expect.poll(playing).toEqual([])

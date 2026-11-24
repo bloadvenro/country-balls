@@ -17,4 +17,20 @@
  <path d="m0 590 135-67 79 18 147-72 94 58 186 37 158-52 111 42 252-94 146 59 132-55v436H0Z" fill="#73698e"/>
  <path d="M0 589Q345 496 712 570T1440 541V900H0Z" fill="url(#dust)"/>
  <g opacity=".7"><use href="#crater" transform="translate(258 650) scale(1.2)"/><use href="#crater" transform="translate(904 579) scale(.46)"/><use href="#crater" transform="translate(1190 739) scale(1.5)"/><use href="#crater" transform="translate(637 815)"/><use href="#crater" transform="translate(522 617) scale(.28)"/></g>
+  <!-- Launchpad and a rocket with a large crew hatch. -->
+  <g transform="translate(625 582)" stroke-linejoin="round">
+    <ellipse cy="8" rx="114" ry="21" fill="#827694"/><ellipse cy="2" rx="110" ry="16" fill="#aaa3b5"/>
+    <path d="M-35-131Q-90-110-98-23l49-35m84-73q56 22 64 108L50-58" fill="#c77772" stroke="#905e70" stroke-width="4"/>
+    <path d="M-51-53Q-69-195 0-279 71-198 51-53Z" fill="#eee4d5" stroke="#81788a" stroke-width="5"/>
+    <path d="M-36-215q13-40 36-64 23 28 37 65-36-9-73-1Z" fill="#df9385"/>
+    <path d="m-47-53 8 25h78l9-25Z" fill="#73869a"/><path d="m-33-26-8 22m76-22 8 22" stroke="#776b82" stroke-width="7"/>
+    <circle cy="-147" r="39" fill="#a4a5b2" stroke="#857e92" stroke-width="4"/><circle cy="-147" r="30" fill="#6386a1"/><path d="m-16-139 15-22m-4 30 14-18" stroke="#bce1dc" stroke-width="5"/>
+  </g>
+  <g transform="translate(889 601)">
+    <path d="m-72-35 13-67h37l16 66" fill="#ba9a77" stroke="#736c77" stroke-width="5"/>
+    <path d="M-13-35v-37h54l16 38" fill="none" stroke="#8c797d" stroke-width="7"/>
+    <path d="M-89-41H63l26 22-10 21H-72Z" fill="#e1b775" stroke="#8f7b78" stroke-width="4"/>
+    <path d="M35-71v-42l21-9" fill="none" stroke="#797884" stroke-width="5"/><rect x="48" y="-133" width="30" height="19" rx="4" fill="#718a99"/><circle cx="69" cy="-124" r="5" fill="#cae3d7"/>
+    <g fill="#57586a" stroke="#a6a0a7" stroke-width="7"><circle cx="-58" r="21"/><circle cx="4" r="21"/><circle cx="66" r="21"/></g>
+  </g>
 </svg>

@@ -7,4 +7,18 @@
   <path d="M0 626q351-56 697 8t743-12v278H0Z" fill="#c7a7de"/>
   <g transform="translate(656 530)"><path d="M-169 143h338l-31 116h-276Z" fill="#fff9e4" stroke="#74557c" stroke-width="8"/><path d="M-139 143q28-109 73-32 49-117 98-5 50-85 103 37Z" fill="#ff9ab0" stroke="#74557c" stroke-width="8"/><path d="M-130 188h260" stroke="#f1c765" stroke-width="14"/><path d="M0 103V-3" stroke="#74557c" stroke-width="7"/><path d="M0 0q50 17 65-22Q25-60 0-30-27-60-65-22-48 18 0 0Z" fill="#79c9d6" stroke="#74557c" stroke-width="6"/></g>
   <g fill="#fff1a5"><circle cx="342" cy="342" r="8"/><circle cx="910" cy="350" r="7"/><circle cx="1130" cy="480" r="9"/><circle cx="260" cy="510" r="7"/></g>
+  <!-- A puppet theatre, microphone and presents for a birthday performance. -->
+  <g transform="translate(565 296)">
+    <ellipse cx="143" cy="327" rx="185" ry="17" fill="#b19acb"/>
+    <path d="M-17 6h330v278H-17Z" fill="#876e9d"/>
+    <rect x="8" y="21" width="276" height="172" rx="5" fill="#7188ab"/>
+    <circle cx="221" cy="72" r="21" fill="#ffdfa4"/>
+    <path d="M10 166q63-84 142-14 59-46 132-11v51H10Z" fill="#99b4aa"/>
+    <g fill="#d88092"><path d="M-9 16H81q-4 52-58 76l22 100H-9Z"/><path d="M302 16h-90q3 52 58 76l-22 100h54Z"/></g>
+    <path d="M-22 10q22-33 55-21 38-42 75-17 42-39 83-1 44-24 72 14 38-10 54 25Z" fill="#f0bc77" stroke="#ba9177" stroke-width="4"/>
+    <path d="M-29 186h349v16H-29Z" fill="#f3cd94"/><path d="M-12 204h313v94H-12Z" fill="#d89aa0"/>
+    <path d="m30 251 23-18 22 18-22 17Zm93 0 23-18 22 18-22 17Zm94 0 23-18 22 18-22 17Z" fill="#ffdc9a"/>
+  </g>
+  <g transform="translate(961 609)" stroke="#716482" stroke-linecap="round"><path d="M0 0v-114l-18-18m18 132-24 11m24-11 24 11" fill="none" stroke-width="6"/><rect x="-36" y="-148" width="31" height="15" rx="7" fill="#5e596d" transform="rotate(30 -21 -141)"/></g>
+  <g transform="translate(350 662)"><rect width="100" height="77" rx="6" fill="#78b5ad"/><path d="M43 0h15v77H43Z" fill="#ffe0a2"/><rect x="-5" y="-5" width="109" height="16" rx="4" fill="#93c8b9"/><path d="M49 0q-41-2-27-19 13-10 27 19 19-38 31-20Q85-3 49 0Z" fill="#f1bd7a"/></g>
 </svg>

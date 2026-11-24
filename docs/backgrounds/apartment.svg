@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
+  <defs>
+    <linearGradient id="wall" x2=".8" y2="1"><stop stop-color="#f7e3be"/><stop offset="1" stop-color="#ebbe9d"/></linearGradient>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#91cbdb"/><stop offset="1" stop-color="#f6dfb7"/></linearGradient>
+    <linearGradient id="wood" x2=".3" y2="1"><stop stop-color="#dba47b"/><stop offset="1" stop-color="#eac39a"/></linearGradient>
+    <pattern id="wallpaper" width="44" height="50" patternUnits="userSpaceOnUse"><path d="M20 23q-8-1-8-7 6 0 8 7m1 0q8-1 8-7-6 0-8 7" fill="#ba895f" opacity=".14"/></pattern>
+    <pattern id="windows" width="27" height="28" patternUnits="userSpaceOnUse"><rect x="6" y="6" width="10" height="13" rx="1" fill="#fff1c6"/></pattern>
+    <pattern id="weave" width="18" height="12" patternUnits="userSpaceOnUse"><path d="m1 7 5-2m3 5 5-2" stroke="#ffedbb" opacity=".18" stroke-width="1.8"/></pattern>
+    <clipPath id="pane"><rect x="260" y="70" width="426" height="229" rx="6"/></clipPath>
+    <clipPath id="rug"><path d="M390 565q13-8 36-8h583q21 0 35 8l220 141q22 16-7 20H170q-30-3-5-20Z"/></clipPath>
+    <g id="leaf" fill="#5c977e"><path d="M0 0q-25-2-35-37Q-3-36 0 0Z"/><path d="M-26-29-2-3" stroke="#b7d2a2" stroke-width="2"/></g>
+  </defs>
+  <rect width="1440" height="520" fill="url(#wall)"/>
+  <rect width="1440" height="520" fill="url(#wallpaper)"/>
+  <!-- A courtyard seen from an upstairs window. -->
+  <rect x="247" y="61" width="452" height="255" rx="9" fill="#b98164" opacity=".34"/>
+  <rect x="245" y="54" width="456" height="256" rx="9" fill="#fff3d3" stroke="#c09375" stroke-width="4"/>
+  <g clip-path="url(#pane)">
+    <rect x="260" y="70" width="426" height="229" fill="url(#sky)"/>
+    <circle cx="582" cy="128" r="31" fill="#ffedb4"/>
+    <path d="M275 148q10-17 28-12 12-28 40-14 13 6 14 17 17-3 24 9Z" fill="#f5f1dc"/>
+    <path d="M255 222h72v-45h90v33h57v-53h82v76h52v-55h89v128H255Z" fill="#92b2b2"/>
+    <path d="M255 222h72v-45h90v33h57v-53h82v76h52v-55h89v128H255Z" fill="url(#windows)" opacity=".65"/>
+    <path d="M242 287q27-41 60-22 27-48 71-19 29-22 58 11 42-43 77-10 47-49 86-7 40-33 102-3v83H240Z" fill="#8fba98"/>
+    <path d="M466 68v238M257 180h435" stroke="#fff6dc" stroke-width="9"/>
+  </g>
+  <rect x="229" y="300" width="486" height="13" rx="6" fill="#b17b59"/>
+  <rect x="224" y="296" width="496" height="10" rx="5" fill="#f9e8c0"/>
+  <path d="M215 47h515" stroke="#977056" stroke-linecap="round" stroke-width="8"/>
+  <g fill="#e3a27e" stroke="#cc8c70" stroke-width="3">
+    <path d="M227 48h85q-6 85-52 126 11 64 9 105-25 12-54 0 12-119 12-231Z"/>
+    <path d="M718 48h-84q6 85 52 126-11 64-9 105 25 12 54 0-13-119-13-231Z"/>
+  </g>
+  <path d="m222 177 39-4m425 0 38 4" stroke="#ffe6ab" stroke-width="6"/>
+  <!-- Framed illustration and a little shelf. -->
+  <g transform="translate(842 73) rotate(-2)">
+    <rect x="3" y="5" width="121" height="151" rx="4" fill="#bd9374"/>
+    <rect width="121" height="151" rx="4" fill="#946c52"/>
+    <rect x="6" y="6" width="109" height="139" fill="#fff1cf"/>
+    <rect x="15" y="15" width="91" height="120" fill="#f9cfac"/>
+    <circle cx="76" cy="46" r="16" fill="#fff2b8"/>
+    <path d="M15 111 49 62l42 64H15Z" fill="#80aaa1"/><path d="m37 135 45-57 24 33v24Z" fill="#54877f"/>
+  </g>
+  <g transform="translate(1034 170)">
+    <path d="M0 2h176" stroke="#ad805f" stroke-width="10" stroke-linecap="round"/>
+    <g stroke="#8a715c" stroke-width="2"><rect x="12" y="-46" width="13" height="44" rx="2" fill="#c47962"/>
+    <rect x="26" y="-54" width="16" height="52" rx="2" fill="#75aaa0"/><path d="m44-42 12-3 9 41-12 3Z" fill="#edc478"/></g>
+    <path d="M124-43q-7-22 3-34 9 8 5 28 8-13 19-13-1 16-21 20Z" fill="#60927a"/>
+    <path d="M120-47h17v9q19 13 9 32-5 6-19 5-17 0-18-12-3-17 11-25Z" fill="#d79470"/>
+  </g>
+  <rect y="486" width="1440" height="414" fill="url(#wood)"/>
+  <path d="M0 487h1440" stroke="#b68c70" stroke-width="16"/><path d="M0 481h1440" stroke="#fff0cf" stroke-width="14"/>
+  <g fill="none" stroke="#b68768" opacity=".37" stroke-width="2.5"><path d="M0 528h1440M0 598h1440M0 692h1440M0 825h1440M270 494l-40 34m354 0-20 70m440-104 26 34m206 0 74 70M354 598l-63 94m623-94 30 94m-350 0-29 133m625-133 100 133M210 825l-83 75m820-75 35 75"/></g>
+  <path d="m278 493 181 0-175 190H0v-28Z" fill="#fff2c3" opacity=".3"/>
+  <!-- Two-seater with piped cushions and tapered wooden feet. -->
+  <ellipse cx="836" cy="508" rx="250" ry="17" fill="#9b725e" opacity=".25"/>
+  <g stroke-linejoin="round">
+    <path d="m622 465 29 2-12 42h-13Zm395 2 27-2-4 44h-12Z" fill="#885e4b"/>
+    <rect x="620" y="316" width="424" height="145" rx="35" fill="#427e76" stroke="#396e69" stroke-width="4"/>
+    <rect x="636" y="325" width="189" height="93" rx="23" fill="#79aba0"/>
+    <rect x="832" y="325" width="195" height="93" rx="23" fill="#81b2a5"/>
+    <path d="M610 407q0-17 31-17h380q28 0 30 17l-6 61q-1 14-18 14H633q-19 0-20-16Z" fill="#548d82" stroke="#42796e" stroke-width="4"/>
+    <path d="M638 408q8-15 25-15h333q22 0 30 15v17q-174 11-388 0Z" fill="#98c4ac"/>
+    <path d="M830 395v31" stroke="#74a58f" stroke-width="3"/>
+    <g fill="#73a798" stroke="#4a837a" stroke-width="4"><rect x="591" y="371" width="55" height="91" rx="21"/><rect x="1021" y="371" width="55" height="91" rx="21"/></g>
+    <g transform="translate(686 359) rotate(-12)"><rect x="-27" y="-29" width="55" height="58" rx="10" fill="#e9b65e"/><path d="m-17 0 17-16L16 0 0 16Z" stroke="#ffda92" stroke-width="3" fill="none"/></g>
+    <path d="m938 348 39-3q11 1 14 12l5 32-59 5-7-32q-2-9 8-14Z" fill="#e4aa98"/>
+  </g>
+  <!-- Side table, reading lamp and houseplant bookend the room. -->
+  <g transform="translate(280 418)">
+    <path d="M-44 0h86l-9 79h-7l1-66h-58l-5 66h-8Z" fill="#a37455"/>
+    <path d="M-50 0H49" stroke="#b88560" stroke-width="12" stroke-linecap="round"/>
+    <ellipse cy="-8" rx="23" ry="5" fill="#9d785c"/><path d="M0-9v-67" stroke="#aa815b" stroke-width="6"/>
+    <path d="m-22-109 45-1 15 43h-75Z" fill="#fff0bf" stroke="#dcb384" stroke-width="3"/>
+  </g>
+  <g transform="translate(1190 489)">
+    <ellipse cy="9" rx="49" ry="8" fill="#bc9475"/>
+    <g fill="none" stroke="#65886d" stroke-width="5"><path d="M0-42q-7-52-28-87m30 81q10-66 34-100m-32 98 1-129"/></g>
+    <use href="#leaf" x="-13" y="-83"/><use href="#leaf" x="-28" y="-125"/><use href="#leaf" transform="translate(25 -114) scale(-1 1)"/><use href="#leaf" transform="translate(5 -153) rotate(30)"/>
+    <path d="M-35-49h70l-8 47q-2 9-26 9T-26-2Z" fill="#cf8267"/><rect x="-38" y="-55" width="76" height="12" rx="5" fill="#e39976"/>
+  </g>
+  <g clip-path="url(#rug)"><rect x="122" y="550" width="1196" height="185" fill="#bd7971"/><path d="m399 570 632 0 216 144H192Z" fill="none" stroke="#edbb99" stroke-width="6"/>
+    <path d="m409 576 614 0 194 130H219Z" fill="none" stroke="#dfab90" stroke-width="2"/>
+    <rect x="132" y="550" width="1164" height="185" fill="url(#weave)"/>
+    <g fill="none" stroke="#e6ae91" stroke-width="3"><path d="m708 622 37 15-37 15-37-15Zm-80 10 13 5-13 5-13-5Zm160 0 13 5-13 5-13-5Z"/></g>
+  </g>
+  <!-- Cartoon on the television opposite the sofa. -->
+  <g transform="translate(488 440)">
+    <path d="m-62 3-6 67m134-67 6 67" stroke="#906d54" stroke-width="10"/>
+    <rect x="-83" y="-20" width="168" height="40" rx="5" fill="#b48564"/>
+    <rect x="-73" y="-14" width="97" height="25" rx="3" fill="#8e6451"/>
+    <path d="M0-26v-18m-24 21h50" stroke="#51575d" stroke-width="7"/>
+    <rect x="-85" y="-141" width="172" height="104" rx="8" fill="#414c58"/>
+    <rect x="-77" y="-133" width="156" height="87" rx="4" fill="#95cfd6"/>
+    <circle cx="47" cy="-110" r="12" fill="#fff2bb"/>
+    <path d="M-77-56q40-42 88-12 32-19 68-12v34H-77Z" fill="#85b493"/>
+    <path d="m-30-74 26 0-8 9h-11Z" fill="#a66c51"/><path d="m-17-100-12 23h12Z" fill="#fff0c5"/>
+  </g>
+</svg>

@@ -6,4 +6,42 @@
   <g stroke="#55466f" stroke-width="8" stroke-linejoin="round"><path d="M330 591V352h175v239" fill="#ffcf66"/><path d="M329 352h178l-25-66H355Z" fill="#f08491"/><path d="M505 433q173 85 209 226H574q-13-123-69-150Z" fill="#77c7ef"/></g>
   <g><ellipse cx="840" cy="683" rx="135" ry="55" fill="#e7bd70"/><path d="M718 673q52-104 114-48 65-68 139 50" fill="#f4d38d" stroke="#b98c50" stroke-width="7"/><path d="M790 639v-87l76 30-76 25" fill="#f68aa2" stroke="#76506f" stroke-width="6"/></g>
   <circle cx="104" cy="742" r="31" fill="#fff" stroke="#5e4c75" stroke-width="6"/><path d="m77 731 50 20m-10-35-29 50" stroke="#6c9ee8" stroke-width="7"/>
+  <g transform="translate(793 306)" stroke-linejoin="round">
+    <path d="M-103 240 0-2l107 242" fill="none" stroke="#6b8290" stroke-width="18"/><path d="M-66 159H69" stroke="#809aa6" stroke-width="10"/>
+    <circle r="153" fill="none" stroke="#da8e83" stroke-width="11"/><circle r="142" fill="none" stroke="#eab39a" stroke-width="4"/>
+    <path d="M0 0 0 153" stroke="#d09a88" stroke-width="4"/>
+    <path d="M0 0 108 108" stroke="#d09a88" stroke-width="4"/>
+    <path d="M0 0 153 0" stroke="#d09a88" stroke-width="4"/>
+    <path d="M0 0 108 -108" stroke="#d09a88" stroke-width="4"/>
+    <path d="M0 0 0 -153" stroke="#d09a88" stroke-width="4"/>
+    <path d="M0 0 -108 -108" stroke="#d09a88" stroke-width="4"/>
+    <path d="M0 0 -153 0" stroke="#d09a88" stroke-width="4"/>
+    <path d="M0 0 -108 108" stroke="#d09a88" stroke-width="4"/>
+    <circle r="17" fill="#f8d67c" stroke="#bd926b" stroke-width="5"/>
+    <g transform="translate(0 153)"><path d="m-26 37 13-30q14-17 26 0l14 30" fill="none" stroke="#876d74" stroke-width="4"/>
+      <path d="M-31 28h62l-5 24q-25 12-51 0Z" fill="#75b8b3" stroke="#826c78" stroke-width="3"/><path d="M-26 34h52" stroke="#ffe7bd" stroke-width="3"/></g>
+    <g transform="translate(108 108)"><path d="m-26 37 13-30q14-17 26 0l14 30" fill="none" stroke="#876d74" stroke-width="4"/>
+      <path d="M-31 28h62l-5 24q-25 12-51 0Z" fill="#d78c9e" stroke="#826c78" stroke-width="3"/><path d="M-26 34h52" stroke="#ffe7bd" stroke-width="3"/></g>
+    <g transform="translate(153 0)"><path d="m-26 37 13-30q14-17 26 0l14 30" fill="none" stroke="#876d74" stroke-width="4"/>
+      <path d="M-31 28h62l-5 24q-25 12-51 0Z" fill="#e7b364" stroke="#826c78" stroke-width="3"/><path d="M-26 34h52" stroke="#ffe7bd" stroke-width="3"/></g>
+    <g transform="translate(108 -108)"><path d="m-26 37 13-30q14-17 26 0l14 30" fill="none" stroke="#876d74" stroke-width="4"/>
+      <path d="M-31 28h62l-5 24q-25 12-51 0Z" fill="#9e96c1" stroke="#826c78" stroke-width="3"/><path d="M-26 34h52" stroke="#ffe7bd" stroke-width="3"/></g>
+    <g transform="translate(0 -153)"><path d="m-26 37 13-30q14-17 26 0l14 30" fill="none" stroke="#876d74" stroke-width="4"/>
+      <path d="M-31 28h62l-5 24q-25 12-51 0Z" fill="#75b8b3" stroke="#826c78" stroke-width="3"/><path d="M-26 34h52" stroke="#ffe7bd" stroke-width="3"/></g>
+    <g transform="translate(-108 -108)"><path d="m-26 37 13-30q14-17 26 0l14 30" fill="none" stroke="#876d74" stroke-width="4"/>
+      <path d="M-31 28h62l-5 24q-25 12-51 0Z" fill="#d78c9e" stroke="#826c78" stroke-width="3"/><path d="M-26 34h52" stroke="#ffe7bd" stroke-width="3"/></g>
+    <g transform="translate(-153 0)"><path d="m-26 37 13-30q14-17 26 0l14 30" fill="none" stroke="#876d74" stroke-width="4"/>
+      <path d="M-31 28h62l-5 24q-25 12-51 0Z" fill="#e7b364" stroke="#826c78" stroke-width="3"/><path d="M-26 34h52" stroke="#ffe7bd" stroke-width="3"/></g>
+    <g transform="translate(-108 108)"><path d="m-26 37 13-30q14-17 26 0l14 30" fill="none" stroke="#876d74" stroke-width="4"/>
+      <path d="M-31 28h62l-5 24q-25 12-51 0Z" fill="#9e96c1" stroke="#826c78" stroke-width="3"/><path d="M-26 34h52" stroke="#ffe7bd" stroke-width="3"/></g>
+  </g>
+  <!-- A miniature train with an open passenger carriage. -->
+  <g transform="translate(306 704)" stroke-linejoin="round">
+   <ellipse cx="141" cy="16" rx="185" ry="18" fill="#7cab76"/>
+   <path d="M-52 7h370" stroke="#7c8170" stroke-width="5"/>
+   <path d="M-8-66h78v64H-18v-33l10-4Z" fill="#cf827e"/><rect x="38" y="-96" width="65" height="88" rx="5" fill="#76aaa5"/><rect x="50" y="-85" width="39" height="40" rx="4" fill="#d7edcf"/>
+   <path d="M27-97h85M0-70v-21h17v21" stroke="#797889" stroke-width="9"/><path d="M95-19h28m123 0h24" stroke="#837774" stroke-width="7"/>
+   <rect x="123" y="-44" width="138" height="42" rx="9" fill="#e6ac67"/><path d="M132-45v-51m121 51v-51" stroke="#aa825e" stroke-width="5"/><path d="M115-97h154" stroke="#b77f77" stroke-width="12" stroke-linecap="round"/>
+   <g fill="#586171" stroke="#d9bf9a" stroke-width="5"><circle cx="1" cy="-4" r="13"/><circle cx="78" cy="-4" r="13"/><circle cx="147" cy="-4" r="13"/><circle cx="239" cy="-4" r="13"/></g>
+  </g>
 </svg>

@@ -18,4 +18,20 @@
  <path d="m442 737 126-28 61 10 91-26m-152 16 32-26m221-74 132 4 68-16m-68 16 40 16" fill="none" stroke="#f2ffff" stroke-linecap="round" stroke-width="4"/>
  <path d="M0 748q109-45 235-22l94 43-138 49-191-8Zm1440-29-155-37-142 36 109 31 188 4Z" fill="#edf9ff"/>
  <use href="#shard" transform="translate(201 757) rotate(-16)"/><use href="#shard" transform="translate(216 758) rotate(14) scale(.67)"/><use href="#shard" transform="translate(1199 718) rotate(7) scale(.8)"/>
+  <!-- A snow shelter, fishing hole and runner sled. -->
+  <g transform="translate(685 520)">
+    <ellipse cy="12" rx="156" ry="20" fill="#8ab3c8"/>
+    <path d="M-144 2q0-146 135-153Q128-159 146 1Z" fill="#eaf6f6" stroke="#a5c9d9" stroke-width="5"/>
+    <path d="M-124-58q122 19 253-2m-219-53q87 14 188-1m-154 11-10 52m126-53 16 51m-97 5L-30 0m112-52L94 0" fill="none" stroke="#bedbe3" stroke-width="4"/>
+    <path d="M18 9q-1-87 57-89 64-1 72 82Z" fill="#d1e8ed" stroke="#a3c9d7" stroke-width="4"/><path d="M39 8q1-57 36-61 40-4 52 56Z" fill="#638ba6"/>
+  </g>
+  <ellipse cx="502" cy="664" rx="74" ry="20" fill="#f5ffff"/><ellipse cx="502" cy="661" rx="65" ry="15" fill="#719bb8"/>
+  <path d="m411 622 80-116q11-17 19-8" fill="none" stroke="#ba946c" stroke-width="6" stroke-linecap="round"/>
+  <path d="M510 498q18 81 2 161" fill="none" stroke="#8198a8" stroke-width="2"/><ellipse cx="512" cy="657" rx="5" ry="8" fill="#eb9b85"/>
+  <g transform="translate(929 623)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M-91 23H79q41 0 44-27M-94 9H75q34 0 36-22" stroke="#748c9a" stroke-width="7"/>
+    <path d="m-67-4 8 24m100-23 9 21" stroke="#aa7f62" stroke-width="9"/>
+    <rect x="-94" y="-24" width="175" height="24" rx="9" fill="#ce9272" stroke="#ad7b62" stroke-width="4"/>
+    <path d="M75-20q40-8 39 13" stroke="#cf997e" stroke-width="5"/>
+  </g>
 </svg>

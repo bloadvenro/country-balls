@@ -54,5 +54,9 @@
 .feature-grid{margin:12px 0 20px}.feature-grid button{min-height:84px}.feature-grid svg{width:min(100%,72px);height:44px}
 .park-page[data-background=space] .park-canvas{background-image:url('/backgrounds/space.svg')}
 .park-page[data-background=ocean] .park-canvas{background-image:url('/backgrounds/ocean.svg')}
+.park-page[data-background=kitchen] .park-canvas{background-image:url('/backgrounds/kitchen.svg')}
+.park-page[data-background=bathroom] .park-canvas{background-image:url('/backgrounds/bathroom.svg')}
+.park-page[data-background=bedroom] .park-canvas{background-image:url('/backgrounds/bedroom.svg')}
+.park-page[data-background=apartment] .park-canvas{background-image:url('/backgrounds/apartment.svg')}
 .park-page[data-background=ice] .park-canvas{background-image:url('/backgrounds/ice.svg')}
 @media(max-width:680px){.park-dock{right:10px}.background-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.background-picker button{display:block;text-align:center}.background-picker span{font-size:12px}.floating-panel.backgrounds,.floating-panel.friends{right:10px;top:70px;width:calc(100% - 20px)}}

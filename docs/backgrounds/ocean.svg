@@ -18,4 +18,21 @@
  <use href="#coral" transform="translate(212 730) scale(1.18)"/><use href="#coral" transform="translate(1038 645) scale(.65)"/><use href="#kelp" transform="translate(1305 780) scale(1.4)"/>
  <g fill="#f49376" stroke="#d87c68" stroke-width="2"><path d="m535 767 6-16 8 13 19 1-13 9 3 15-16-8-14 8 4-15-13-6Z"/></g>
  <g><use href="#bubble" x="565" y="374"/><use href="#bubble" transform="translate(580 336) scale(.57)"/><use href="#bubble" x="991" y="390"/><use href="#bubble" transform="translate(979 432) scale(.65)"/></g>
+  <!-- Research submarine and a treasure chest on the seabed. -->
+  <g transform="translate(703 405)">
+    <path d="M-46-56v-32h45v32m-21-33v-25h30" stroke="#6d9a98" stroke-width="10" fill="none"/>
+    <path d="m-150-18-39-28v68l39-20Z" fill="#df9861"/><path d="M-160-4h-31" stroke="#99795c" stroke-width="8"/>
+    <path d="M-170-2q9-65 104-73h105q90 1 116 54 21 51-66 78H-68q-81-2-102-59Z" fill="#eab861" stroke="#b38c59" stroke-width="5"/>
+    <path d="M-153 29q87 22 285-3-27 29-77 33H-66q-57 0-87-30Z" fill="#d99d54"/>
+    <g fill="#7fb7bb" stroke="#f8da8b" stroke-width="9"><circle cx="-63" cy="-9" r="34"/><circle cx="39" cy="-9" r="34"/></g>
+    <path d="m-83-6 18-23m88 25 16-21" stroke="#bce4d9" stroke-linecap="round" stroke-width="6"/>
+    <path d="M-68 62v14h117V62" fill="none" stroke="#9b8e6e" stroke-width="5"/>
+    <circle cx="147" cy="-7" r="9" fill="#fff4ae"/>
+  </g>
+  <g transform="translate(929 674) rotate(-8)">
+    <ellipse cy="16" rx="82" ry="14" fill="#baaa83"/><rect x="-61" y="-32" width="122" height="47" rx="5" fill="#af7854" stroke="#916448" stroke-width="4"/>
+    <path d="M-61-35q-7-56 22-58h77q21 7 23 51Z" fill="#996548" stroke="#d0a56b" stroke-width="6"/>
+    <g fill="#f4cf69"><ellipse cx="-31" cy="-33" rx="14" ry="6"/><ellipse cx="-8" cy="-36" rx="17" ry="7"/><ellipse cx="26" cy="-31" rx="16" ry="6"/></g>
+    <path d="M-42-28v39m82-39v39" stroke="#dfb472" stroke-width="10"/><rect x="-8" y="-27" width="18" height="17" rx="3" fill="#f3d084"/>
+  </g>
 </svg>

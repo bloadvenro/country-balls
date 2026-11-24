@@ -1,4 +1,4 @@
-"""Render the six original instrumental loops with numpy and ffmpeg."""
+"""Render the original instrumental loops with numpy and ffmpeg."""
 from pathlib import Path
 import subprocess
 
@@ -20,6 +20,14 @@ SCORES = {
               ((7, 4, 2), (6, 4, 1), (2, 6, 8, 7), (4, 0))),
     'ocean': (62, 82, 3, DORIAN, 'harp', (0, 3, 6, 4, 0, 5, 3, 0),
               ((0, 2, 4, 5), (4, 2, 1), (2, 4, 6, 4), (3, 1, 0))),
+    'kitchen': (62, 103, 4, MAJOR, 'mallet', (0, 3, 4, 0, 5, 2, 4, 0),
+                ((0, 2, 4, 2, 0), (3, 5, 4, 3), (1, 4, 6, 4), (2, 1, 0))),
+    'bathroom': (65, 88, 3, MAJOR, 'glass', (0, 5, 3, 4, 1, 3, 4, 0),
+                 ((4, 6, 7), (6, 4, 2), (5, 4, 3, 1), (2, 4, 0))),
+    'bedroom': (57, 65, 3, MAJOR, 'celesta', (0, 3, 1, 4, 5, 3, 4, 0),
+                ((4, 2), (1, 2, 3), (2, 4, 1), (1, 0))),
+    'apartment': (60, 84, 3, MAJOR, 'harp', (0, 3, 5, 4, 0, 1, 4, 0),
+                  ((2, 4, 7, 6), (5, 4, 2), (3, 1, 4, 3), (2, 1, 0))),
     'ice': (67, 78, 3, MAJOR, 'celesta', (0, 5, 3, 4, 2, 5, 4, 0),
             ((4, 7, 6), (2, 4, 2, 1), (5, 7, 9, 7), (4, 2, 0))),
 }
