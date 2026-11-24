@@ -293,7 +293,8 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
     {bedroom && layout ? <BedroomArt night={bedroom.night} lampOn={bedroom.lampOn} dx={layout.dx} dy={layout.dy}/> : <SceneArt scene={scene}/>}
     <Stage ref={stage} width={width} height={height} onClick={e => { if (e.target === e.target.getStage()) clear() }} onTap={e => { if (e.target === e.target.getStage()) clear() }}>
       <Layer>
-      {switches.map(control => <Rect key={control.key} {...control.box} fill="transparent" onClick={control.toggle} onTap={control.toggle}/>)}
+      {switches.map(control => <Rect key={control.key} {...control.box} fill="transparent"
+        onPointerClick={e => { if (e.evt.button === 0) control.toggle() }}/>)}
       {actors.map((a,i) => {
         const ball = balls.find(b => b.id === a.ballId)
         if (!ball) return null

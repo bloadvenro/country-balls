@@ -148,6 +148,36 @@ test.describe('выбор места', () => {
     await page.touchscreen.tap(target.x, target.y)
     await expect(lamp).toHaveAttribute('aria-pressed', 'true')
   })
+
+  test('совместимые события мыши после касания не переключают свет повторно', async ({ page }) => {
+    await page.goto('/')
+    await page.getByTestId('open-backgrounds').tap()
+    await page.getByTestId('background-bedroom').tap()
+    const tapWithMouseEvents = async (name: string) => {
+      const box = (await page.getByRole('button', { name, exact: true }).boundingBox())!
+      const point = { clientX: Math.round(box.x + box.width / 2), clientY: Math.round(box.y + box.height / 2) }
+      await page.touchscreen.tap(point.clientX, point.clientY)
+      // Some hybrid devices also deliver legacy mouse events for this contact.
+      const canvas = page.locator('.park-canvas canvas')
+      await canvas.dispatchEvent('mousedown', { ...point, button: 0, buttons: 1 })
+      await canvas.dispatchEvent('mouseup', { ...point, button: 0, buttons: 0 })
+      await canvas.dispatchEvent('click', { ...point, button: 0, detail: 1 })
+    }
+    await tapWithMouseEvents('Луна — включить день')
+    expect((await saved(page)).bedroomNight).toBe(false)
+    await tapWithMouseEvents('Солнце — включить ночь')
+    expect((await saved(page)).bedroomNight).toBe(true)
+    await tapWithMouseEvents('Прикроватная лампа')
+    expect((await saved(page)).bedroomLampOn).toBe(false)
+    await page.reload()
+    const lamp = page.getByRole('button', { name: 'Прикроватная лампа' })
+    await expect(lamp).toHaveAttribute('aria-pressed', 'false')
+    const box = (await lamp.boundingBox())!
+    for (const expected of [true, false]) {
+      await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2)
+      expect((await saved(page)).bedroomLampOn).toBe(expected)
+    }
+  })
 })
 
 test('старая коллекция объединяется с друзьями и сохраняет правки готового шарика', async ({ page }) => {
