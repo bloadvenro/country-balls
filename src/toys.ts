@@ -46,9 +46,9 @@ export type Face = keyof typeof faces
 export type Item = keyof typeof items
 
 const anchors: Record<Item, [number, number]> = {
-  ears: [0, -40], tail: [61, 8], bow: [29, -42], crown: [0, -50], glasses: [2, -2],
-  topHat: [0, -53], cap: [3, -48], flower: [47, 22], moustache: [2, 19], scarf: [0, 48],
-  headphones: [0, -5], pirate: [2, -7], star: [42, -31], backpack: [-52, 11],
+  ears: [0, -40], tail: [61, 8], bow: [29, -42], crown: [0, -50], glasses: [10, -5],
+  topHat: [0, -53], cap: [3, -48], flower: [47, 22], moustache: [10, 19], scarf: [0, 48],
+  headphones: [0, -5], pirate: [10, -7], star: [42, -31], backpack: [-52, 11],
   wings: [0, 5], partyHat: [4, -53], antenna: [0, -51], medal: [0, 45],
   magicWand: [49, 21], sailor: [0, -49],
   bunny: [0, -47], beret: [-5, -48], moonPin: [31, -39], tiara: [0, -48], neckerchief: [0, 42], ribbon: [0, 44],

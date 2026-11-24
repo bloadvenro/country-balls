@@ -453,3 +453,119 @@ test('дружба и парный танец запускаются касан�
     await expect(page.locator('.park-page')).toHaveAttribute('data-action', 'friend')
   } finally { await page.close() }
 })
+
+test('друг с кодом страны на старой сцене попадает в мастерскую один раз', async ({ page }) => {
+  await page.addInitScript(key => {
+    if (localStorage.getItem(key)) return
+    const pose = { ballId: 'friend-de', scale: 1.2, angle: 10, y: .5 }
+    localStorage.setItem(key, JSON.stringify({ version: 1, collection: [], actors: [
+      { ...pose, id: 'first', x: .3 }, { ...pose, id: 'second', x: .7 },
+    ] }))
+  }, storageKey)
+  await page.goto('/#workshop')
+  await page.getByRole('button', { name: 'Германия Изменить' }).click()
+  await page.locator('.catalog-flag[aria-label="Франция"]').click()
+  await page.getByRole('button', { name: 'Сохранить' }).click()
+  await page.reload()
+  await page.getByTestId('open-friends').click()
+  await expect(page.locator('.friend-picker button').filter({ hasText: 'Франция' })).toHaveText('Францияна сцене: 2')
+  await page.getByTestId('open-workshop').click()
+  await expect(page.locator('.collection-ball span')).toHaveText(['Япония', 'Бразилия', 'Франция'])
+})
+
+test('старое окно со своей сценой не стирает созданного или переодетого шарика', async ({ page, context }) => {
+  const other = await context.newPage()
+  await page.goto('/')
+  await other.goto('/')
+  const staleScene = await saved(other)
+  await page.getByTestId('open-workshop').click()
+  await page.locator('.catalog-flag[aria-label="Канада"]').click()
+  await page.getByRole('button', { name: 'Готово' }).click()
+  await other.getByTestId('open-friends').click()
+  await expect(other.locator('.friend-picker button span')).toContainText(['Канада'])
+  await other.getByTestId('open-backgrounds').click()
+  await other.getByTestId('background-ice').click()
+  await page.getByTestId('open-workshop').click()
+  await page.getByRole('button', { name: 'Канада Изменить' }).click()
+  await page.getByRole('button', { name: 'Наряды', exact: true }).click()
+  await page.getByRole('button', { name: 'Очки', exact: true }).click()
+  await page.getByRole('button', { name: 'Сохранить' }).click()
+  await expect(page.locator('.park-canvas canvas')).toBeVisible()
+  await expect(page.getByText('Изменения сохранены в коллекции.')).toHaveCount(0)
+  // A pre-update PWA may still replace the entire v1 snapshot after the new window closes.
+  await page.close()
+  await other.evaluate(({ key, old }) => localStorage.setItem(key, JSON.stringify(old)), { key: storageKey, old: staleScene })
+  await other.reload()
+  await other.getByTestId('open-friends').click()
+  await expect(other.locator('.friend-picker button span')).toHaveText(['Япония', 'Бразилия', 'Канада'])
+  await other.getByTestId('open-workshop').click()
+  await other.getByRole('button', { name: 'Канада Изменить' }).click()
+  await other.getByRole('button', { name: 'Наряды', exact: true }).click()
+  await expect(other.locator('.worn button')).toHaveAccessibleName('Выбрать: Очки, предмет 1')
+})
+
+test('два пальца ведут разных героев, второй продолжает после отпускания первого', async ({ page }) => {
+  await page.goto('/')
+  const surface = page.locator('.park-canvas canvas')
+  await surface.waitFor()
+  // Each triple is a finger identifier and its coordinates as fractions of the canvas.
+  type Finger = [number, number, number]
+  const touch = (type: string, down: Finger[], changed: Finger[]) => surface.evaluate((el, event) => {
+    const rect = el.getBoundingClientRect()
+    const finger = ([identifier, x, y]: Finger) => new Touch({
+      identifier, target: el, clientX: rect.x + x * rect.width, clientY: rect.y + y * rect.height,
+    })
+    el.dispatchEvent(new TouchEvent(event.type, { bubbles: true, cancelable: true,
+      touches: event.down.map(finger), targetTouches: event.down.map(finger), changedTouches: event.changed.map(finger) }))
+  }, {type, down, changed})
+  let left: Finger = [11, .32, .62], right: Finger = [22, .68, .62]
+  await touch('touchstart', [left], [left])
+  left = [11, .36, .58]
+  await touch('touchmove', [left], [left])
+  await touch('touchstart', [left, right], [right])
+  left = [11, .42, .53]; right = [22, .64, .67]
+  await touch('touchmove', [left, right], [left, right])
+  await touch('touchend', [right], [left])
+  right = [22, .59, .72]
+  await touch('touchmove', [right], [right])
+  await touch('touchend', [], [right])
+  await page.reload()
+  const { actors } = await saved(page)
+  for (const [i, [, x, y]] of [left, right].entries()) {
+    expect(actors[i].x).toBeCloseTo(x, 2)
+    expect(actors[i].y).toBeCloseTo(y, 2)
+    expect(actors[i]).toMatchObject({ scale: 1, angle: 0 })
+  }
+})
+
+test('оправа очков и глаза смещаются вместе в обе стороны', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/#workshop')
+  await page.getByRole('button', { name: 'Мордочки', exact: true }).click()
+  await page.getByRole('button', { name: 'Точки', exact: true }).click()
+  await page.getByRole('button', { name: 'Наряды', exact: true }).click()
+  await page.getByRole('button', { name: 'Очки', exact: true }).click()
+  await page.getByRole('button', { name: 'Повернуть предмет' }).click()
+  await page.getByRole('button', { name: 'Готово' }).click()
+  const actor = (await saved(page)).actors.at(-1)!
+  const centers = () => page.locator('.park-canvas canvas').evaluate((node: HTMLCanvasElement, actor) => {
+    const cx = Math.round(node.width * actor.x), cy = Math.round(node.height * actor.y)
+    const pixels = node.getContext('2d')!.getImageData(cx - 65, cy - 45, 130, 85).data
+    const center = (rgb: number[]) => {
+      let sum = 0, count = 0
+      for (let i = 0; i < pixels.length; i += 4) {
+        if (rgb.every((v, n) => Math.abs(pixels[i + n] - v) < 2)) { sum += (i / 4) % 130; count++ }
+      }
+      return count > 5 ? sum / count : 0
+    }
+    return { eyes: center([36, 33, 38]), frame: center([41, 38, 59]) }
+  }, actor)
+  await expect.poll(async () => Math.min(...Object.values(await centers()))).toBeGreaterThan(10)
+  const right = await centers()
+  await page.getByRole('button', { name: 'Лицо влево' }).click()
+  await expect.poll(async () => (await centers()).frame).toBeLessThan(right.frame - 20)
+  const left = await centers()
+  expect(Math.abs((right.eyes - left.eyes) - (right.frame - left.frame))).toBeLessThan(2)
+  await page.getByRole('button', { name: 'Лицо вправо' }).click()
+  await expect.poll(centers).toEqual(right)
+})

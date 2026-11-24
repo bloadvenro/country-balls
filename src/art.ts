@@ -38,7 +38,11 @@ export const isBehindProp = (kind: Item) => behindProps.has(kind)
 export const svgUri = (content: string, box: number) =>
   'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="${box*2}" height="${box*2}" viewBox="${-box/2} ${-box/2} ${box} ${box}">${content}</svg>`)
 
-// All face layers use ball-local coordinates. Only the face moves when the actor turns.
+// Saved accessory positions use the workshop view (facing right, looking straight ahead).
+export const faceX = (facing: -1 | 1 = 1, look = 0) => 10 * facing + 2 * look
+export const faceAccessoryShift = (kind: Item, x: number) =>
+  kind === 'glasses' || kind === 'moustache' || kind === 'pirate' ? x - faceX() : 0
+
 const line = 'stroke="#211f25" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"'
 const shellEye = '<path d="M-14 5C-16-6-12-20-1-21 10-22 17-12 15 3 6 2-4 3-14 5Z"/>'
 const galaxyEye = '<ellipse cy="-6" rx="13" ry="15" fill="#302b60"/><path d="M-10-13Q-5-20 1-15T8-7Q1-10-2-5T-10-2Q-5-9-10-13" fill="#615698" stroke="none"/><path d="m4-15 1 3 3 1-3 1-1 3-1-3-3-1 3-1Z" fill="#fff5d4" stroke="none"/><circle cx="-5" cy="0" r="1.5" fill="white" stroke="none"/>'
@@ -81,8 +85,8 @@ const mouths: Record<Mouth,string> = {
 export function mouthArt(style: Mouth) {
   return `<g ${line}>${mouths[style]}</g>`
 }
-export function faceArt(face: Face, look = 0, blink = false, eyes = expressions[face].eyes, mouth = expressions[face].mouth) {
-  return `<g transform="translate(${look*2} 0)">${eyeArt(eyes,blink)}<g transform="translate(0 18)">${mouthArt(mouth)}</g></g>`
+export function faceArt(face: Face, blink = false, eyes = expressions[face].eyes, mouth = expressions[face].mouth) {
+  return `${eyeArt(eyes,blink)}<g transform="translate(0 18)">${mouthArt(mouth)}</g>`
 }
 
 export const glaze = `<path d="M-49-37C-67-2-50 43-9 52 17 59 42 46 54 31A61 61 0 0 1-49-37Z" fill="#282035" opacity=".24"/>

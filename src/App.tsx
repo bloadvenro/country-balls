@@ -1,3 +1,4 @@
+import { useSavedGame } from './useSavedGame'
 import { useSceneMusic } from './sceneMusic'
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 import {
@@ -11,8 +12,8 @@ import { actions, soundAction, type ActionId, type Performance } from './actions
 import { chime, pronounce, stopVoice } from './audio'
 import {
   accessory, addToStage, backgrounds, clamp, countries, faces, favoriteCodes, flagOf, items,
-  loadGame, nameOf, newBall, storageKey, type Accessory, type BackgroundId,
-  type Ball, type Code, type Face, type Game, type Item,
+  nameOf, newBall, type Accessory, type BackgroundId,
+  type Ball, type Code, type Face, type Item,
 } from './model'
 
 type Page = 'park' | 'workshop'
@@ -25,7 +26,7 @@ const ParkCanvas = lazy(() => import('./Canvas').then(module => ({ default: modu
 
 function App() {
   const [page, setPage] = useState<Page>(route)
-  const [game, setGame] = useState<Game>(loadGame)
+  const { game, setGame, storageError } = useSavedGame()
   useSceneMusic(game.backgroundId, game.music && page === 'park')
   const [draft, setDraft] = useState<Ball>(newBall)
   const [editingId, setEditingId] = useState<string | null>(null)
@@ -43,7 +44,6 @@ function App() {
   const [fullscreenAvailable] = useState(() => document.fullscreenEnabled && !!document.documentElement.requestFullscreen)
   const [notice, setNotice] = useState('')
   const [voiceUnavailable, setVoiceUnavailable] = useState<Code | null>(null)
-  const [storageError, setStorageError] = useState(false)
   const [cached, setCached] = useState(false)
   const timers = useRef<number[]>([])
   const balls = game.collection
@@ -57,14 +57,6 @@ function App() {
   })
   const displayActors = game.actors.map(instance => ({ ...instance, ballId: `display-${instance.id}` }))
 
-  useEffect(() => {
-    try {
-      localStorage.setItem(storageKey, JSON.stringify(game))
-      setStorageError(false)
-    } catch {
-      setStorageError(true)
-    }
-  }, [game])
   useEffect(() => {
     const hash = () => {
       setPage(route()); setPanel(null); setTargetAction(null); setPerformance(null); setVoiceUnavailable(null); stopVoice()
@@ -113,7 +105,7 @@ function App() {
     else location.hash = next
   }
   const resetDraft = (ball = newBall()) => {
-    setDraft(ball); setEditingId(null); setSelectedProp(null); setPast([]); setTab('flags'); setLook(0)
+    setDraft(ball); setEditingId(null); setSelectedProp(null); setPast([]); setTab('flags'); setLook(0); setNotice('')
   }
   const create = () => { resetDraft(newBall()); go('workshop') }
   const edit = (ball: Ball) => {
@@ -157,11 +149,9 @@ function App() {
     if (editingId) {
       setGame(value => ({ ...value, collection: value.collection.map(ball => ball.id === editingId ? draft : ball) }))
       setActor(game.actors.find(item => item.ballId === editingId)?.id ?? null)
-      setNotice('Изменения сохранены в коллекции.')
       chime(game.sounds, true); resetDraft(); go('park'); return
     }
-    const next = addToStage(game, draft, true)
-    setGame(next)
+    const next = setGame(value => addToStage(value, draft, true))
     setActor(next.actors[next.actors.length - 1]?.id ?? null)
     chime(game.sounds, true); resetDraft(); go('park')
   }
@@ -181,7 +171,7 @@ function App() {
     } else {
       setActor(id); setPerformance(null)
     }
-    setPanel(null); setNotice('')
+    setPanel(null)
   }
   const runAction = (id: ActionId) => {
     const action = actions[id]
@@ -208,8 +198,8 @@ function App() {
     }
   }
   const putBall = (ball: Ball) => {
-    const next = addToStage(game, ball, false)
-    setGame(next); setActor(next.actors[next.actors.length - 1]?.id ?? null); setPanel(null)
+    const next = setGame(value => addToStage(value, ball, false))
+    setActor(next.actors[next.actors.length - 1]?.id ?? null); setPanel(null)
   }
   const iconButton = (label: string, Icon: typeof Minus, click: () => void, disabled = false) =>
     <button type="button" className="icon-button" aria-label={label} title={label} onClick={click} disabled={disabled}><Icon /></button>
@@ -371,7 +361,6 @@ function App() {
     {targetAction && <div className="target-hint" role="status">{actions[targetAction].label} · Выбери подсвеченного друга
       <button aria-label="Отменить выбор друга" title="Отменить выбор друга" onClick={() => setTargetAction(null)}><X /></button></div>}
     {!game.actors.length && <div className="empty-stage glass"><Sparkles /><h1>Сцена готова!</h1><p>Добавь друзей или создай нового шарика.</p><button className="primary-button" onClick={() => setPanel('friends')}><Plus />Добавить друга</button></div>}
-    {notice && <p className="toast" role="status">{notice}</p>}
     {storageError && <p className="toast" role="status">Не удалось сохранить игру в этом браузере.</p>}
   </main>
 }

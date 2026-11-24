@@ -2,10 +2,13 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Konva from 'konva'
 import { Circle, Ellipse, Group, Image as KImage, Layer, Line, Rect, Stage } from 'react-konva'
 import { actions, type Action, type Performance } from './actions'
-import { accessoryArt, faceArt, glaze, isBehindProp, svgUri } from './art'
+import { accessoryArt, faceAccessoryShift, faceArt, faceX, glaze, isBehindProp, svgUri } from './art'
 import { useBallFlag } from './ballFlag'
 import { clamp, type Accessory, type Actor, type Ball } from './model'
 import type { Face } from './toys'
+
+// A second finger must be able to hit another actor while the first actor is moving.
+Konva.hitOnDragEnabled = true
 
 type PinchTarget = { scale: number; angle: number }
 function usePinch(container: React.RefObject<HTMLDivElement|null>, stage: React.RefObject<Konva.Stage|null>,
@@ -24,10 +27,10 @@ function usePinch(container: React.RefObject<HTMLDivElement|null>, stage: React.
       const [a,b] = Array.from(e.touches), rect = el.getBoundingClientRect()
       const hit = (t:Touch) => stage.current!.getIntersection({x:t.clientX-rect.left,y:t.clientY-rect.top})?.findAncestor('.gesture-object',true)
       const first = hit(a), second = hit(b)
-      if (first?.isDragging()) first.stopDrag()
       if (!first || first !== second) return
       const base = latest.current.find(first.id()), g = geometry(a,b)
       if (!base || g.dist < 4) return
+      if (first.isDragging()) first.stopDrag()
       latest.current.select(first.id()); gesture = {id:first.id(),base:{...base},...g}; suppress=true; block(e)
     }
     const move = (e:TouchEvent) => {
@@ -106,7 +109,8 @@ function Prop({ a, editing }: { a: Accessory; editing?: Editing }) {
   </Group>
 }
 function Puppet({ ball, look = 0, editing, face, blink = false, facing = 1 }: { ball: Ball; look?: number; editing?: Editing; face?: Face; blink?: boolean; facing?: -1 | 1 }) {
-  const flag = useBallFlag(ball.code), expression = useBitmap(svgUri(faceArt(face ?? ball.face, look, blink, face ? undefined : ball.eyes, face ? undefined : ball.mouth), 104))
+  const flag = useBallFlag(ball.code), expression = useBitmap(svgUri(faceArt(face ?? ball.face, blink, face ? undefined : ball.eyes, face ? undefined : ball.mouth), 104))
+  const x = faceX(facing, look)
   const finish = useBitmap(svgUri(glaze, 130))
   return <>
     {ball.accessories.filter(a => isBehindProp(a.kind)).map(a => <Prop key={a.id} a={a} editing={editing}/>)}
@@ -117,9 +121,10 @@ function Puppet({ ball, look = 0, editing, face, blink = false, facing = 1 }: { 
         <Circle radius={62} fillRadialGradientStartPoint={{ x:-12, y:-20 }} fillRadialGradientEndPoint={{ x:0,y:0 }} fillRadialGradientStartRadius={24} fillRadialGradientEndRadius={63} fillRadialGradientColorStops={[0,'rgba(45,39,67,0)',1,'rgba(45,39,67,.14)']}/>
       </Group>
       <KImage image={finish} x={-65} y={-65} width={130} height={130}/>
-      <KImage image={expression} x={-52 + facing * 10} y={-52} width={104} height={104}/>
+      <KImage image={expression} x={-52 + x} y={-52} width={104} height={104}/>
     </Group>
-    {ball.accessories.filter(a => !isBehindProp(a.kind)).map(a => <Prop key={a.id} a={a} editing={editing}/>)}
+    {ball.accessories.filter(a => !isBehindProp(a.kind)).map(a =>
+      <Group key={a.id} x={faceAccessoryShift(a.kind, x)}><Prop a={a} editing={editing}/></Group>)}
   </>
 }
 
@@ -222,7 +227,8 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
   const stage = useRef<Konva.Stage>(null), reduced = useReducedMotion()
   usePinch(ref,stage,id=>actors.find(a=>a.id===id),grab,transform,[.55,1.6])
   const zoom = Math.min(width/580,height/330,1.35)
-  const [phase, setPhase] = useState(0), [look, setLook] = useState(0), [blink,setBlink] = useState(false), [dragging,setDragging] = useState<string|null>(null)
+  const [phase, setPhase] = useState(0), [look, setLook] = useState(0), [blink,setBlink] = useState(false)
+  const [dragging, setDragging] = useState<string[]>([])
   useEffect(() => {
     if (!show) { setPhase(0); return }
     let frame = 0
@@ -236,22 +242,22 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
     tick(); return () => cancelAnimationFrame(frame)
   }, [show, finish, reduced])
   useEffect(() => {
-    if (reduced || show || dragging) { setLook(0); return }
+    if (reduced || show || dragging.length) { setLook(0); return }
     let second = 0, third = 0
     const interval = window.setInterval(() => {
       setLook(-1); second = window.setTimeout(() => setLook(1),650); third = window.setTimeout(() => setLook(0),1350)
     }, 5300)
     return () => { clearInterval(interval); clearTimeout(second); clearTimeout(third); setLook(0) }
-  }, [reduced,show,dragging])
+  }, [reduced,show,dragging.length])
   useEffect(() => {
-    if (reduced || show || dragging) { setBlink(false); return }
+    if (reduced || show || dragging.length) { setBlink(false); return }
     let close = 0
     const interval = window.setInterval(() => {
       setBlink(true)
       close = window.setTimeout(() => setBlink(false), 140)
     }, 3700)
     return () => { clearInterval(interval); clearTimeout(close); setBlink(false) }
-  }, [reduced,show,dragging])
+  }, [reduced,show,dragging.length])
 
   return <div ref={ref} className="park-canvas" role="img" aria-label="Игровая сцена">
     <Stage ref={stage} width={width} height={height} onClick={e => { if (e.target === e.target.getStage()) clear() }} onTap={e => { if (e.target === e.target.getStage()) clear() }}>
@@ -280,14 +286,14 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
         return <Group key={a.id} id={a.id} name="gesture-object" x={baseX+motion.x} y={baseY+motion.y-motion.jump}
           scaleX={s} scaleY={s} draggable
           onClick={() => tap(a.id)} onTap={() => tap(a.id)}
-          onDragStart={e => { e.currentTarget.position({x:baseX,y:baseY}); setDragging(a.id); grab(a.id) }}
+          onDragStart={e => { e.currentTarget.position({x:baseX,y:baseY}); setDragging(ids => [...ids, a.id]); grab(a.id) }}
           dragBoundFunc={pos => ({x:clamp(pos.x,edgeX,width-edgeX),y:clamp(pos.y,edgeY,height-edgeY)})}
-          onDragEnd={e => { setDragging(null); move(a.id,e.currentTarget.x()/width,e.currentTarget.y()/height) }}>
+          onDragEnd={e => { setDragging(ids => ids.filter(id => id !== a.id)); move(a.id,e.currentTarget.x()/width,e.currentTarget.y()/height) }}>
           <Circle radius={72} fill="transparent"/>
           <Ellipse y={65+motion.jump} radiusX={53} radiusY={7} fill="#305c49" opacity={.2} listening={false}/>
           {(active || eligible) && <Circle radius={70} stroke={eligible ? '#6040b8' : '#fff'} shadowColor="#7960b7" shadowBlur={3} strokeWidth={eligible ? 4 : 3} dash={eligible ? [8,5] : undefined} listening={false}/>}
           <Group rotation={a.angle+motion.rotation} scaleX={motion.scaleX} scaleY={motion.scaleY} listening={false}>
-            <Puppet ball={ball} face={temporaryFace} facing={a.facing === -1 ? -1 : 1} blink={!participant && blink} look={dragging === a.id || participant ? 0 : (i%2 ? -look : look)}/>
+            <Puppet ball={ball} face={temporaryFace} facing={a.facing === -1 ? -1 : 1} blink={!participant && blink} look={dragging.includes(a.id) || participant ? 0 : (i%2 ? -look : look)}/>
             {participant && <Fx kind={spec?.fxKey} amount={motion.fx} side={side} source={source}/>}
             {participant && <Gesture kind={key} side={side} phase={phase} reduced={reduced}/>}
           </Group>

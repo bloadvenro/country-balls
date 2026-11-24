@@ -65,32 +65,66 @@ const itemOK = (item: unknown): item is Item => typeof item === 'string' && Obje
 const personalityOK = (value: unknown): value is PersonalityId =>
   value === 'cheerful' || value === 'shy' || value === 'mischievous' || value === 'calm'
 
-export function loadGame(): Game {
-  try {
-    const raw = JSON.parse(localStorage.getItem(storageKey) || 'null') as Partial<Game> | null
-    if (!raw || raw.version !== 1 || !Array.isArray(raw.collection) || !Array.isArray(raw.actors)) return initialGame()
-    const savedBalls = raw.collection.filter((ball): ball is Ball =>
-      !!ball && typeof ball.id === 'string' && codeOK(ball.code) && faceOK(ball.face) &&
-      (!ball.personalityId || personalityOK(ball.personalityId)) && Array.isArray(ball.accessories) &&
-      ball.accessories.every(part => poseOK(part) && typeof part.id === 'string' && itemOK(part.kind)))
-      .map(ball => ({ ...ball, eyes: ball.eyes && Object.hasOwn(eyeStyles, ball.eyes) ? ball.eyes : undefined,
-        mouth: ball.mouth && Object.hasOwn(mouthStyles, ball.mouth) ? ball.mouth : undefined }))
-    // Older v1 saves kept the two ready-made friends outside the collection.
-    const missingStarters = starterBalls.filter(starter => !savedBalls.some(ball => ball.id === starter.id))
-    const collection = [...missingStarters, ...savedBalls]
-    const ids = new Set(collection.map(ball => ball.id))
-    return {
-      version: 1,
-      collection,
-      actors: raw.actors.filter(actor =>
-        poseOK(actor) && typeof actor.id === 'string' && typeof actor.ballId === 'string' && ids.has(actor.ballId)),
-      voice: raw.voice !== false,
-      sounds: raw.sounds !== false,
-      music: raw.music ?? (raw.sounds !== false),
-      backgroundId: backgrounds.includes(raw.backgroundId as BackgroundId) ? raw.backgroundId as BackgroundId : 'park',
+// Keep one record per design. Older installations can still write a whole v1
+// scene, but cannot remove a design created or edited by the updated game.
+export const ballKeyPrefix = 'sharomir.ball.v1.'
+
+function parseRecord(value: string | null) {
+  try { return value ? JSON.parse(value) : null } catch { return null }
+}
+
+function restoreBall(raw: Partial<Ball> | null): Ball | undefined {
+  if (!raw || typeof raw.id !== 'string' || !codeOK(raw.code)) return
+  return {
+    ...raw, id: raw.id, code: raw.code, face: faceOK(raw.face) ? raw.face : 'smile',
+    personalityId: personalityOK(raw.personalityId) ? raw.personalityId : undefined,
+    eyes: raw.eyes && Object.hasOwn(eyeStyles, raw.eyes) ? raw.eyes : undefined,
+    mouth: raw.mouth && Object.hasOwn(mouthStyles, raw.mouth) ? raw.mouth : undefined,
+    accessories: Array.isArray(raw.accessories) ? raw.accessories.filter(part =>
+      poseOK(part) && typeof part.id === 'string' && itemOK(part.kind)) : [],
+  }
+}
+
+export function loadGame(fallback: Game): Game {
+  const raw = parseRecord(localStorage.getItem(storageKey)) as Partial<Game> | null
+  const old = raw?.version === 1 ? raw : fallback
+  const balls = new Map(starterBalls.map(ball => [ball.id, ball]))
+  for (const record of Array.isArray(old.collection) ? old.collection : []) {
+    const ball = restoreBall(record)
+    if (ball) balls.set(ball.id, ball)
+  }
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    if (!key?.startsWith(ballKeyPrefix)) continue
+    const ball = restoreBall(parseRecord(localStorage.getItem(key)))
+    if (ball && key === ballKeyPrefix + ball.id) balls.set(ball.id, ball)
+  }
+  const actors: Actor[] = []
+  for (const actor of Array.isArray(old.actors) ? old.actors : []) {
+    if (!poseOK(actor) || typeof actor.id !== 'string' || typeof actor.ballId !== 'string') continue
+    if (!balls.has(actor.ballId)) {
+      // Named friends carry a country code. A random design ID alone has no flag to recover.
+      const code = actor.ballId.startsWith('friend-') ? actor.ballId.slice('friend-'.length) : undefined
+      if (!codeOK(code)) continue
+      balls.set(actor.ballId, { id: actor.ballId, code, face: 'smile', accessories: [] })
     }
-  } catch {
-    return initialGame()
+    actors.push(actor)
+  }
+  return {
+    version: 1, collection: [...balls.values()], actors,
+    voice: old.voice !== false, sounds: old.sounds !== false,
+    music: old.music ?? (old.sounds !== false),
+    backgroundId: backgrounds.includes(old.backgroundId as BackgroundId) ? old.backgroundId as BackgroundId : 'park',
+  }
+}
+
+export function rememberBalls(balls: Ball[], previous: Ball[]) {
+  const previousById = new Map(previous.map(ball => [ball.id, ball]))
+  for (const ball of balls) {
+    const key = ballKeyPrefix + ball.id
+    if (previousById.get(ball.id) !== ball || localStorage.getItem(key) === null) {
+      localStorage.setItem(key, JSON.stringify(ball))
+    }
   }
 }
 
