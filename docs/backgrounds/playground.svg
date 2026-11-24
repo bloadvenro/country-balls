@@ -1,6 +1,20 @@
 <svg preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900">
-  <defs><linearGradient id="s" x2="0" y2="1"><stop stop-color="#bfeaf5"/><stop offset="1" stop-color="#fff2cd"/></linearGradient><linearGradient id="g" x2="0" y2="1"><stop stop-color="#a5dc82"/><stop offset="1" stop-color="#6abd76"/></linearGradient></defs>
-  <rect width="1440" height="900" fill="url(#s)"/><circle cx="205" cy="145" r="66" fill="#ffe17b"/><path d="M0 560q325-81 640 13t800-22v349H0Z" fill="url(#g)"/>
+  <defs><linearGradient id="s" x2="0" y2="1"><stop stop-color="#bfeaf5"/><stop offset="1" stop-color="#fff2cd"/></linearGradient><linearGradient id="g" x2="0" y2="1"><stop stop-color="#a5dc82"/><stop offset="1" stop-color="#6abd76"/></linearGradient><linearGradient id="nightSky" x2="0" y2="1"><stop stop-color="#162141"/><stop offset=".49" stop-color="#354b75"/><stop offset="1" stop-color="#887ba1"/></linearGradient>
+  <pattern id="stars" patternUnits="userSpaceOnUse" width="281" height="157">
+    <g fill="#fff3ce"><circle cx="17" cy="28" r="1.7"/><circle cx="115" cy="91" r="1.2"/><circle cx="239" cy="48" r="1.6"/><circle cx="206" cy="142" r="1.1"/>
+    <path d="m66 66 1.4 4.5L72 72l-4.6 1.4L66 78l-1.4-4.6L60 72l4.6-1.5Z"/></g>
+  </pattern>
+  <linearGradient id="duskShade" x2="0" y2="1"><stop stop-color="#282657" stop-opacity="0"/><stop offset=".47" stop-color="#262f61" stop-opacity=".48"/><stop offset="1" stop-color="#223656" stop-opacity=".4"/></linearGradient>
+ </defs>
+  <rect width="1440" height="900" fill="url(#s)"/><g class="at-night" display="none"><rect x="0" y="0" width="1440" height="900" fill="url(#nightSky)"/><rect x="0" y="0" width="1440" height="900" fill="url(#stars)"/></g>
+  <g class="sky-body"><g transform="translate(205 145) scale(1.32)">
+      <circle class="by-day" r="50" fill="#ffe17b"/>
+      <g class="at-night" display="none">
+        <circle r="57" fill="#edf5ce" opacity=".075"/>
+        <path d="M18-46A49 49 0 1 0 45 25C6 39-22-8 18-46Z" fill="#fff1bb"/>
+        <path d="m28-28 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" fill="#fff7d5"/>
+      </g>
+    </g></g><path d="M0 560q325-81 640 13t800-22v349H0Z" fill="url(#g)"/>
   <g stroke="#65466f" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M1040 575 1165 296l125 279M1100 435h133"/><path d="M1121 437v100m91-100v100"/></g>
   <g fill="#f0a2bd" stroke="#65466f" stroke-width="7"><rect x="1081" y="525" width="80" height="16" rx="8"/><rect x="1172" y="525" width="80" height="16" rx="8"/></g>
   <g stroke="#55466f" stroke-width="8" stroke-linejoin="round"><path d="M330 591V352h175v239" fill="#ffcf66"/><path d="M329 352h178l-25-66H355Z" fill="#f08491"/><path d="M505 433q173 85 209 226H574q-13-123-69-150Z" fill="#77c7ef"/></g>
@@ -46,4 +60,5 @@
    <rect x="123" y="-44" width="138" height="42" rx="9" fill="#e6ac67"/><path d="M132-45v-51m121 51v-51" stroke="#aa825e" stroke-width="5"/><path d="M115-97h154" stroke="#b77f77" stroke-width="12" stroke-linecap="round"/>
    <g fill="#586171" stroke="#d9bf9a" stroke-width="5"><circle cx="1" cy="-4" r="13"/><circle cx="78" cy="-4" r="13"/><circle cx="147" cy="-4" r="13"/><circle cx="239" cy="-4" r="13"/></g>
   </g>
+  <rect class="at-night" display="none" width="1440" height="900" fill="url(#duskShade)"/>
 </svg>

@@ -1,12 +1,13 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react'
 import Konva from 'konva'
 import { Circle, Ellipse, Group, Image as KImage, Layer, Line, Rect, Stage } from 'react-konva'
 import { actions, type Action, type Performance } from './actions'
 import { accessoryArt, faceAccessoryShift, faceArt, faceX, glaze, isBehindProp, strainingHands, svgUri } from './art'
 import { useBallFlag } from './ballFlag'
 import { BedroomArt, bedroomLayout, type BedroomLighting } from './Bedroom'
+import { sceneryLayout } from './scenery'
 import { SceneArt } from './SceneArt'
-import { actorScaleLimits, clamp, type Accessory, type Actor, type Ball, type BackgroundId } from './model'
+import { actorScaleLimits, clamp, type Accessory, type Actor, type Ball, type BackgroundId, type SceneState, type SceneryFlag } from './model'
 import type { Face } from './toys'
 
 // A second finger must be able to hit another actor while the first actor is moving.
@@ -240,13 +241,15 @@ function Gesture({ kind, side, phase, reduced }: { kind:string|undefined; side:-
 
 type ParkProps = {
   scene: BackgroundId
+  scenery: SceneState
+  toggleScenery: (key: SceneryFlag) => void
   bedroom?: BedroomLighting
   actors: Actor[]; balls: Ball[]; selected: string | null; target: boolean; performance: Performance | null
   tap: (id: string) => void; clear: () => void; grab: (id: string) => void
   move: (id: string, x: number, y: number) => void; finish: () => void
   transform:(id:string,p:PinchTarget)=>void
 }
-export function ParkCanvas({ actors, balls, selected, target, performance: show, tap, clear, grab, move, finish,transform, scene, bedroom }: ParkProps) {
+export function ParkCanvas({ actors, balls, selected, target, performance: show, tap, clear, grab, move, finish,transform, scene, bedroom, scenery, toggleScenery }: ParkProps) {
   const { ref, width, height } = useFrame()
   const stage = useRef<Konva.Stage>(null), reduced = useReducedMotion()
   usePinch(ref,stage,id=>actors.find(a=>a.id===id),grab,transform,actorScaleLimits)
@@ -283,14 +286,25 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
     return () => { clearInterval(interval); clearTimeout(close); setBlink(false) }
   }, [reduced,show,dragging.length])
 
+  const background = sceneryLayout(scene, width, height)
   const layout = bedroom && bedroomLayout(width, height)
   const switches = bedroom && layout ? [
     { key: 'sky', label: bedroom.night ? 'Луна — включить день' : 'Солнце — включить ночь', box: layout.sky, toggle: bedroom.toggleSky, pressed: undefined },
     ...(bedroom.night ? [{ key: 'lamp', label: 'Прикроватная лампа', box: layout.lamp, toggle: bedroom.toggleLamp, pressed: bedroom.lampOn }] : []),
-  ] : []
+  ] : background.switches.map(({ key, label, box }) => ({
+    key, box, label: key === 'night' ? label + (scenery.night ? ' — включить день' : ' — включить ночь') : label,
+    toggle: () => toggleScenery(key),
+    pressed: key === 'tvOff' || key === 'chestClosed' ? !scenery[key] : !!scenery[key],
+  }))
 
   return <><div ref={ref} className="park-canvas" role="img" aria-label="Игровая сцена">
-    {bedroom && layout ? <BedroomArt night={bedroom.night} lampOn={bedroom.lampOn} dx={layout.dx} dy={layout.dy}/> : <SceneArt scene={scene}/>}
+    {bedroom && layout ? <BedroomArt night={bedroom.night} lampOn={bedroom.lampOn} dx={layout.dx} dy={layout.dy}/> : (
+      <div className="scene-frame" data-night={!!scenery.night} data-tv-off={!!scenery.tvOff}
+        data-chest-closed={!!scenery.chestClosed} data-tap-running={!!scenery.tapRunning} data-shower-running={!!scenery.showerRunning}
+        style={{ ...background.frame, '--sun-x': background.sunX + 'px', '--sun-y': background.sunY + 'px', '--basin-x': background.basinX + 'px' } as CSSProperties}>
+        <SceneArt scene={scene}/>
+      </div>
+    )}
     <Stage ref={stage} width={width} height={height} onClick={e => { if (e.target === e.target.getStage()) clear() }} onTap={e => { if (e.target === e.target.getStage()) clear() }}>
       <Layer>
       {switches.map(control => <Rect key={control.key} {...control.box} fill="transparent"
@@ -335,7 +349,7 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
       })}</Layer>
     </Stage>
   </div>
-    {switches.map(({key, label, box, toggle, pressed}) => <button key={key} className="bedroom-switch"
+    {switches.map(({key, label, box, toggle, pressed}) => <button key={key} className="scene-switch"
       aria-label={label} aria-pressed={pressed} onClick={toggle}
       style={{ left: box.x, top: box.y, width: box.width, height: box.height }}/>)}
   </>

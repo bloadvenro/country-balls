@@ -9,7 +9,12 @@
     <clipPath id="pane"><rect x="260" y="70" width="426" height="229" rx="6"/></clipPath>
     <clipPath id="rug"><path d="M390 565q13-8 36-8h583q21 0 35 8l220 141q22 16-7 20H170q-30-3-5-20Z"/></clipPath>
     <g id="leaf" fill="#5c977e"><path d="M0 0q-25-2-35-37Q-3-36 0 0Z"/><path d="M-26-29-2-3" stroke="#b7d2a2" stroke-width="2"/></g>
-  </defs>
+  <linearGradient id="nightSky" x2="0" y2="1"><stop stop-color="#162141"/><stop offset=".49" stop-color="#354b75"/><stop offset="1" stop-color="#887ba1"/></linearGradient>
+  <pattern id="stars" patternUnits="userSpaceOnUse" width="281" height="157">
+    <g fill="#fff3ce"><circle cx="17" cy="28" r="1.7"/><circle cx="115" cy="91" r="1.2"/><circle cx="239" cy="48" r="1.6"/><circle cx="206" cy="142" r="1.1"/>
+    <path d="m66 66 1.4 4.5L72 72l-4.6 1.4L66 78l-1.4-4.6L60 72l4.6-1.5Z"/></g>
+  </pattern>
+ </defs>
   <rect width="1440" height="520" fill="url(#wall)"/>
   <rect width="1440" height="520" fill="url(#wallpaper)"/>
   <!-- A courtyard seen from an upstairs window. -->
@@ -17,7 +22,15 @@
   <rect x="245" y="54" width="456" height="256" rx="9" fill="#fff3d3" stroke="#c09375" stroke-width="4"/>
   <g clip-path="url(#pane)">
     <rect x="260" y="70" width="426" height="229" fill="url(#sky)"/>
-    <circle cx="582" cy="128" r="31" fill="#ffedb4"/>
+    <g class="at-night" display="none"><rect x="260" y="70" width="426" height="229" fill="url(#nightSky)"/><rect x="260" y="70" width="426" height="229" fill="url(#stars)"/></g>
+  <g transform="translate(582 128) scale(0.62)">
+      <circle class="by-day" r="50" fill="#ffedb4"/>
+      <g class="at-night" display="none">
+        <circle r="57" fill="#edf5ce" opacity=".075"/>
+        <path d="M18-46A49 49 0 1 0 45 25C6 39-22-8 18-46Z" fill="#fff1bb"/>
+        <path d="m28-28 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" fill="#fff7d5"/>
+      </g>
+    </g>
     <path class="cloud" d="M275 148q10-17 28-12 12-28 40-14 13 6 14 17 17-3 24 9Z" fill="#f5f1dc"/>
     <path d="M255 222h72v-45h90v33h57v-53h82v76h52v-55h89v128H255Z" fill="#92b2b2"/>
     <path d="M255 222h72v-45h90v33h57v-53h82v76h52v-55h89v128H255Z" fill="url(#windows)" opacity=".65"/>
@@ -51,7 +64,7 @@
   <rect y="486" width="1440" height="414" fill="url(#wood)"/>
   <path d="M0 487h1440" stroke="#b68c70" stroke-width="16"/><path d="M0 481h1440" stroke="#fff0cf" stroke-width="14"/>
   <g fill="none" stroke="#b68768" opacity=".37" stroke-width="2.5"><path d="M0 528h1440M0 598h1440M0 692h1440M0 825h1440M270 494l-40 34m354 0-20 70m440-104 26 34m206 0 74 70M354 598l-63 94m623-94 30 94m-350 0-29 133m625-133 100 133M210 825l-83 75m820-75 35 75"/></g>
-  <path d="m278 493 181 0-175 190H0v-28Z" fill="#fff2c3" opacity=".3"/>
+  <path class="by-day" d="m278 493 181 0-175 190H0v-28Z" fill="#fff2c3" opacity=".3"/>
   <!-- Two-seater with piped cushions and tapered wooden feet. -->
   <ellipse cx="836" cy="508" rx="250" ry="17" fill="#9b725e" opacity=".25"/>
   <g stroke-linejoin="round">
@@ -91,10 +104,17 @@
     <rect x="-73" y="-14" width="97" height="25" rx="3" fill="#8e6451"/>
     <path d="M0-26v-18m-24 21h50" stroke="#51575d" stroke-width="7"/>
     <rect x="-85" y="-141" width="172" height="104" rx="8" fill="#414c58"/>
+    <g class="tv-picture">
     <rect x="-77" y="-133" width="156" height="87" rx="4" fill="#95cfd6"/>
     <circle cx="47" cy="-110" r="12" fill="#fff2bb"/>
     <path d="M-77-56q40-42 88-12 32-19 68-12v34H-77Z" fill="#85b493"/>
     <g class="sailboat"><path d="m-30-74 26 0-8 9h-11Z" fill="#a66c51"/><path d="m-17-100-12 23h12Z" fill="#fff0c5"/></g>
+    </g>
+    <g class="tv-standby" display="none">
+      <rect x="-77" y="-133" width="156" height="87" rx="4" fill="#273544"/>
+      <path d="m-67-58 52-65H2l-52 65Zm31-2 50-62h6l-50 62Z" fill="#344456"/>
+      <circle cx="68" cy="-41" r="2.3" fill="#ffab88"/>
+    </g>
   </g>
   <!-- A picture taped to the wall, and a wooden train left on the living-room rug. -->
   <g transform="translate(758 223) rotate(5)">
@@ -110,4 +130,5 @@
     <rect x="15" y="-29" width="56" height="22" rx="5" fill="#96b4cc"/><rect x="19" y="-48" width="24" height="31" rx="3" fill="#e6b478"/><path d="M17-49h28m15 20v-10" stroke="#aa755c" stroke-width="6"/>
     <g fill="#885e50" stroke="#e6c599" stroke-width="3"><circle cx="-80" cy="-6" r="7"/><circle cx="-55" cy="-6" r="7"/><circle cx="-27" cy="-6" r="7"/><circle cx="-5" cy="-6" r="7"/><circle cx="27" cy="-6" r="7"/><circle cx="61" cy="-6" r="7"/></g>
   </g>
+  <rect class="at-night" display="none" width="1440" height="900" fill="#343663" opacity=".25"/>
 </svg>

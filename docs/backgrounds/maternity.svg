@@ -9,7 +9,12 @@
     <clipPath id="window"><rect x="902" y="94" width="291" height="234" rx="48"/></clipPath>
     <g id="wheel"><circle cy="2" r="16" fill="#526b70"/><circle cy="2" r="7.5" fill="#b9cfc6"/><path d="M0-18V1" stroke="#829b9a" stroke-width="7" stroke-linecap="round"/></g>
     <g id="leaf"><path d="M0 1Q-11-19-24-19-24-4 0 1Z" fill="#79a492"/></g>
-  </defs>
+  <linearGradient id="nightSky" x2="0" y2="1"><stop stop-color="#162141"/><stop offset=".49" stop-color="#354b75"/><stop offset="1" stop-color="#887ba1"/></linearGradient>
+  <pattern id="stars" patternUnits="userSpaceOnUse" width="281" height="157">
+    <g fill="#fff3ce"><circle cx="17" cy="28" r="1.7"/><circle cx="115" cy="91" r="1.2"/><circle cx="239" cy="48" r="1.6"/><circle cx="206" cy="142" r="1.1"/>
+    <path d="m66 66 1.4 4.5L72 72l-4.6 1.4L66 78l-1.4-4.6L60 72l4.6-1.5Z"/></g>
+  </pattern>
+ </defs>
   <rect width="1440" height="900" fill="url(#wall)"/>
   <rect y="326" width="1440" height="204" fill="url(#tiles)"/>
   <path d="M0 325h1440" stroke="#97b8ab" stroke-width="6"/>
@@ -65,7 +70,15 @@
   <rect x="893" y="85" width="309" height="255" rx="54" fill="#c8baa3"/>
   <g clip-path="url(#window)">
     <rect x="900" y="90" width="300" height="245" fill="#b9deda"/>
-    <circle cx="1120" cy="153" r="40" fill="#fff0bc"/>
+    <g class="at-night" display="none"><rect x="900" y="90" width="300" height="245" fill="url(#nightSky)"/><rect x="900" y="90" width="300" height="245" fill="url(#stars)"/></g>
+  <g transform="translate(1120 153) scale(0.8)">
+      <circle class="by-day" r="50" fill="#fff0bc"/>
+      <g class="at-night" display="none">
+        <circle r="57" fill="#edf5ce" opacity=".075"/>
+        <path d="M18-46A49 49 0 1 0 45 25C6 39-22-8 18-46Z" fill="#fff1bb"/>
+        <path d="m28-28 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" fill="#fff7d5"/>
+      </g>
+    </g>
     <path d="M885 280q81-80 150-41 71-80 177-47v151H885Z" fill="#a3cabb"/>
     <path d="M892 297q96-58 177-11 75-41 145-28v81H892Z" fill="#87b5a7"/>
     <path d="M1048 80v264m-165-140h335" stroke="#f7edda" stroke-width="9"/>
@@ -113,4 +126,5 @@
     <path d="M-58 10q41-13 105-10 16 2 19 15l4 16q-54 22-125 9-12-8-3-30Z" fill="#edc2ad" stroke="#b89180" stroke-width="4"/>
     <path d="M-65-16q9 3 13 42m115-52q-14 2-15 42" fill="none" stroke="#b89379" stroke-width="9"/>
   </g>
+  <rect class="at-night" display="none" width="1440" height="900" fill="#343663" opacity=".25"/>
 </svg>

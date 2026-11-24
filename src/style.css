@@ -60,5 +60,5 @@ body,body *{touch-action:inherit}
   .bedroom-mobile{transform-origin:924px 207px;animation:cot-rock 3.2s ease-in-out infinite alternate}
 }
 @keyframes cot-rock{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
-.bedroom-switch{position:absolute;pointer-events:none;background:transparent;padding:0;border-radius:14px}
+.scene-switch{position:absolute;pointer-events:none;background:transparent;padding:0;border-radius:14px}
 @media(max-width:680px){.park-dock{right:10px}.background-picker{grid-template-columns:repeat(2,minmax(0,1fr))}.background-picker button{display:block;text-align:center}.background-picker span{font-size:12px}.floating-panel.backgrounds,.floating-panel.friends{right:10px;top:70px;width:calc(100% - 20px)}}

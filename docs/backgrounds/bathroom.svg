@@ -7,22 +7,36 @@
   </defs>
   <rect width="1440" height="535" fill="url(#wall)"/>
   <rect width="1440" height="501" fill="url(#tile)"/>
-  <rect x="245" y="75" width="186" height="169" rx="58" fill="#caad81"/><rect x="251" y="81" width="174" height="157" rx="53" fill="#b6d9df"/><path d="m275 195 68-84m-39 96 47-58" fill="none" stroke="#e1f4ed" stroke-width="9"/>
+  <g class="basin-fixture"><rect x="245" y="75" width="186" height="169" rx="58" fill="#caad81"/><rect x="251" y="81" width="174" height="157" rx="53" fill="#b6d9df"/><path d="m275 195 68-84m-39 96 47-58" fill="none" stroke="#e1f4ed" stroke-width="9"/>
+  </g>
   <rect x="923" y="177" width="191" height="10" rx="4" fill="#b18d71"/>
   <rect x="945" y="129" width="26" height="47" rx="7" fill="#dd9f8b"/><rect x="950" y="120" width="15" height="13" rx="2" fill="#b57b72"/><rect x="985" y="138" width="33" height="38" rx="8" fill="#f8dd97"/><path d="M1003 139v-11h13" fill="none" stroke="#909f91" stroke-width="5"/>
   <path d="M1080 301h174" stroke="#829d92" stroke-width="10" stroke-linecap="round"/><rect x="1100" y="298" width="88" height="132" rx="5" fill="#ddad80"/><path d="M1101 398h86m-86 12h86" stroke="#fff1ca" stroke-width="5"/>
   <path d="M0 502h1440v398H0Z" fill="url(#floor)"/>
   <path d="M0 502h1440" stroke="#91b4aa" stroke-width="12"/>
   <path d="M0 585h1440M0 690h1440M0 842h1440m-710-337v395m-273-395L255 900m728-395 171 395" fill="none" stroke="#b6d5cd" stroke-width="3"/>
-  <path d="m246 341 9 162h154l9-162" fill="#8cb6ad"/><path d="M225 329h210q-21 55-104 55t-106-55Z" fill="#f7fbeb" stroke="#9bbdb5" stroke-width="4"/><path d="M328 328v-27q0-22 26-18" fill="none" stroke="#84a3a1" stroke-width="8"/>
+  <g class="basin-fixture">
+  <path d="m246 341 9 162h154l9-162" fill="#8cb6ad"/><path d="M225 329h210q-21 55-104 55t-106-55Z" fill="#f7fbeb" stroke="#9bbdb5" stroke-width="4"/><g class="tap-stream" display="none" fill="none" stroke-linecap="round">
+    <path d="M354 283v44" stroke="#6ec8d9" stroke-width="7"/>
+    <path class="running-water" d="M353 283v44" stroke="#e5fcff" stroke-width="2.3" stroke-dasharray="5 8"/>
+    <path d="m345 324 4 2m10 0 4-3" stroke="#8ac9cf" stroke-width="3"/>
+  </g>
+  <path class="faucet" d="M328 328v-27q0-22 26-18" fill="none" stroke="#84a3a1" stroke-width="8"/>
+  </g>
   <path d="M542 430V252q0-48 47-48 38 0 38 37" fill="none" stroke="#779da0" stroke-width="11"/>
-  <path d="M595 249q32-31 65 0l-2 7h-62Z" fill="#e1eddb" stroke="#7fa4a0" stroke-width="4"/>
-  <g class="shower" stroke="#90c8cd" stroke-linecap="round" stroke-width="4"><path d="m608 271-5 16m25-16-2 17m21-16 2 16m-47 14-3 12m29-12v12"/></g>
+  <path class="shower-head" d="M595 249q32-31 65 0l-2 7h-62Z" fill="#e1eddb" stroke="#7fa4a0" stroke-width="4"/>
   <ellipse cx="789" cy="598" rx="258" ry="22" fill="#83afa9" opacity=".45"/>
   <path d="m586 547 6 43 15 3 13-39m327-1 10 40 16-2 9-44" fill="#a98d70"/>
   <path d="M519 436q10 124 93 134 143 23 295-2 94-14 116-132Z" fill="#f7f6e5" stroke="#8eafaa" stroke-width="5"/>
   <ellipse cx="774" cy="434" rx="259" ry="37" fill="#fffbed" stroke="#97b9b0" stroke-width="5"/>
   <ellipse cx="774" cy="437" rx="232" ry="23" fill="#a2d8d7"/>
+  <g class="shower-stream" display="none" fill="none" stroke-linecap="round">
+    <g class="running-water" stroke="#71bed2" stroke-width="3.5" stroke-dasharray="10 16">
+      <path d="m607 261-34 162m46-162-16 155m27-155 6 151m5-151 29 161m-17-161 44 169"/>
+    </g>
+    <g stroke="#c6f3f5" stroke-width="2.5" stroke-dasharray="3 11"><path d="m612 263-22 150m46-151 19 145"/></g>
+    <ellipse cx="629" cy="433" rx="56" ry="5" stroke="#e3f9f6" stroke-width="2.5"/>
+  </g>
   <g fill="#eefbf5"><circle cx="612" cy="426" r="18"/><circle cx="635" cy="416" r="20"/><circle cx="657" cy="426" r="18"/></g>
   <g class="suds"><use href="#bubble" x="664" y="378"/><use href="#bubble" transform="translate(686 351) scale(.6)"/></g>
   <g class="duck"><path d="M896 426q22 5 30-13 9-13 20-1 7 12-8 16-14 25-42 7Z" fill="#f4c35b"/><circle cx="939" cy="414" r="2"/><path d="m945 417 10 3-10 4Z" fill="#d98857"/></g>

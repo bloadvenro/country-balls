@@ -299,6 +299,11 @@ function App() {
     <Suspense fallback={<div className="loading">Готовим сцену…</div>}>
       <section className="stage-shell" aria-label={backgroundLabels[game.backgroundId]}>
         <ParkCanvas scene={game.backgroundId} actors={displayActors} balls={displayBalls} selected={actor} target={!!targetAction}
+          scenery={game.scenery[game.backgroundId] ?? {}} toggleScenery={key => setGame(value => {
+            const place = game.backgroundId
+            const previous = value.scenery[place]
+            return { ...value, scenery: { ...value.scenery, [place]: { ...previous, [key]: !previous?.[key] } } }
+          })}
           bedroom={game.backgroundId === 'bedroom' ? {
             night: game.bedroomNight, lampOn: game.bedroomLampOn,
             toggleSky: () => setGame(value => ({ ...value, bedroomNight: !value.bedroomNight })),

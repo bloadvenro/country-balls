@@ -149,6 +149,81 @@ test.describe('выбор места', () => {
     await expect(lamp).toHaveAttribute('aria-pressed', 'true')
   })
 
+
+  test('солнце и окна меняют освещение только в выбранном месте, ночь сохраняется после перезапуска', async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 })
+    await page.goto('/')
+    for (const id of ['park', 'playground', 'ice', 'maternity', 'apartment', 'kitchen']) {
+      await page.getByTestId('open-backgrounds').tap()
+      await page.getByTestId('background-' + id).tap()
+      const sun = page.locator('.scene-art circle.by-day')
+      await expect(sun).toBeVisible()
+      const box = (await sun.boundingBox())!
+      await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2)
+      await expect(sun, id).toBeHidden()
+      await expect(page.getByRole('button', { name: /включить день/ })).toBeVisible()
+      if (id === 'ice') await expect(page.locator('.at-night .aurora')).toBeVisible()
+      if (id === 'kitchen' || id === 'apartment') {
+        // Tap the lower window pane, away from the moon.
+        const pane = (await page.getByRole('button', { name: /включить день/ }).boundingBox())!
+        await page.touchscreen.tap(pane.x + pane.width * .45, pane.y + pane.height * .78)
+        await expect(sun).toBeVisible()
+      }
+    }
+    await page.reload()
+    await page.getByTestId('open-backgrounds').tap()
+    await page.getByTestId('background-ice').tap()
+    await expect(page.locator('.at-night .aurora')).toBeVisible()
+    const moon = page.locator('.sky-body .at-night')
+    const box = (await moon.boundingBox())!
+    await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2)
+    await expect(page.locator('.scene-art circle.by-day')).toBeVisible()
+    await expect(page.locator('.at-night .aurora')).toBeHidden()
+  })
+
+  test('экран, сундук и вода переключаются касанием рисунка, включая два независимых крана', async ({ page }) => {
+    await page.setViewportSize({ width: 844, height: 390 })
+    await page.goto('/')
+    const choose = async (id: string) => {
+      await page.getByTestId('open-backgrounds').tap()
+      await page.getByTestId('background-' + id).tap()
+    }
+    const tapArt = async (selector: string) => {
+      const box = (await page.locator('.scene-art ' + selector).boundingBox())!
+      await page.touchscreen.tap(box.x + box.width / 2, box.y + box.height / 2)
+    }
+    await choose('apartment')
+    await tapArt('.tv-picture')
+    await expect(page.locator('.tv-standby')).toBeVisible()
+    await page.getByRole('button', { name: /Окно гостиной/ }).press('Enter')
+    await expect(page.locator('.tv-standby')).toBeVisible()
+    await tapArt('.tv-standby')
+    await expect(page.locator('.tv-picture')).toBeVisible()
+
+    await choose('ocean')
+    await tapArt('.chest-open')
+    await expect(page.locator('.chest-shut')).toBeVisible()
+    await tapArt('.chest-shut')
+    await expect(page.locator('.chest-open')).toBeVisible()
+
+    await choose('kitchen')
+    await tapArt('.faucet')
+    await expect(page.locator('.tap-stream')).toBeVisible()
+    await choose('bathroom')
+    await page.setViewportSize({ width: 390, height: 844 })
+    await expect(page.locator('.tap-stream')).toBeHidden()
+    await tapArt('.shower-head')
+    await tapArt('.faucet')
+    await expect(page.locator('.shower-stream')).toBeVisible()
+    await expect(page.locator('.tap-stream')).toBeVisible()
+    await tapArt('.shower-head')
+    await expect(page.locator('.shower-stream')).toBeHidden()
+    await page.reload()
+    await expect(page.locator('.tap-stream')).toBeVisible()
+    await tapArt('.faucet')
+    await expect(page.locator('.tap-stream')).toBeHidden()
+  })
+
   test('совместимые события мыши после касания не переключают свет повторно', async ({ page }) => {
     await page.goto('/')
     await page.getByTestId('open-backgrounds').tap()

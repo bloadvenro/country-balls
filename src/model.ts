@@ -9,6 +9,19 @@ export { countries, favoriteCodes, faces, flagOf, items, nameOf, type Code, type
 
 export const backgrounds = ['park', 'playground', 'party', 'space', 'ocean', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom', 'maternity'] as const
 export type BackgroundId = typeof backgrounds[number]
+const sceneryFlags = ['night', 'tvOff', 'chestClosed', 'showerRunning', 'tapRunning'] as const
+export type SceneryFlag = typeof sceneryFlags[number]
+export type SceneState = Partial<Record<SceneryFlag, boolean>>
+type Scenery = Partial<Record<BackgroundId, SceneState>>
+
+function restoreScenery(raw?: Scenery): Scenery {
+  const scenery: Scenery = {}
+  for (const place of backgrounds) {
+    const state = raw?.[place]
+    if (state) scenery[place] = Object.fromEntries(sceneryFlags.filter(key => state[key] === true).map(key => [key, true]))
+  }
+  return scenery
+}
 export type PersonalityId = 'cheerful' | 'shy' | 'mischievous' | 'calm'
 export type Pose = { x: number; y: number; scale: number; angle: number }
 export type Accessory = Pose & { id: string; kind: Item }
@@ -30,6 +43,7 @@ export type Game = {
   music: boolean
   sounds: boolean
   backgroundId: BackgroundId
+  scenery: Scenery
   bedroomNight: boolean
   bedroomLampOn: boolean
 }
@@ -55,7 +69,7 @@ export function initialGame(): Game {
     version: 1, collection: [...starterBalls],
     actors: [makeActor('friend-jp', .32, .62), makeActor('friend-br', .68, .62)],
     voice: true, sounds: true, music: true, backgroundId: 'park',
-    bedroomNight: true, bedroomLampOn: true,
+    scenery: {}, bedroomNight: true, bedroomLampOn: true,
   }
 }
 
@@ -119,6 +133,7 @@ export function loadGame(fallback: Game): Game {
     voice: old.voice !== false, sounds: old.sounds !== false,
     music: old.music ?? (old.sounds !== false),
     backgroundId: backgrounds.includes(old.backgroundId as BackgroundId) ? old.backgroundId as BackgroundId : 'park',
+    scenery: restoreScenery(old.scenery),
     bedroomNight: old.bedroomNight !== false, bedroomLampOn: old.bedroomLampOn !== false,
   }
 }
