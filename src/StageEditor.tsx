@@ -7,8 +7,8 @@ import { expressions, eyeStyles, mouthStyles, type Eyes, type Mouth } from './to
 import './stage-editor.css'
 
 const tabs = [
-  ['outfits', 'Наряды', Shirt], ['features', 'Глаза и рот', Eye], ['flags', 'Флаги', Flag],
-  ['moods', 'Мордочки', Smile], ['actions', 'Действия', Sparkles],
+  ['moods', 'Мордочки', Smile], ['features', 'Глаза и рот', Eye], ['outfits', 'Наряды', Shirt],
+  ['actions', 'Действия', Sparkles], ['flags', 'Флаги', Flag],
 ] as const
 type Tab = typeof tabs[number][0]
 type Point = { x: number; y: number }
@@ -41,7 +41,7 @@ type Props = {
 }
 
 export function StageEditor({ actor, ball, mood, canPair, close, toggleItem, chooseFeature, chooseFlag, chooseMood, run, remove, rotate, flip, flipLabel, resize }: Props) {
-  const [tab, setTab] = useState<Tab>('outfits')
+  const [tab, setTab] = useState<Tab>(tabs[0][0])
   const dialog = useRef<HTMLDialogElement>(null)
   const tabStrip = useRef<HTMLDivElement>(null)
   const pressedBackdrop = useRef(false)
