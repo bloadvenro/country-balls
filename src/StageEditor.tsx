@@ -43,6 +43,7 @@ type Props = {
 export function StageEditor({ actor, ball, mood, canPair, close, toggleItem, chooseFeature, chooseFlag, chooseMood, run, remove, rotate, flip, flipLabel, resize }: Props) {
   const [tab, setTab] = useState<Tab>('outfits')
   const dialog = useRef<HTMLDialogElement>(null)
+  const tabStrip = useRef<HTMLDivElement>(null)
   const pressedBackdrop = useRef(false)
   const manualPosition = useRef<Point | null>(null)
   const drag = useRef<{ pointer: number; start: Point; offset: Point } | null>(null)
@@ -55,8 +56,17 @@ export function StageEditor({ actor, ball, mood, canPair, close, toggleItem, cho
 
   useLayoutEffect(() => {
     const element = dialog.current!
+    const strip = tabStrip.current!
+    // Chromium can swallow the next tap if it treats this drag as a fling.
+    const cancelNativePan = (event: TouchEvent) => {
+      if (dragged.current && event.cancelable) event.preventDefault()
+    }
+    strip.addEventListener('touchmove', cancelNativePan, { passive: false })
     element.showModal()
-    return () => element.close()
+    return () => {
+      strip.removeEventListener('touchmove', cancelNativePan)
+      element.close()
+    }
   }, [])
   useLayoutEffect(() => {
     const element = dialog.current!
@@ -131,7 +141,7 @@ export function StageEditor({ actor, ball, mood, canPair, close, toggleItem, cho
       const box = event.currentTarget.getBoundingClientRect()
       if (event.clientX < box.left || event.clientX >= box.right || event.clientY < box.top || event.clientY >= box.bottom) close()
     }}>
-    <div className="stage-editor-tabs" role="group" aria-label="Разделы редактора"
+    <div ref={tabStrip} className="stage-editor-tabs" role="group" aria-label="Разделы редактора"
       aria-description="Потяни за эту полоску, чтобы передвинуть редактор"
       onPointerDown={startDrag} onPointerMove={moveDrag} onPointerUp={finishDrag}
       onPointerCancel={finishDrag} onLostPointerCapture={finishDrag}

@@ -110,7 +110,13 @@ test.describe('перемещение редактора на планшете',
     expect(await popup.boundingBox()).toEqual(moved)
 
     const gripX = moved.x + moved.width / 2, gripY = moved.y + 7
-    await page.mouse.move(gripX, gripY)
+    await touch('touchStart', gripX, gripY)
+    await touch('touchMove', gripX + 50, gripY + 45)
+    await touch('touchEnd')
+    const outfits = popup.getByRole('button', {name: 'Наряды', exact: true})
+    await outfits.tap()
+    await expect(outfits).toHaveAttribute('aria-pressed', 'true')
+    await page.mouse.move(gripX + 50, gripY + 45)
     await page.mouse.down()
     await page.mouse.move(1, 1, { steps: 5 })
     await page.mouse.up()
