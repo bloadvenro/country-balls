@@ -233,6 +233,10 @@ function App() {
   const rotateActor = () => {
     if (currentActor) transformActor({ angle: (currentActor.angle + 15) % 360 })
   }
+  const flipActor = () => setGame(value => ({
+    ...value, actors: value.actors.map(item => item.id === actor ? { ...item, facing: item.facing === -1 ? 1 : -1 } : item),
+  }))
+  const flipLabel = currentActor?.facing === -1 ? 'Лицо вправо' : 'Лицо влево'
   const chooseMood = (face: Face) => {
     if (!actor) return
     setActorFaces(value => ({ ...value, [actor]: face })); setPerformance(null); setTargetAction(null)
@@ -436,7 +440,7 @@ function App() {
       toggleItem={toggleStageItem} chooseFeature={chooseStageFeature}
       chooseFlag={code => changeDesign(currentBall.id, ball => ({ ...ball, code }))}
       chooseMood={chooseMood} run={id => { setQuickActor(null); runAction(id) }}
-      remove={removeStageActor} rotate={rotateActor} resize={resizeActor}/>}
+      remove={removeStageActor} rotate={rotateActor} flip={flipActor} flipLabel={flipLabel} resize={resizeActor}/>}
     {currentActor && !quickOpen && <aside className="actor-bar glass" aria-label={`Действия: ${currentBall ? nameOf(currentBall.code) : 'шарик'}`}>
       <div className="selected-ball"><BallIcon ball={currentBall!} /></div>
       <div className="action-groups">
@@ -453,8 +457,7 @@ function App() {
         {iconButton('Уменьшить шарика', Minus, () => resizeActor(-.15))}
         {iconButton('Увеличить шарика', Plus, () => resizeActor(.15))}
         {iconButton('Повернуть шарика', RotateCw, rotateActor)}
-        {iconButton(currentActor.facing === -1 ? 'Лицо вправо' : 'Лицо влево', FlipHorizontal2, () =>
-          setGame(value => ({ ...value, actors: value.actors.map(item => item.id === actor ? { ...item, facing: item.facing === -1 ? 1 : -1 } : item) })))}
+        {iconButton(flipLabel, FlipHorizontal2, flipActor)}
         {iconButton('Убрать шарика со сцены', Trash2, removeStageActor)}
       </div>
     </aside>}

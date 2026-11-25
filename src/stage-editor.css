@@ -14,14 +14,26 @@
 }
 .stage-editor[open] { display: flex; flex-direction: column }
 .stage-editor::backdrop { background: #2112350d }
-.stage-editor-head { display: flex; align-items: center; gap: 8px; padding: 3px 6px 3px 14px }
-.stage-editor-head img { width: 25px; height: 18px; border-radius: 3px; object-fit: cover }
-.stage-editor-head strong { flex: 1; min-width: 0; font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
-.stage-editor-head button { display: grid; width: 44px; height: 44px; place-items: center; border-radius: 12px; background: transparent }
-.stage-editor-head button:hover { background: #f5f1fb }
-.stage-editor-head svg { width: 20px }
 .stage-editor-tabs, .stage-editor-tools { display: grid; gap: 3px; padding: 5px; flex: none }
-.stage-editor-tabs { grid-template-columns: repeat(5, minmax(0, 1fr)); background: #f0ecf7 }
+.stage-editor-tabs {
+  position: relative;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  padding-top: 15px;
+  background: #f0ecf7;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+.stage-editor-tabs::before {
+  content: '';
+  position: absolute;
+  top: 5px; left: 50%;
+  width: 36px; height: 4px;
+  transform: translateX(-50%);
+  border-radius: 4px;
+  background: #aca0bd;
+}
+.stage-editor-tabs:active, .stage-editor-tabs:active button { cursor: grabbing }
 .stage-editor-tabs button { display: grid; justify-items: center; align-content: center; gap: 2px; padding: 4px 1px; min-height: 48px; border-radius: 11px; background: transparent; color: var(--muted) }
 .stage-editor-tabs button[aria-pressed="true"] { background: white; color: var(--purple-dark); box-shadow: 0 1px 5px #31234b1a }
 .stage-editor-tabs svg { width: 19px; height: 19px }
@@ -37,7 +49,7 @@
 .stage-editor-grid span { font-size: 11px; line-height: 1.13; overflow-wrap: anywhere }
 .stage-editor-grid button > .outfit-check { position: absolute; top: 3px; right: 3px; width: 15px; height: 15px; border-radius: 100%; padding: 2px; color: white; background: var(--purple); stroke-width: 3 }
 .stage-editor-actions button > svg { width: 26px; height: 26px }
-.stage-editor-tools { grid-template-columns: repeat(4,minmax(0, 1fr)); gap: 6px; border-top: 1px solid var(--line); padding: 7px 9px }
+.stage-editor-tools { grid-template-columns: repeat(5,minmax(0, 1fr)); gap: 6px; border-top: 1px solid var(--line); padding: 7px 9px }
 .stage-editor-tools button { border-radius: 11px; min-height: 44px; display: grid; place-items: center; background: #f3f0f8 }
 .stage-editor-tools svg { width: 20px; height: 20px }
 .stage-editor-tools .stage-remove { background: #fcf0f3; color: #a63c54 }
