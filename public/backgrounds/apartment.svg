@@ -9,6 +9,10 @@
     <clipPath id="pane"><rect x="260" y="70" width="426" height="229" rx="6"/></clipPath>
     <clipPath id="rug"><path d="M390 565q13-8 36-8h583q21 0 35 8l220 141q22 16-7 20H170q-30-3-5-20Z"/></clipPath>
     <g id="leaf" fill="#5c977e"><path d="M0 0q-25-2-35-37Q-3-36 0 0Z"/><path d="M-26-29-2-3" stroke="#b7d2a2" stroke-width="2"/></g>
+    <radialGradient id="reading-lamp-halo">
+      <stop stop-color="#ffe1a5" stop-opacity=".86"/><stop offset=".43" stop-color="#ffc779" stop-opacity=".46"/><stop offset="1" stop-color="#ffc678" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="reading-lamp-silk" x2="0" y2="1"><stop stop-color="#ffdc8d"/><stop offset=".68" stop-color="#fff3bf"/><stop offset="1" stop-color="#ffdf96"/></linearGradient>
   <linearGradient id="nightSky" x2="0" y2="1"><stop stop-color="#162141"/><stop offset=".49" stop-color="#354b75"/><stop offset="1" stop-color="#887ba1"/></linearGradient>
   <pattern id="stars" patternUnits="userSpaceOnUse" width="281" height="157">
     <g fill="#fff3ce"><circle cx="17" cy="28" r="1.7"/><circle cx="115" cy="91" r="1.2"/><circle cx="239" cy="48" r="1.6"/><circle cx="206" cy="142" r="1.1"/>
@@ -23,14 +27,14 @@
   <g clip-path="url(#pane)">
     <rect x="260" y="70" width="426" height="229" fill="url(#sky)"/>
     <g class="at-night" display="none"><rect x="260" y="70" width="426" height="229" fill="url(#nightSky)"/><rect x="260" y="70" width="426" height="229" fill="url(#stars)"/></g>
-  <g transform="translate(582 128) scale(0.62)">
+  <g class="living-room-sky"><g transform="translate(582 128) scale(0.62)">
       <circle class="by-day" r="50" fill="#ffedb4"/>
       <g class="at-night" display="none">
         <circle r="57" fill="#edf5ce" opacity=".075"/>
         <path d="M18-46A49 49 0 1 0 45 25C6 39-22-8 18-46Z" fill="#fff1bb"/>
         <path d="m28-28 2 6 6 2-6 2-2 6-2-6-6-2 6-2Z" fill="#fff7d5"/>
       </g>
-    </g>
+    </g></g>
     <path class="cloud" d="M275 148q10-17 28-12 12-28 40-14 13 6 14 17 17-3 24 9Z" fill="#f5f1dc"/>
     <path d="M255 222h72v-45h90v33h57v-53h82v76h52v-55h89v128H255Z" fill="#92b2b2"/>
     <path d="M255 222h72v-45h90v33h57v-53h82v76h52v-55h89v128H255Z" fill="url(#windows)" opacity=".65"/>
@@ -84,7 +88,7 @@
     <path d="M-44 0h86l-9 79h-7l1-66h-58l-5 66h-8Z" fill="#a37455"/>
     <path d="M-50 0H49" stroke="#b88560" stroke-width="12" stroke-linecap="round"/>
     <ellipse cy="-8" rx="23" ry="5" fill="#9d785c"/><path d="M0-9v-67" stroke="#aa815b" stroke-width="6"/>
-    <path d="m-22-109 45-1 15 43h-75Z" fill="#fff0bf" stroke="#dcb384" stroke-width="3"/>
+    <path class="reading-lamp-shade" d="m-22-109 45-1 15 43h-75Z" fill="#fff0bf" stroke="#dcb384" stroke-width="3"/>
   </g>
   <g transform="translate(1190 489)">
     <ellipse cy="9" rx="49" ry="8" fill="#bc9475"/>
@@ -131,4 +135,10 @@
     <g fill="#885e50" stroke="#e6c599" stroke-width="3"><circle cx="-80" cy="-6" r="7"/><circle cx="-55" cy="-6" r="7"/><circle cx="-27" cy="-6" r="7"/><circle cx="-5" cy="-6" r="7"/><circle cx="27" cy="-6" r="7"/><circle cx="61" cy="-6" r="7"/></g>
   </g>
   <rect class="at-night" display="none" width="1440" height="900" fill="#343663" opacity=".25"/>
+  <g class="reading-lamp-glow" transform="translate(280 418)" display="none">
+    <ellipse cy="-79" rx="150" ry="132" fill="url(#reading-lamp-halo)"/>
+    <ellipse cy="-3" rx="49" ry="9" fill="#ffdf98" opacity=".32"/>
+    <path d="m-22-109 45-1 15 43h-75Z" fill="url(#reading-lamp-silk)" stroke="#f2c780" stroke-width="2"/>
+    <ellipse cy="-67" rx="37" ry="3" fill="#fff3bf"/>
+  </g>
 </svg>

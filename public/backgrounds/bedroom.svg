@@ -25,10 +25,23 @@
     </g>
     <g id="lit-bulb"><circle r="30" fill="url(#warm-light)"/><circle r="8" fill="#ffe39a"/><circle cy="-2" r="4" fill="#fff7ce"/></g>
     <g id="garland-glow"><use href="#lit-bulb" x="240" y="140"/><use href="#lit-bulb" x="310" y="167"/><use href="#lit-bulb" x="391" y="174"/><use href="#lit-bulb" x="469" y="157"/></g>
+    <g id="mobile-stars">
+      <use href="#star" transform="translate(-15 -47) scale(1.35)"/>
+      <use href="#star" transform="translate(71 -49)"/>
+    </g>
+    <path id="mobile-moon" d="M29-71q-8 18 10 19-9 11-19 1t9-20Z"/>
+    <g id="mobile-glow">
+      <g fill="url(#warm-light)">
+        <circle cx="-15" cy="-47" r="29"/><circle cx="71" cy="-49" r="27"/>
+        <circle cx="26" cy="-58" r="36"/>
+      </g>
+      <use href="#mobile-stars"/>
+      <use href="#mobile-moon" fill="#ffe899" stroke="#fff4c6" stroke-width="1.8"/>
+    </g>
     <g id="mobile-charms" stroke-linecap="round" stroke-linejoin="round">
     <path d="M27-103v15m-43 12 43-13 47 14m-88 0v21m40-33v23m48-10v18" fill="none" stroke="#9f8593" stroke-width="2.5"/>
-    <use href="#star" transform="translate(-15 -47) scale(1.35)"/><use href="#star" transform="translate(71 -49)"/>
-    <path d="M29-71q-8 18 10 19-9 11-19 1t9-20Z" fill="#ffdb95" stroke="#c9a578" stroke-width="1.5"/>
+    <use href="#mobile-stars"/>
+    <use href="#mobile-moon" fill="#ffdb95" stroke="#c9a578" stroke-width="1.5"/>
     </g>
   </defs>
   <g id="walls">
@@ -40,15 +53,16 @@
   <path d="M771 95q-18 48 27 47-21 28-47 5t20-52Z" fill="#ffdf9f"/><use href="#star" x="840" y="104"/><use href="#star" x="865" y="162"/><use href="#star" x="717" y="164"/>
   </g>
   <use href="#garland"/>
-  <g id="furniture">
+  <g id="floor-and-shelves">
   <path d="M695 196q48-30 86 0 43-23 120-13l-6 32-18 15H723Z" fill="#777c9b"/><path d="M797 62v180m-105-85h211" stroke="#e9d8c6" stroke-width="8"/>
   <rect x="1062" y="158" width="197" height="10" rx="4" fill="#af8874"/><path d="m1084 156 0-51 13 0 0 51m4 0v-40h15v40" fill="#769e98"/>
   <path d="M1147 151q-14-19 3-31-5-9 3-13 9-4 12 6l12-1q6-12 14-4 4 5-1 12 15 14 3 30Z" fill="#c79e80"/><circle cx="1163" cy="129" r="2" fill="#69525b"/><circle cx="1180" cy="129" r="2" fill="#69525b"/>
   <path d="M0 502h1440v398H0Z" fill="url(#floor)"/>
   <path d="M0 502h1440" stroke="#aa8f92" stroke-width="12"/>
   <path d="M0 595h1440M0 752h1440m-956-240-69 83m488 0 32 157" stroke="#c5a59a" fill="none" stroke-width="3"/>
+  </g>
   <!-- Small cot beside the parents' bed, with a moon-and-stars mobile. -->
-  <g transform="translate(897 310)" stroke-linecap="round" stroke-linejoin="round">
+  <g id="crib" transform="translate(897 310)" stroke-linecap="round" stroke-linejoin="round">
     <ellipse cx="3" cy="151" rx="144" ry="17" fill="#a88f91" opacity=".3"/>
     <path d="m-113 112-7 32m226-31 6 33" stroke="#ae8467" stroke-width="11"/>
     <path d="M-119 114V-12q2-24 23-19l25 18h167q20-24 33-5v131Z" fill="#e7c99d" stroke="#b18b70" stroke-width="4"/>
@@ -59,6 +73,7 @@
     <rect x="-126" y="106" width="255" height="17" rx="6" fill="#c99d7c"/>
     <path d="M112-15v-66q0-22-22-22H24" fill="none" stroke="#a67d68" stroke-width="5"/>
   </g>
+  <g id="furniture">
   <ellipse cx="714" cy="611" rx="324" ry="25" fill="#a88f91" opacity=".35"/>
   <path d="M432 481v119m531-119 13 119" stroke="#976e60" stroke-width="16" stroke-linecap="round"/>
   <path d="M416 508V361q0-45 44-45h97q36 0 36 34v155" fill="#ba907a" stroke="#9c7566" stroke-width="5"/>

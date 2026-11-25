@@ -3,29 +3,58 @@
     <linearGradient id="beachSky" x2=".15" y2="1"><stop stop-color="#89ccd9"/><stop offset="1" stop-color="#ffedc9"/></linearGradient>
     <linearGradient id="beachSea" x2=".12" y2="1"><stop stop-color="#7db8bf"/><stop offset=".5" stop-color="#81c8c4"/><stop offset="1" stop-color="#badfcb"/></linearGradient>
     <linearGradient id="beachSand" x2=".25" y2="1"><stop stop-color="#edcd99"/><stop offset=".55" stop-color="#f4ddaf"/><stop offset="1" stop-color="#e9c592"/></linearGradient>
+    <linearGradient id="beachNightSky" x2="0" y2="1"><stop stop-color="#172343"/><stop offset=".63" stop-color="#39496a"/><stop offset="1" stop-color="#897899"/></linearGradient>
+    <linearGradient id="beachNightSea" x2=".05" y2="1"><stop stop-color="#586780"/><stop offset=".4" stop-color="#355a75"/><stop offset="1" stop-color="#49828a"/></linearGradient>
+    <linearGradient id="beachNightSand" x2=".22" y2="1"><stop stop-color="#747b8d"/><stop offset=".6" stop-color="#8f8694"/><stop offset="1" stop-color="#82798c"/></linearGradient>
+    <pattern id="beachStars" width="264" height="156" patternUnits="userSpaceOnUse">
+      <g fill="#f9eacb"><circle cx="15" cy="26" r="1.7"/><circle cx="97" cy="84" r="1.2"/><circle cx="133" cy="19" r="1.1"/><circle cx="189" cy="71" r="2"/><circle cx="238" cy="34" r="1.3"/><circle cx="208" cy="141" r="1.5"/><circle cx="43" cy="123" r="1.2"/>
+      <path d="m65 45 1.5 4.2 4.1 1.4-4.1 1.4-1.5 4.4-1.3-4.4-4.2-1.4 4.2-1.4Z"/></g>
+    </pattern>
+    <radialGradient id="beachHalo"><stop stop-color="#fff3b7" stop-opacity=".68"/><stop offset=".28" stop-color="#ffeab0" stop-opacity=".28"/><stop offset="1" stop-color="#fff2b8" stop-opacity="0"/></radialGradient>
+    <linearGradient id="beaconBeam" x2="1" y2=".12"><stop stop-color="#fff5bc" stop-opacity=".76"/><stop offset=".65" stop-color="#ffebb5" stop-opacity=".29"/><stop offset="1" stop-color="#ffedbc" stop-opacity="0"/></linearGradient>
+    <g id="beachLightPath" stroke-linecap="round">
+      <path d="M947 290q12 .8 22-.5m-27 6q18 .8 36-1m-52 7q18-1.8 36-1m7-1 22-.8m-47 8q18 1.5 36-1m-66 8q26 2 52-1m8 0 20-1m-63 10q22-3 51-1m-81 10 38-1m7 0q28 1.8 58-1m-77 13q23 2.4 50-1m-90 13q30-3 63-1m12-1 26-1" fill="none" stroke-width="3.4"/>
+      <path d="M921 369q27 2 51-1m15 0 33-1m-136 16q19-3 42-1m10 0q26 2 43-1m-54 15q24 2 50-1m11-1 36-1" fill="none" stroke-width="4" opacity=".65"/>
+    </g>
     <pattern id="sandGrains" width="98" height="72" patternUnits="userSpaceOnUse"><g fill="#c99b65" opacity=".38"><ellipse cx="21" cy="17" rx="2.7" ry="1.4"/><ellipse cx="26" cy="15" rx="1.6" ry="1"/><circle cx="77" cy="56" r="1.2"/></g></pattern>
     <g id="beachShell" stroke="#c38271" stroke-width="2" stroke-linecap="round"><path d="M0 8C-6 5-22-2-18-9q2-5 8-3 2-8 9-4 5-6 10 1 8-2 8 5 4 8-17 18Z" fill="#e9aa91"/><path d="m-9-8 8 13m2-16-2 16m12-13L2 5" fill="none"/></g>
     <g id="sandTower" stroke-linejoin="round"><path d="m-31 4 7-98-5-5v-26h13v12h12v-12h13v12h12v-12h12v24l-7 8 8 97Z" fill="#dfb57d" stroke="#bc9468" stroke-width="3"/><path d="m10-91 4 89h17l-8-89Z" fill="#cda16d"/><path d="M-8-60q0-14 14-14v20H-8Z" fill="#9f835e"/><path d="M-26-93h49" stroke="#be986f" stroke-width="3"/></g>
   </defs>
 
   <rect width="1440" height="370" fill="url(#beachSky)"/>
-  <circle cx="958" cy="119" r="44" fill="#ffeab2"/><circle cx="958" cy="119" r="57" fill="#ffedb3" opacity=".2"/>
-  <g fill="#fff6dd" opacity=".88">
+  <g class="at-night" display="none"><rect width="1440" height="370" fill="url(#beachNightSky)"/><rect width="1440" height="285" fill="url(#beachStars)"/></g>
+  <g class="sky-body"><g class="by-day"><circle cx="958" cy="119" r="44" fill="#ffeab2"/><circle cx="958" cy="119" r="57" fill="#ffedb3" opacity=".2"/></g>
+    <g class="at-night" display="none" transform="translate(958 119)">
+      <circle r="79" fill="url(#beachHalo)"/><path d="M12-39A41 41 0 1 0 40 13C8 27-14-9 12-39Z" fill="#fff1cf"/>
+      <path d="m30-33 2 7 7 2-7 2-2 7-2-7-7-2 7-2Z" fill="#f4edce"/>
+    </g>
+  </g>
+  <g class="beach-clouds" fill="#fff6dd" opacity=".88">
     <path d="M89 130q7-21 26-18 11-36 42-24 18 6 21 23 25-7 35 19Z"/>
     <path d="M528 94q10-23 31-19 13-35 43-28 20 4 27 25 29-8 44 22Z"/>
     <path d="M1183 181q9-18 26-15 13-26 37-19 11 4 17 17 22-4 33 17Z"/>
   </g>
   <g class="beach-gulls" fill="none" stroke="#768f98" stroke-width="3.5" stroke-linecap="round"><path d="M650 139q16-4 24 5 6-13 19-15m24 32q10-4 16 2 4-9 14-11"/></g>
   <!-- Lighthouse and a low pine-covered headland at the entrance to the bay. -->
-  <path d="M0 285q84-50 171-40 61 6 118 23 42 13 96 17Z" fill="#a0ae91"/>
+  <g class="beach-headland">
+  <path class="beach-bluff" d="M0 285q84-50 171-40 61 6 118 23 42 13 96 17Z" fill="#a0ae91"/>
   <g stroke-linejoin="round"><path d="m185 245 6-63h19l7 66Z" fill="#f7e6ce" stroke="#9c9687" stroke-width="2"/><path d="m189 204 22-1 2 12-25 1Z" fill="#cd8e7d"/>
     <rect x="190" y="174" width="22" height="10" fill="#9baba2"/><path d="m185 174 16-13 15 13Z" fill="#c18c7b"/><path d="M196 180h9" stroke="#fff0bb" stroke-width="4"/>
   </g>
-  <path d="M0 284q166-5 349 2t408 0 381-2 302 1v213H0Z" fill="url(#beachSea)"/>
-  <g fill="none" stroke-linecap="round"><path d="M0 286q253 4 438 0m46 1 141 0m430-1 385-1" stroke="#e0ecd5" stroke-width="3"/>
+  <g class="at-night" display="none">
+    <path class="beach-beam" d="m201 179 235-51 0 85Z" fill="url(#beaconBeam)"/>
+    <circle cx="201" cy="179" r="34" fill="url(#beachHalo)"/>
+    <rect x="193" y="175" width="16" height="7" rx="2" fill="#fff7c8"/>
+  </g></g>
+  <path class="beach-sea" d="M0 284q166-5 349 2t408 0 381-2 302 1v213H0Z" fill="url(#beachSea)"/>
+  <g class="beach-waterlines" fill="none" stroke-linecap="round"><path d="M0 286q253 4 438 0m46 1 141 0m430-1 385-1" stroke="#e0ecd5" stroke-width="3"/>
     <path d="m98 354 98 1m51-34 100 1m88 34 95-1m103-44 48 0m368 39 64 1m161-40 87 0" stroke="#d6edcf" stroke-width="3"/>
     <path d="m128 392 61 1m302-14 78 0m431-75 39 0m85 23 112 1" stroke="#70b8b6" stroke-width="2"/>
   </g>
+  <g class="beach-reflection"><g class="beach-ripples">
+    <use class="by-day" href="#beachLightPath" stroke="#fff0b8" opacity=".85"/>
+    <use class="at-night" display="none" href="#beachLightPath" stroke="#e4edf4"/>
+  </g></g>
   <g class="beach-boat" stroke-linejoin="round">
     <path d="M821 285v-89" stroke="#9a7a66" stroke-width="4"/>
     <path d="m815 201-49 76q25-7 49-3Z" fill="#f6e2b7" stroke="#cbbd9e" stroke-width="2"/>
@@ -34,12 +63,13 @@
     <path d="M775 298q39 4 76-1" stroke="#daf1d7" stroke-width="3" fill="none"/>
   </g>
 
-  <path d="M0 461q166-42 366-27t370 5 356-24 348 17v468H0Z" fill="url(#beachSand)"/>
+  <path class="beach-sand" d="M0 461q166-42 366-27t370 5 356-24 348 17v468H0Z" fill="url(#beachSand)"/>
   <path d="M0 461q166-42 366-27t370 5 356-24 348 17v468H0Z" fill="url(#sandGrains)"/>
-  <path d="M0 454q167-39 365-27t372 5 359-25 344 19v14q-155-29-348-13t-354 22-377-5T0 472Z" fill="#dfd3a8"/>
+  <path class="beach-wet-sand" d="M0 454q167-39 365-27t372 5 359-25 344 19v14q-155-29-348-13t-354 22-377-5T0 472Z" fill="#dfd3a8"/>
   <g class="beach-foam"><path d="M-16 442q171-40 377-24t375 5 359-25 363 20v11q-153-26-349-14t-374 22-372-6T-16 458Z" fill="#e3f3da"/><path d="M33 430q132-26 231-17m178 15q81 6 147 5m409-34q65-9 128-7m136 7 89 8" stroke="#eff7de" stroke-width="4" fill="none" stroke-linecap="round"/></g>
 
   <!-- A canvas deck chair and striped parasol leave room to play in the foreground. -->
+  <g class="beach-toys">
   <ellipse cx="527" cy="589" rx="145" ry="18" fill="#ad936e" opacity=".23"/>
   <path d="m511 556 23-235" stroke="#a78367" stroke-width="8" stroke-linecap="round"/>
   <path d="M413 364q19-69 119-77 85 10 122 89-24-17-44-4-24-20-49-6-27-19-51-4-25-19-48-4-27-12-49 6Z" fill="#f1dca6" stroke="#b28c75" stroke-width="3" stroke-linejoin="round"/>
@@ -68,4 +98,5 @@
   </g>
   <g opacity=".88"><use href="#beachShell" transform="translate(319 651) rotate(-19) scale(.7)"/><use href="#beachShell" transform="translate(1021 727) rotate(20) scale(.6)"/></g>
   <g transform="translate(634 742) rotate(9)" fill="#d99377" stroke="#bd876f" stroke-width="2"><path d="m0-19 6 13 16 2-12 9 3 14-14-8-13 7 3-14-12-10 16-1Z"/><circle r="2" fill="#f7c9a3" stroke="none"/></g>
+  </g>
 </svg>

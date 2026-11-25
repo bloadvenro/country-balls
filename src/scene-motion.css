@@ -2,6 +2,11 @@
 .scene-art{position:absolute;inset:0;pointer-events:none}
 .scene-art svg{display:block;width:100%;height:100%}
 
+.scene-art .living-room-sky { transform: translateX(var(--living-sun-x, 0px)) }
+.scene-frame[data-lamp-on="true"] .reading-lamp-glow,
+.scene-frame[data-fridge-open="true"] .fridge-light-mask,
+.scene-frame[data-fridge-open="true"] .fridge-light { display: inline }
+
 .scene-art .basin-fixture { transform: translateX(var(--basin-x)) }
 .scene-art .sky-body { transform: translate(var(--sun-x), var(--sun-y)) }
 .scene-frame[data-night="true"] .at-night,
@@ -99,3 +104,32 @@
 @keyframes beach-surf { to { transform: translate(5px,12px); opacity: .5 } }
 @keyframes beach-bob { to { transform: translate(12px,-4px) rotate(3deg) } }
 @keyframes beach-glide { to { transform: translate(-60px,-8px) } }
+
+.scene-art .beach-headland { transform: translateX(var(--beach-headland-x)) }
+.scene-art .beach-reflection { transform: translateX(var(--sun-x)) }
+.scene-frame[data-night="true"] .beach-sea { fill: url(#beachNightSea) }
+.scene-frame[data-night="true"] .beach-sand { fill: url(#beachNightSand) }
+.scene-frame[data-night="true"] .beach-bluff { fill: #495a66 }
+.scene-frame[data-night="true"] .beach-clouds { fill: #7f8399; opacity: .48 }
+.scene-frame[data-night="true"] .beach-gulls { stroke: #414d67 }
+.scene-frame[data-night="true"] .beach-toys { filter: brightness(.79) saturate(.73) }
+.scene-frame[data-night="true"] .beach-wet-sand { fill: #888b97 }
+.scene-frame[data-night="true"] .beach-foam path:first-child { fill: #a3bdc7 }
+.scene-frame[data-night="true"] .beach-foam path + path { stroke: #c2d8de }
+.scene-frame[data-night="true"] .beach-waterlines { opacity: .34 }
+@media (prefers-reduced-motion: no-preference) {
+  .scene-art .beach-ripples { animation: beach-glimmer 3s ease-in-out infinite alternate }
+  .scene-art .beach-beam { animation: beach-beacon 4s ease-in-out infinite alternate }
+}
+@keyframes beach-glimmer { to { opacity: .72; transform: translateX(3px) } }
+@keyframes beach-beacon { to { opacity: .54 } }
+.scene-art .ward-wash-station { transform: var(--ward-wash) }
+.scene-art .ward-window { transform: var(--ward-window) }
+.scene-art .ward-wall-decor { transform: var(--ward-decor); display: var(--ward-decor-display) }
+.scene-art .ward-monitor { transform: var(--ward-monitor) }
+.scene-art .ward-door-leaf { transform-origin: 53px 510px }
+.scene-frame[data-door-open="true"] .ward-door-leaf { transform: skewY(12deg) scaleX(.12) }
+
+@media (prefers-reduced-motion: no-preference) {
+  .scene-art .ward-door-leaf { transition: transform .38s ease-in-out }
+}

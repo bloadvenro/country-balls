@@ -371,7 +371,9 @@ function App() {
           scenery={game.scenery[game.backgroundId] ?? {}} toggleScenery={key => setGame(value => {
             const place = game.backgroundId
             const previous = value.scenery[place]
-            return { ...value, scenery: { ...value.scenery, [place]: { ...previous, [key]: !previous?.[key] } } }
+            const next = { ...previous, [key]: !previous?.[key] }
+            if (place === 'apartment' && key === 'night') delete next.lampOff
+            return { ...value, scenery: { ...value.scenery, [place]: next } }
           })}
           bedroom={game.backgroundId === 'bedroom' ? {
             night: game.bedroomNight, lampOn: game.bedroomLampOn,

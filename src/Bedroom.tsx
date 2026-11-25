@@ -19,10 +19,11 @@ export function bedroomLayout(width: number, height: number) {
     const hitWidth = Math.max(44, w * scale), hitHeight = Math.max(44, h * scale)
     return { x: left + cx * scale - hitWidth / 2, y: cy * scale - hitHeight / 2, width: hitWidth, height: hitHeight }
   }
-  return { dx, dy, sky: hitBox(763, 123, 76, 74), lamp: hitBox(352 + dx, 357 + dy, 94, 108) }
+  const cribX = Math.min(0, (width - left) / scale - 983)
+  return { dx, dy, cribX, sky: hitBox(763, 123, 76, 74), lamp: hitBox(352 + dx, 357 + dy, 94, 108) }
 }
 
-export function BedroomArt({ night, lampOn, dx, dy }: Pick<BedroomLighting, 'night' | 'lampOn'> & { dx: number; dy: number }) {
+export function BedroomArt({ night, lampOn, dx, dy, cribX }: Pick<BedroomLighting, 'night' | 'lampOn'> & { dx: number; dy: number; cribX: number }) {
   const file = './backgrounds/bedroom.svg#'
   // On a narrow screen the movable nightstand and its string of lights share a wall.
   const lightsX = Math.max(0, dx)
@@ -31,10 +32,17 @@ export function BedroomArt({ night, lampOn, dx, dy }: Pick<BedroomLighting, 'nig
     <use href={file + 'walls'}/>
     <use href={file + (night ? 'moon-sky' : 'sun-sky')}/>
     <use href={file + 'garland'} x={lightsX} y={lightsY}/>
+    <use href={file + 'floor-and-shelves'}/>
+    <use href={file + 'crib'} x={cribX}/>
     <use href={file + 'furniture'}/>
-    <g className="bedroom-mobile"><use href={file + 'mobile-charms'} x="897" y="310"/></g>
     <use href={file + 'nightstand'} x={dx} y={dy}/>
     {night && <use href={file + 'night-shadows'}/>}
+    <g transform={`translate(${cribX} 0)`}>
+      <g className="bedroom-mobile">
+        <use href={file + 'mobile-charms'} x="897" y="310" style={{filter: night && !lampOn ? 'brightness(.6)' : undefined}}/>
+        {night && lampOn && <use href={file + 'mobile-glow'} x="897" y="310"/>}
+      </g>
+    </g>
     {night && lampOn && <>
       <use href={file + 'garland-glow'} x={lightsX} y={lightsY}/>
       <use href={file + 'lamp-glow'} x={dx} y={dy}/>

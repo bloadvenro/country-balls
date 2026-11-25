@@ -9,7 +9,7 @@ export { countries, favoriteCodes, faces, flagOf, items, nameOf, type Code, type
 
 export const backgrounds = ['park', 'playground', 'party', 'space', 'ocean', 'beach', 'ice', 'apartment', 'kitchen', 'bathroom', 'bedroom', 'maternity'] as const
 export type BackgroundId = typeof backgrounds[number]
-const sceneryFlags = ['night', 'tvOff', 'chestClosed', 'showerRunning', 'tapRunning', 'fridgeOpen', 'ovenOpen'] as const
+const sceneryFlags = ['night', 'tvOff', 'chestClosed', 'showerRunning', 'tapRunning', 'fridgeOpen', 'ovenOpen', 'lampOff', 'doorOpen'] as const
 export type SceneryFlag = typeof sceneryFlags[number]
 export type SceneState = Partial<Record<SceneryFlag, boolean>>
 type Scenery = Partial<Record<BackgroundId, SceneState>>

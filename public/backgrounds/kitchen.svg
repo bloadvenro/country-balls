@@ -5,6 +5,21 @@
     <pattern id="tiles" width="62" height="44" patternUnits="userSpaceOnUse"><rect width="60" height="42" rx="3" fill="#add1bc"/></pattern>
     <g id="chair"><path d="M-41-74v106m83-106v106" stroke="#946b50" stroke-width="10"/><rect x="-48" y="-116" width="98" height="76" rx="16" fill="#78a595" stroke="#658d7c" stroke-width="4"/><rect x="-53" y="-22" width="108" height="16" rx="6" fill="#cfa578"/></g>
     <g id="plate"><ellipse rx="33" ry="9" fill="#fdf3d2" stroke="#a6b3a2" stroke-width="2"/><ellipse rx="22" ry="5" fill="#d8dfbd"/></g>
+    <radialGradient id="oven-amber" cx=".68" cy=".18" r=".91">
+      <stop stop-color="#fff0b5"/><stop offset=".3" stop-color="#f6bd6c"/><stop offset=".69" stop-color="#cf794c"/><stop offset="1" stop-color="#825044"/>
+    </radialGradient>
+    <radialGradient id="oven-glass" cx=".68" cy=".32" r=".85">
+      <stop stop-color="#ffd98f"/><stop offset=".34" stop-color="#e6a261"/><stop offset=".74" stop-color="#985e49"/><stop offset="1" stop-color="#694a47"/>
+    </radialGradient>
+    <radialGradient id="fridge-bulb" cx=".50" cy=".05" r=".95">
+      <stop stop-color="#fffdd9"/><stop offset=".34" stop-color="#f7ffec"/><stop offset=".75" stop-color="#e0f8e6"/><stop offset="1" stop-color="#c1e7dd"/>
+    </radialGradient>
+    <!-- Keep the appliance lights luminous when the room darkens. -->
+    <mask id="kitchen-shadows" maskUnits="userSpaceOnUse" x="0" y="0" width="1440" height="900">
+      <rect width="1440" height="900" fill="white"/>
+      <g class="kitchen-oven"><rect x="325" y="371" width="180" height="94" rx="8"/></g>
+      <g class="kitchen-fridge"><rect class="fridge-light-mask" display="none" x="1090" y="118" width="158" height="360" rx="13"/></g>
+    </mask>
   <linearGradient id="nightSky" x2="0" y2="1"><stop stop-color="#162141"/><stop offset=".49" stop-color="#354b75"/><stop offset="1" stop-color="#887ba1"/></linearGradient>
   <pattern id="stars" patternUnits="userSpaceOnUse" width="281" height="157">
     <g fill="#fff3ce"><circle cx="17" cy="28" r="1.7"/><circle cx="115" cy="91" r="1.2"/><circle cx="239" cy="48" r="1.6"/><circle cx="206" cy="142" r="1.1"/>
@@ -33,6 +48,10 @@
     <g fill="#947962"><circle cx="339" cy="349" r="6"/><circle cx="363" cy="349" r="6"/><circle cx="389" cy="349" r="6"/></g>
     <rect class="oven-interior" x="315" y="363" width="200" height="115" rx="8" fill="#794e48"/>
     <rect x="324" y="371" width="182" height="94" rx="6" fill="#a16b4d"/>
+    <g class="at-night oven-cavity-light" display="none">
+      <rect x="324" y="371" width="182" height="94" rx="6" fill="url(#oven-amber)"/>
+      <rect x="463" y="376" width="29" height="5" rx="2.5" fill="#fff3bd"/>
+    </g>
     <path d="M325 444h180l-13 13H337Z" fill="#515959"/><path d="M333 443h165" stroke="#d1b18b" stroke-width="4"/>
     <!-- A bunny bread roll and a pair of star biscuits on the baking tray. -->
     <g stroke="#a56b3e" stroke-linejoin="round" stroke-width="2.5">
@@ -45,6 +64,12 @@
     <g class="oven-door">
       <rect x="312" y="360" width="206" height="121" rx="9" fill="#cab18f" stroke="#9e8169" stroke-width="3"/>
       <rect x="325" y="371" width="180" height="94" rx="8" fill="#4f6563"/>
+      <g class="at-night oven-window-light" display="none">
+        <rect x="325" y="371" width="180" height="94" rx="8" fill="url(#oven-glass)"/>
+        <path d="M340 441q18-2 36 0h114l-9 9H349Z" fill="#8b5747"/>
+        <path d="M358 440q2-12 15-13-9-16-4-18 5-3 12 13-1-14 4-15 6-1 3 17 15 2 16 16Zm72-2 7-8 8 8Zm33 0 6-9 7 9Z" fill="#dfa469"/>
+        <path d="M464 377h26" stroke="#ffdf9c" stroke-width="3" stroke-linecap="round"/>
+      </g>
       <path d="m344 445 44-54m-11 51 40-47" stroke="#78918a" stroke-width="7"/>
       <path d="M354 367h122" stroke="#6d7771" stroke-width="7" stroke-linecap="round"/>
     </g>
@@ -65,7 +90,11 @@
     <rect x="1081" y="107" width="177" height="385" rx="20" fill="#ebdec1" stroke="#b99e80" stroke-width="4"/>
     <rect class="fridge-interior" x="1090" y="118" width="158" height="360" rx="13" fill="#a5cfcd"/>
     <rect x="1097" y="125" width="143" height="341" rx="10" fill="#dcf1de"/>
-    <ellipse cx="1168" cy="134" rx="19" ry="4" fill="#fffaab"/>
+    <g class="fridge-light" display="none">
+      <rect x="1097" y="125" width="143" height="341" rx="10" fill="url(#fridge-bulb)"/>
+      <ellipse cx="1168" cy="136" rx="38" ry="9" fill="#fffbd6" opacity=".67"/>
+      <rect x="1148" y="130" width="40" height="6" rx="3" fill="#fffff3"/>
+    </g>
     <!-- Popsicles upstairs, a strawberry cake and milk below. -->
     <g stroke-linejoin="round" stroke-width="3">
       <path d="M1128 215v-21m61 21v-21" stroke="#b3895e" stroke-width="7" stroke-linecap="round"/>
@@ -114,5 +143,5 @@
     <rect x="1" y="-85" width="25" height="18" rx="5" fill="#83b8b0"/><path d="M1-83q0-7 10-7l2-5h6l1 6 6 6Z" fill="#679c99"/>
   </g>
 
-  <rect class="at-night" display="none" width="1440" height="900" fill="#343663" opacity=".25"/>
+  <rect class="at-night" display="none" width="1440" height="900" mask="url(#kitchen-shadows)" fill="#343663" opacity=".25"/>
 </svg>

@@ -323,15 +323,16 @@ export function ParkCanvas({ actors, balls, selected, target, performance: show,
   const switches = bedroom && layout ? [
     { key: 'sky', label: bedroom.night ? 'Луна — включить день' : 'Солнце — включить ночь', box: layout.sky, toggle: bedroom.toggleSky, pressed: undefined },
     ...(bedroom.night ? [{ key: 'lamp', label: 'Прикроватная лампа', box: layout.lamp, toggle: bedroom.toggleLamp, pressed: bedroom.lampOn }] : []),
-  ] : background.switches.map(({ key, label, box }) => ({
+  ] : background.switches.filter(control => control.key !== 'lampOff' || scenery.night).map(({ key, label, box }) => ({
     key, box, label: key === 'night' ? label + (scenery.night ? ' — включить день' : ' — включить ночь') : label,
     toggle: () => toggleScenery(key),
-    pressed: key === 'tvOff' || key === 'chestClosed' ? !scenery[key] : !!scenery[key],
+    pressed: key === 'tvOff' || key === 'chestClosed' || key === 'lampOff' ? !scenery[key] : !!scenery[key],
   }))
 
   return <><div ref={ref} className="park-canvas" role="img" aria-label="Игровая сцена">
-    {bedroom && layout ? <BedroomArt night={bedroom.night} lampOn={bedroom.lampOn} dx={layout.dx} dy={layout.dy}/> : (
+    {bedroom && layout ? <BedroomArt night={bedroom.night} lampOn={bedroom.lampOn} dx={layout.dx} dy={layout.dy} cribX={layout.cribX}/> : (
       <div className="scene-frame" data-night={!!scenery.night} data-tv-off={!!scenery.tvOff}
+        data-door-open={!!scenery.doorOpen} data-lamp-on={scene === 'apartment' && !!scenery.night && !scenery.lampOff}
         data-oven-open={!!scenery.ovenOpen} data-fridge-open={!!scenery.fridgeOpen}
         data-chest-closed={!!scenery.chestClosed} data-tap-running={!!scenery.tapRunning} data-shower-running={!!scenery.showerRunning}
         style={{ ...background.frame, '--sun-x': background.sunX + 'px', '--sun-y': background.sunY + 'px', '--basin-x': background.basinX + 'px' } as CSSProperties}>
